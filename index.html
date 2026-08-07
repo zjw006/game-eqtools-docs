@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>塔防游戏全景研究档案 · TD Doctrine Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;family=JetBrains+Mono:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0e0c;--bg2:#111411;--panel:#151814;--panel2:#1a1e18;--line:#2b3227;
+  --ink:#e9e5d6;--ink-dim:#9aa090;--amber:#ffb225;--amber-soft:#ffcf6b;
+  --red:#ff5d3a;--teal:#46c9a5;--blue:#5ea8d8;--violet:#b48ce8;
+  --serif:'Noto Serif SC',serif;--sans:'Noto Sans SC',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.85;
+  background-image:linear-gradient(rgba(70,201,165,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(70,201,165,.035) 1px,transparent 1px);
+  background-size:44px 44px;overflow-x:hidden;
+}
+::selection{background:var(--amber);color:#111}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--line);border-radius:5px}
+::-webkit-scrollbar-thumb:hover{background:var(--amber)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(12,14,12,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:4px;padding:0 28px;height:56px;overflow-x:auto}
+nav::-webkit-scrollbar{height:0}
+nav .brand{font-family:var(--serif);font-weight:900;font-size:15px;color:var(--amber);white-space:nowrap;margin-right:18px;display:flex;align-items:center;gap:8px}
+nav .brand::before{content:"";width:10px;height:10px;background:var(--amber);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+nav a{color:var(--ink-dim);text-decoration:none;font-size:12.5px;font-weight:400;padding:6px 11px;white-space:nowrap;border-radius:3px;transition:all .25s;letter-spacing:.04em}
+nav a:hover{color:var(--amber);background:rgba(255,178,37,.08)}
+nav a.active{color:#111;background:var(--amber);font-weight:500}
+header{min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding:130px 6vw 80px;position:relative}
+header .hero-img{position:absolute;inset:0;z-index:0;opacity:.35;background:url('https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=dark%20tactical%20war%20room%20holographic%20table%20map%2C%20top-down%20view%20of%20a%20glowing%20tower%20defense%20battlefield%20grid%2C%20amber%20orange%20enemy%20path%20lines%20winding%20through%20hexagonal%20tiles%2C%20small%20defense%20turret%20icons%2C%20teal%20hologram%20UI%20overlays%2C%20military%20command%20center%20aesthetic%2C%20moody%20cinematic%20lighting%2C%20high%20detail%20digital%20art&image_size=landscape_16_9') center/cover no-repeat;-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 25%,#000 70%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 25%,#000 70%,transparent 100%)}
+header .hero-veil{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 80% 70% at 30% 55%,rgba(12,14,12,.4),var(--bg) 90%)}
+header .inner{position:relative;z-index:2;max-width:1200px}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.35em;color:var(--teal);text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:14px}
+.kicker::before{content:"";width:42px;height:1px;background:var(--teal)}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(40px,6.5vw,86px);line-height:1.18;letter-spacing:.02em}
+h1 em{font-style:normal;color:var(--amber);text-shadow:0 0 40px rgba(255,178,37,.35)}
+header .sub{margin-top:28px;max-width:760px;color:var(--ink-dim);font-size:clamp(14px,1.4vw,17px)}
+header .meta-row{margin-top:46px;display:flex;flex-wrap:wrap;gap:14px}
+header .meta-chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;border:1px solid var(--line);padding:8px 16px;border-radius:2px;color:var(--ink-dim);background:rgba(21,24,20,.7)}
+header .meta-chip b{color:var(--amber);font-weight:600}
+main{max-width:1280px;margin:0 auto;padding:0 5vw 120px}
+section{margin-top:110px;scroll-margin-top:80px}
+.sec-head{display:flex;align-items:baseline;gap:20px;margin-bottom:14px;border-bottom:1px solid var(--line);padding-bottom:18px;flex-wrap:wrap}
+.sec-num{font-family:var(--mono);font-size:13px;color:var(--red);letter-spacing:.2em}
+.sec-head h2{font-family:var(--serif);font-weight:900;font-size:clamp(26px,3.4vw,44px);line-height:1.25}
+.sec-head .en{font-family:var(--mono);font-size:11px;color:var(--ink-dim);letter-spacing:.3em;text-transform:uppercase;margin-left:auto}
+.sec-lead{color:var(--ink-dim);max-width:820px;margin-bottom:38px;font-size:15px}
+.sec-lead b{color:var(--ink);font-weight:500}
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.card{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:6px;padding:26px 24px;position:relative;overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s}
+.card:hover{transform:translateY(-4px);border-color:rgba(255,178,37,.45);box-shadow:0 18px 44px -18px rgba(0,0,0,.8)}
+.card::before{content:"";position:absolute;top:0;left:0;width:34px;height:3px;background:var(--amber)}
+.card h3{font-family:var(--serif);font-weight:700;font-size:19px;margin-bottom:10px;color:var(--ink)}
+.card h3 .tag{font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:.15em;display:block;margin-bottom:6px;font-weight:400}
+.card p{font-size:13.5px;color:var(--ink-dim)}
+.card p b,.card li b{color:var(--ink);font-weight:500}
+.card ul{margin-top:10px;padding-left:0;list-style:none}
+.card li{font-size:13px;color:var(--ink-dim);padding:5px 0 5px 18px;position:relative;border-bottom:1px dashed rgba(43,50,39,.6)}
+.card li:last-child{border-bottom:none}
+.card li::before{content:"";position:absolute;left:2px;top:13px;width:7px;height:7px;background:var(--amber);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:720px}
+th{font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.12em;color:var(--amber);text-align:left;padding:13px 16px;background:rgba(255,178,37,.05);border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:12px 16px;border-bottom:1px solid rgba(43,50,39,.5);color:var(--ink-dim);vertical-align:top}
+td:first-child{color:var(--ink);font-weight:500;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,178,37,.03)}
+td .mini{display:block;font-size:11px;color:var(--ink-dim);opacity:.75;margin-top:2px}
+.pill{display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 9px;border-radius:20px;letter-spacing:.06em;margin:1px 2px}
+.pill.a{background:rgba(255,178,37,.13);color:var(--amber)}
+.pill.t{background:rgba(70,201,165,.12);color:var(--teal)}
+.pill.r{background:rgba(255,93,58,.12);color:var(--red)}
+.pill.b{background:rgba(94,168,216,.12);color:var(--blue)}
+.pill.v{background:rgba(180,140,232,.12);color:var(--violet)}
+.formula{font-family:var(--mono);font-size:13px;line-height:1.9;background:#0a0c09;border:1px solid var(--line);border-left:3px solid var(--amber);padding:16px 20px;border-radius:4px;margin:12px 0;overflow-x:auto;color:#d6e4c8}
+.formula .cmt{color:#5f6b57}
+.formula .hl{color:var(--amber)}
+.formula .hl2{color:var(--teal)}
+.formula .hl3{color:var(--red)}
+.f-note{font-size:12px;color:var(--ink-dim);margin-top:6px}
+.f-note b{color:var(--amber-soft);font-weight:500}
+.callout{border:1px solid rgba(255,178,37,.3);background:rgba(255,178,37,.05);border-radius:6px;padding:20px 24px;margin:24px 0;font-size:13.5px;color:var(--ink-dim)}
+.callout b{color:var(--amber);font-weight:500}
+.callout.red{border-color:rgba(255,93,58,.35);background:rgba(255,93,58,.05)}
+.callout.red b{color:var(--red)}
+.callout.teal{border-color:rgba(70,201,165,.3);background:rgba(70,201,165,.05)}
+.callout.teal b{color:var(--teal)}
+.flow{display:flex;flex-wrap:wrap;gap:0;align-items:stretch;margin:20px 0}
+.flow .node{border:1px solid var(--line);background:var(--panel);border-radius:5px;padding:12px 18px;font-size:12.5px;color:var(--ink);font-weight:500;display:flex;align-items:center;text-align:center}
+.flow .node small{display:block;color:var(--ink-dim);font-weight:300;font-size:11px}
+.flow .arr{display:flex;align-items:center;padding:0 8px;color:var(--amber);font-family:var(--mono);font-size:14px}
+.chart-box{border:1px solid var(--line);border-radius:6px;background:var(--panel);padding:24px;margin-top:24px}
+.chart-box h4{font-family:var(--serif);font-size:17px;font-weight:700;margin-bottom:4px}
+.chart-box p{font-size:12.5px;color:var(--ink-dim);margin-bottom:14px}
+canvas#diffChart{width:100%;height:340px;display:block}
+.legend{display:flex;gap:22px;flex-wrap:wrap;margin-top:12px}
+.legend span{font-family:var(--mono);font-size:11px;color:var(--ink-dim);display:flex;align-items:center;gap:7px}
+.legend i{width:16px;height:3px;display:inline-block;border-radius:2px}
+details{border:1px solid var(--line);border-radius:6px;background:var(--panel);margin-bottom:12px;overflow:hidden}
+details summary{cursor:pointer;padding:16px 22px;font-family:var(--serif);font-weight:700;font-size:16px;list-style:none;display:flex;align-items:center;gap:12px;transition:background .2s}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-family:var(--mono);color:var(--amber);font-size:18px;width:20px;text-align:center;transition:transform .25s}
+details[open] summary::before{transform:rotate(45deg)}
+details summary:hover{background:rgba(255,178,37,.04)}
+details summary .frm-tag{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:.15em;font-weight:400}
+details .body{padding:4px 22px 22px;border-top:1px dashed var(--line)}
+footer{border-top:1px solid var(--line);margin-top:120px;padding:44px 6vw;display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;font-family:var(--mono);font-size:11px;color:var(--ink-dim);letter-spacing:.08em}
+footer b{color:var(--amber);font-weight:600}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.reveal.on{opacity:1;transform:none}
+@media(max-width:640px){nav{padding:0 12px}.card{padding:20px 18px}th,td{padding:10px 12px}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="brand">TD ARCHIVE · 塔防研究档案</div>
+  <a href="#s1">类型基因</a>
+  <a href="#s2">防御塔体系</a>
+  <a href="#s3">敌人与波次</a>
+  <a href="#s4">经济系统</a>
+  <a href="#s5">地图与路径</a>
+  <a href="#s6">难度与数值</a>
+  <a href="#s7">案例拆解</a>
+  <a href="#s8">设计清单</a>
+</nav>
+
+<header>
+  <div class="hero-img"></div>
+  <div class="hero-veil"></div>
+  <div class="inner">
+    <div class="kicker">TOWER DEFENSE · RESEARCH DOSSIER</div>
+    <h1>塔防游戏<br>全景<em>研究档案</em></h1>
+    <p class="sub">一份面向策划与独立开发者的塔防品类完全拆解:从核心循环、防御塔与敌人的设计矩阵,到经济模型、路径规划与难度曲线——把"好玩"翻译成可复用的结构与数值。</p>
+    <div class="meta-row">
+      <span class="meta-chip">文档版本 <b>v2.4</b></span>
+      <span class="meta-chip">拆解样本 <b>12 款代表作</b></span>
+      <span class="meta-chip">适用对象 <b>策划 · 程序 · 独立开发者</b></span>
+      <span class="meta-chip">更新日期 <b>2026-08</b></span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ 01 类型基因 ============ -->
+<section id="s1">
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <h2>类型基因与核心循环</h2>
+    <span class="en">Genre DNA &amp; Core Loop</span>
+  </div>
+  <p class="sec-lead">塔防的本质不是"造塔打怪",而是一套<b>空间约束下的资源分配谜题</b>。玩家在接敌前完成全部核心决策,接敌后系统以确定性的结果回放这些决策——这种"异步对抗"结构是塔防区别于一切即时策略的根基。</p>
+
+  <div class="flow">
+    <div class="node">侦察敌情<small>wave preview</small></div>
+    <div class="arr">→</div>
+    <div class="node">规划布防<small>build &amp; place</small></div>
+    <div class="arr">→</div>
+    <div class="node">迎击波次<small>combat phase</small></div>
+    <div class="arr">→</div>
+    <div class="node">结算资源<small>reward</small></div>
+    <div class="arr">→</div>
+    <div class="node">升级强化<small>upgrade</small></div>
+    <div class="arr">→</div>
+    <div class="node">应对下一波<small>loop</small></div>
+  </div>
+
+  <div class="grid g3">
+    <div class="card">
+      <h3><span class="tag">ASYNC TACTICS</span>异步战术</h3>
+      <p>操作与结算分离:玩家在备战阶段完成几乎全部决策,接敌阶段只观察(或微调)。这让塔防成为<b>低操作、高决策密度</b>的品类,天然适配触屏与碎片时间。</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag">SPATIAL PUZZLE</span>空间谜题</h3>
+      <p>塔防的核心资源不是金币,而是<b>火力覆盖的路径长度</b>。同一座塔摆放位置不同,有效输出可相差 3 倍以上——位置即数值。</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag">READABLE FAILURE</span>可读的失败</h3>
+      <p>漏怪的原因永远可见:火力不足、克制缺失或位置错误。失败信息越清晰,玩家的挫败感越低、重开意愿越强——这是塔防高复玩性的秘密。</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <b>一句话定义:</b>塔防 = 在固定空间约束下,用有限经济把 DPS 分配到路径上,使"漏怪数 &lt; 容错上限"的实时策略解谜游戏。所有系统设计都应服务于这个不等式。
+  </div>
+</section>
+
+<!-- ============ 02 防御塔体系 ============ -->
+<section id="s2">
+  <div class="sec-head">
+    <span class="sec-num">02</span>
+    <h2>防御塔设计体系</h2>
+    <span class="en">Tower Taxonomy</span>
+  </div>
+  <p class="sec-lead">健康的塔体系应满足两条铁律:<b>每个原型都有明确的克制与被克制关系</b>;<b>任意两座塔之间存在可计算的协同收益</b>。以下六大原型覆盖了 90% 以上主流塔防的塔位设计。</p>
+
+  <div class="grid g3">
+    <div class="card">
+      <h3><span class="tag">ST · DPS</span>速射单体塔</h3>
+      <p>高攻速、低单发、稳定输出。防线的<b>基本盘</b>,承担 60% 以上的总伤害。</p>
+      <ul>
+        <li><b>克制:</b>轻甲、速攻单位</li>
+        <li><b>短板:</b>对高甲单位抛光</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="tag">AOE · BURST</span>重炮溅射塔</h3>
+      <p>低攻速、范围伤害,收益与敌人密度成正比。逼迫玩家思考<b>聚怪位置</b>。</p>
+      <ul>
+        <li><b>克制:</b>密集人海、集群波</li>
+        <li><b>短板:</b>高速分散目标</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="tag">CC · SLOW</span>减速控制塔</h3>
+      <p>不产出击杀,产出<b>时间</b>——把敌人的路径暴露时长放大 30%–60%,等效提升全队 DPS。</p>
+      <ul>
+        <li><b>克制:</b>一切地面单位</li>
+        <li><b>短板:</b>免疫控制的精英</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="tag">DOT · DEBUFF</span>持续侵蚀塔</h3>
+      <p>毒素、燃烧、破甲。对高 HP 目标性价比极高,鼓励<b>"先挂状态再集火"</b>的序列决策。</p>
+      <ul>
+        <li><b>克制:</b>坦克、Boss</li>
+        <li><b>短板:</b>低 HP 速攻(伤害溢出)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="tag">BUFF · AURA</span>增益光环塔</h3>
+      <p>强化周围塔的攻击、攻速或射程。本身零输出,是<b>阵型密度的奖励机制</b>。</p>
+      <ul>
+        <li><b>克制:</b>—(放大既有优势)</li>
+        <li><b>短板:</b>单独放置完全无效</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="tag">BLOCK · WALL</span>拦截阻挡塔</h3>
+      <p>兵营、路障、召唤物。用"阻挡数"显性改变敌人行进,是<b>空间谜题的第二支笔</b>。</p>
+      <ul>
+        <li><b>克制:</b>速攻、隐身单位</li>
+        <li><b>短板:</b>飞行单位完全无视</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tbl-wrap" style="margin-top:24px">
+    <table>
+      <thead>
+        <tr><th>原型</th><th>定位</th><th>参考造价</th><th>射程/定位建议</th><th>克制</th><th>被克制</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>速射塔<span class="mini">箭塔 / 机枪塔</span></td>
+          <td><span class="pill a">持续输出</span></td>
+          <td>100 G</td>
+          <td>中程 · 路径拐角内侧</td>
+          <td>轻甲 · 速攻</td>
+          <td><span class="pill r">高甲单位</span></td>
+        </tr>
+        <tr>
+          <td>重炮塔<span class="mini">迫击炮 / 投石车</span></td>
+          <td><span class="pill r">范围爆发</span></td>
+          <td>180 G</td>
+          <td>远程 · 聚怪点正上方</td>
+          <td>密集集群</td>
+          <td><span class="pill v">高速分散目标</span></td>
+        </tr>
+        <tr>
+          <td>冰晶塔<span class="mini">减速 / 眩晕</span></td>
+          <td><span class="pill t">控制</span></td>
+          <td>120 G</td>
+          <td>短程 · 火力网入口</td>
+          <td>地面全体</td>
+          <td><span class="pill b">控制免疫精英</span></td>
+        </tr>
+        <tr>
+          <td>毒雾塔<span class="mini">DoT / 破甲</span></td>
+          <td><span class="pill v">持续侵蚀</span></td>
+          <td>150 G</td>
+          <td>中程 · 路径前 1/3 段</td>
+          <td>高 HP 坦克</td>
+          <td><span class="pill a">低 HP 速攻</span></td>
+        </tr>
+        <tr>
+          <td>光环塔<span class="mini">战旗 / 图腾</span></td>
+          <td><span class="pill b">增益辅助</span></td>
+          <td>160 G</td>
+          <td>— · 塔群几何中心</td>
+          <td>—</td>
+          <td><span class="pill t">孤立摆放</span></td>
+        </tr>
+        <tr>
+          <td>拦截塔<span class="mini">兵营 / 路障</span></td>
+          <td><span class="pill t">地面阻挡</span></td>
+          <td>140 G</td>
+          <td>— · 集火区出口</td>
+          <td>速攻 · 隐身</td>
+          <td><span class="pill b">飞行单位</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="formula">
+<span class="cmt">// 塔原型的三条基础校验收公式</span>
+<span class="hl">有效DPS</span>  = 面板伤害 × 攻击速度 × 命中率 × (1 + 暴击率 × 暴击倍率)
+<span class="hl">成本效率</span>  = 有效DPS ÷ 总投入 <span class="cmt">// 总投入 = 造价 + 累计升级费用</span>
+<span class="hl2">覆盖率</span>    = 射程覆盖的路径长度 ÷ 路径总长 <span class="cmt">// 塔防特有指标,决定摆放价值</span>
+  </div>
+  <p class="f-note">经验法则:覆盖率 &lt; <b>15%</b> 的塔位属于低效位;新塔原型的成本效率不应超过同阶旧塔 <b>20%</b>,否则旧塔立即贬值、体系崩盘。</p>
+</section>
+
+<!-- ============ 03 敌人与波次 ============ -->
+<section id="s3">
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <h2>敌人与波次设计</h2>
+    <span class="en">Enemy &amp; Wave Design</span>
+  </div>
+  <p class="sec-lead">敌人不是数值包,而是<b>会移动的考题</b>:每一种敌人对应一个必须被回答的设计问题。波次则是这些考题的排布艺术——难度不来自单个敌人,而来自<b>兵种组合与出场时序</b>。</p>
+
+  <div class="grid g3">
+    <div class="card">
+      <h3><span class="tag">TANK</span>肉盾坦克</h3>
+      <p>高 HP 低速。考题:<b>你的持续 DPS 达标了吗?</b>是检测防线总输出的标尺单位。</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag">RUNNER</span>疾行速攻</h3>
+      <p>低 HP 高速。考题:<b>你的火力有没有浪费在错误的 target 上?</b>惩罚单体爆发溢出。</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag">AIR</span>飞行单位</h3>
+      <p>无视地形与阻挡。考题:<b>你的对空火力独立成立吗?</b>强制开辟第二条防御线。</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag">SPLIT</span>分裂增殖</h3>
+      <p>死亡后分裂为多个小体。考题:<b>你的 AoE 是否捏在正确的时机?</b>惩罚无脑单点。</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag">STEALTH</span>隐身潜行</h3>
+      <p>需要侦测手段才能被攻击。考题:<b>你投资了"看不见收益"的反隐吗?</b>考验对策广度。</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag">BOSS</span>首领巨兽</h3>
+      <p>机制综合体:免疫、召唤、狂暴。考题:<b>你的体系在极限压强下还成立吗?</b>关底总验收。</p>
+    </div>
+  </div>
+
+  <div class="formula">
+<span class="cmt">// 敌人 HP 的混合增长模型:指数打底 + 线性补偿</span>
+<span class="hl3">HP(n)</span>   = HP₀ × (1 + r)^(n-1) + k × n
+<span class="hl">DPS需求</span> = Σ HP(波内全部敌人) ÷ 该波最长暴露时长
+  </div>
+  <p class="f-note">增长率 r 建议 <b>12%–18%</b>;线性项 k 用于保证低练度玩家的最低体验底线。每 5 波安排一次<b>机制波</b>(飞行/隐身/分裂),而不是纯数值波。</p>
+
+  <div class="tbl-wrap" style="margin-top:24px">
+    <table>
+      <thead>
+        <tr><th>波次段</th><th>设计目标</th><th>推荐构成</th><th>压力类型</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>W1 – W4</td><td>教学引导,建立信心</td><td>单一兵种 · 低 HP 线性推进</td><td><span class="pill t">低压</span></td></tr>
+        <tr><td>W5 – W9</td><td>机制引入,首次筛选</td><td>+速攻 / 轻甲混编,W5 精英首秀</td><td><span class="pill a">节奏压力</span></td></tr>
+        <tr><td>W10 – W14</td><td>阵型考验,逼迫重构</td><td>双路分流 + 肉盾掩护速攻</td><td><span class="pill b">空间压力</span></td></tr>
+        <tr><td>W15 – W19</td><td>极限检验,对策验收</td><td>飞行群 + 隐身波 + 分裂群轮换</td><td><span class="pill v">对策压力</span></td></tr>
+        <tr><td>W20</td><td>终局高潮,情绪释放</td><td>Boss + 护送混编,全机制总复习</td><td><span class="pill r">综合压力</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout teal">
+    <b>波次三幕结构:</b>每 5 波构成一个"引入机制 → 强化机制 → 综合考验"的微型三幕剧。玩家在每一幕结尾都应该产生"我变强了"的实感——如果只有"怪变强了",就是数值失败的信号。
+  </div>
+</section>
+
+<!-- ============ 04 经济系统 ============ -->
+<section id="s4">
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <h2>经济与资源系统</h2>
+    <span class="en">Economy Systems</span>
+  </div>
+  <p class="sec-lead">塔防的经济系统是<b>决策的发动机</b>:金币太少,玩家只能照搬唯一解;金币太多,所有塔位都被填满、谜题消失。设计目标不是"收支平衡",而是<b>让玩家永远处于"差一点点"的饥渴状态</b>。</p>
+
+  <div class="flow">
+    <div class="node">击杀掉落<small>kill bounty</small></div>
+    <div class="arr">→</div>
+    <div class="node">利息积累<small>interest</small></div>
+    <div class="arr">→</div>
+    <div class="node">建造 / 升级<small>invest</small></div>
+    <div class="arr">→</div>
+    <div class="node">战力提升<small>power up</small></div>
+    <div class="arr">→</div>
+    <div class="node">更快击杀<small>loop</small></div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3><span class="tag">KILL ECONOMY</span>击杀经济</h3>
+      <p>最基础的现金流。<b>赏金应与威胁度挂钩</b>而非 HP——速攻怪赏金高于坦克,能引导玩家重视目标选择。</p>
+      <ul>
+        <li>基础赏金 ≈ 该波次塔均造价的 3%–5%</li>
+        <li>连杀/无损奖励驱动完美主义</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="tag">INTEREST</span>利息经济</h3>
+      <p>存款生息制造了塔防最深刻的一对矛盾:<b>现在花,还是以后花?</b>利息率每提高 1%,玩家的平均布防时点就后移半波。</p>
+      <ul>
+        <li>建议利率 5%–10%,并设存款上限</li>
+        <li>必须与出售返还率联动校准</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="tag">REFUND</span>出售返还</h3>
+      <p>返还比例决定试错成本:<b>70% 是鼓励实验的分水岭</b>;100% 返还则把塔变成可随时变现的存款,需要配合取消利息或加建造冷却来对冲。</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag">MULTI-CURRENCY</span>多货币分层</h3>
+      <p>金币(建造)、科技点(升级树)、水晶(主动技能)三线并行,把"花钱"这一个决策拆成<b>三条互相竞争的资源轴</b>,决策深度呈乘法增长。</p>
+    </div>
+  </div>
+
+  <div class="formula">
+<span class="cmt">// 经济系统两条验收线</span>
+<span class="hl">利息收益</span>     = 存款 × 利率 × 持有波数
+<span class="hl2">盈亏平衡波数</span> = 塔造价 ÷ (该塔带来的额外击杀赏金 − 存款利息损失)
+  </div>
+  <p class="f-note">任意一座塔的盈亏平衡波数应落在 <b>2–4 波</b>:低于 2 波等于白送,高于 4 波玩家宁愿存款吃息。</p>
+
+  <div class="callout red">
+    <b>通货膨胀陷阱:</b>当出售返还 ≥ 80% 且存在利息时,"存塔吃息、临阵变现"会成为数学最优解——玩家拖延布防反而更强。解法三选一:压低返还率、利息设存款上限、或给出售加冷却。
+  </div>
+</section>
+
+<!-- ============ 05 地图与路径 ============ -->
+<section id="s5">
+  <div class="sec-head">
+    <span class="sec-num">05</span>
+    <h2>地图与路径设计</h2>
+    <span class="en">Map &amp; Path Design</span>
+  </div>
+  <p class="sec-lead">地图是塔防的<b>第一系统</b>:路径形态直接决定塔的价值分布、经济节奏与策略空间。一条好的路径应当同时提供<b>多个"看起来都对"的布防方案</b>,并在关键节点制造抉择。</p>
+
+  <div class="grid g4">
+    <div class="card">
+      <h3><span class="tag">LINEAR</span>单线走廊型</h3>
+      <p>一条路径贯穿全图。空间复杂度最低,数值最可控,适合教学关与移动端。《Defense Grid》一半以上关卡基于此型的变体。</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag">FORK</span>分岔汇流型</h3>
+      <p>路径中途分岔再汇流。玩家在岔口的投资决策不可撤回,天然制造<b>风险与懊悔</b>——情绪浓度的放大器。</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag">OPEN GRID</span>开放网格型</h3>
+      <p>敌人按寻路算法行进,玩家用塔体改变路径本身。策略天花板最高,但需要严格的<b>堵死检测</b>与 AI 兜底。《植物大战僵尸》的五车道是其降维变体。</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag">LAYERED</span>立体多层型</h3>
+      <p>空中层 + 地面层 + 地下层并行推进,要求玩家同时维护多条互相独立的防线,是后期内容消耗的主要手段。</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <b>路径设计的三条硬指标:</b>有效路径长度 ≥ 直线距离的 <b>1.8 倍</b>(否则塔覆盖率不足);任意塔位到路径的可达点 ≥ <b>3 个</b>(否则无抉择);拐角内侧塔位数量应占总塔位的 <b>30%–40%</b>(拐角是火力效率最高的位置,是地图给玩家的"奖励格")。
+  </div>
+</section>
+
+<!-- ============ 06 难度与数值 ============ -->
+<section id="s6">
+  <div class="sec-head">
+    <span class="sec-num">06</span>
+    <h2>难度曲线与数值平衡</h2>
+    <span class="en">Difficulty &amp; Balance</span>
+  </div>
+  <p class="sec-lead">难度设计的核心不是"让游戏变难",而是让<b>玩家战力曲线始终咬住敌人强度曲线</b>:领先太多则无聊,落后太多则绝望。下图是 20 波标准关卡的推荐曲线形态——敌人指数增长,玩家阶梯跃升,两者之间的琥珀色区域即<b>容错带</b>。</p>
+
+  <div class="chart-box">
+    <h4>标准 20 波关卡:敌我强度曲线与关键校验节点</h4>
+    <p>敌方强度按 r=16% 指数增长;玩家战力在 W4 / W8 / W12 / W16 的升级窗口发生阶梯跃升。虚线为机制波的强制校验点。</p>
+    <canvas id="diffChart"></canvas>
+    <div class="legend">
+      <span><i style="background:var(--red)"></i>敌方总强度(指数增长)</span>
+      <span><i style="background:var(--teal)"></i>玩家战力(阶梯成长)</span>
+      <span><i style="background:var(--amber)"></i>容错带 &amp; 关键校验节点</span>
+    </div>
+  </div>
+
+  <div class="formula">
+<span class="cmt">// 难度健康度的量化验收</span>
+<span class="hl">容错率</span> = (玩家战力 − 敌人强度) ÷ 敌人强度
+<span class="hl2">健康区间</span> = <span class="hl">0.05 ≤ 容错率 ≤ 0.30</span>
+  </div>
+  <p class="f-note">容错率 &lt; 5% 玩家进入"绝望区",&gt; 30% 进入"无聊区"。机制波(W5/W10/W15/W20)允许瞬时击穿下限,但必须在 <b>1 波之内</b>回到健康区间。</p>
+
+  <div class="tbl-wrap" style="margin-top:24px">
+    <table>
+      <thead>
+        <tr><th>校验节点</th><th>设计意图</th><th>数值验收标准</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>W3</td><td>教学完成确认</td><td>零升级、任意摆位均可无损通过</td></tr>
+        <tr><td>W5 精英波</td><td>首次机制考验</td><td>至少 1 座克制塔方可稳过;否则漏怪 ≤ 3</td></tr>
+        <tr><td>W10 分流</td><td>空间重规划</td><td>沿用单路布防必漏 10% 以上</td></tr>
+        <tr><td>W15 飞行群</td><td>对空对策验收</td><td>无对空火力时漏怪 ≥ 40%</td></tr>
+        <tr><td>W20 Boss</td><td>终局峰值压力</td><td>满配防线通关时基地剩余血量 ≤ 25%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout red">
+    <b>数值失衡的三个信号:</b>社区出现"唯一解"攻略(策略空间坍缩);速通与新手通关时间差 &gt; 3 倍(容错带过宽);某座塔的选取率 &gt; 60%(成本效率碾压同级)。任一信号出现,优先调塔价而非调怪血——改价格影响的是决策,改血量影响的只是体验。
+  </div>
+</section>
+
+<!-- ============ 07 案例拆解 ============ -->
+<section id="s7">
+  <div class="sec-head">
+    <span class="sec-num">07</span>
+    <h2>经典案例拆解</h2>
+    <span class="en">Case Studies</span>
+  </div>
+  <p class="sec-lead">六款里程碑作品,各自回答了塔防设计的一个根本问题。点击展开查看关键设计决策。</p>
+
+  <details open="">
+    <summary>王国保卫战 Kingdom Rush<span class="frm-tag">HERO SYNERGY · 2011</span></summary>
+    <div class="body">
+      <p style="font-size:13.5px;color:var(--ink-dim);margin:14px 0 6px">回答的问题:<b>接敌阶段零操作怎么办?</b>——加入一个可自由移动的英雄单位,作为"第六座会走的塔"。</p>
+      <ul style="list-style:none;padding-left:0">
+        <li style="font-size:13px;color:var(--ink-dim);padding:5px 0 5px 18px;position:relative">· 兵营拦截 + 箭塔集火,确立"绞肉机"范式:控制创造输出窗口</li>
+        <li style="font-size:13px;color:var(--ink-dim);padding:5px 0 5px 18px;position:relative">· 四级塔二选一分支(游侠/火枪),用互斥升级制造构筑分歧</li>
+        <li style="font-size:13px;color:var(--ink-dim);padding:5px 0 5px 18px;position:relative">· 英雄/铁拳挑战模式复用同一关卡,内容寿命直接 ×3</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>植物大战僵尸 Plants vs. Zombies<span class="frm-tag">ECONOMY RHYTHM · 2009</span></summary>
+    <div class="body">
+      <p style="font-size:13.5px;color:var(--ink-dim);margin:14px 0 6px">回答的问题:<b>如何把经济决策前置到每一秒?</b>——用"阳光掉落"替代金币结算,资源节奏即游戏节奏。</p>
+      <ul style="list-style:none;padding-left:0">
+        <li style="font-size:13px;color:var(--ink-dim);padding:5px 0 5px 18px;position:relative">· 五行车道 = 五条独立单线走廊,空间复杂度降到极致</li>
+        <li style="font-size:13px;color:var(--ink-dim);padding:5px 0 5px 18px;position:relative">· 向日葵 vs 攻击植物:游戏史上最经典的"投资/消费"抉择</li>
+        <li style="font-size:13px;color:var(--ink-dim);padding:5px 0 5px 18px;position:relative">· 僵尸图鉴的解锁顺序,本身就是难度曲线的实体化</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>气球塔防 6 Bloons TD 6<span class="frm-tag">LONG-TERM META · 2018</span></summary>
+    <div class="body">
+      <p style="font-size:13.5px;color:var(--ink-dim);margin:14px 0 6px">回答的问题:<b>如何让一局 20 分钟的玩法支撑数千小时?</b>——24 种塔 × 3 系 × 5 级的升级矩阵 + 局外知识系统。</p>
+      <ul style="list-style:none;padding-left:0">
+        <li style="font-size:13px;color:var(--ink-dim);padding:5px 0 5px 18px;position:relative">· 单局只能点满 3 系中的 2 系,互斥制造重玩性</li>
+        <li style="font-size:13px;color:var(--ink-dim);padding:5px 0 5px 18px;position:relative">· 猴币与知识点把局外养成接入局内数值</li>
+        <li style="font-size:13px;color:var(--ink-dim);padding:5px 0 5px 18px;position:relative">· 合作模式按路径分区,把空间谜题变成社交分工</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>防御阵型 Defense Grid<span class="frm-tag">3D &amp; REWIND · 2008</span></summary>
+    <div class="body">
+      <p style="font-size:13.5px;color:var(--ink-dim);margin:14px 0 6px">回答的问题:<b>3D 自由视角下塔防还能读得懂吗?</b>——用核心搬运机制把"失败"变成"二次拦截机会"。</p>
+      <ul style="list-style:none;padding-left:0">
+        <li style="font-size:13px;color:var(--ink-dim);padding:5px 0 5px 18px;position:relative">· 敌人偷走核心后按原路返回,漏怪不等于扣分</li>
+        <li style="font-size:13px;color:var(--ink-dim);padding:5px 0 5px 18px;position:relative">· 出售 100% 返还,鼓励实验性摆位</li>
+        <li style="font-size:13px;color:var(--ink-dim);padding:5px 0 5px 18px;position:relative">· 回溯功能把"可读的失败"升级为"可撤销的失败"</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>明日方舟 Arknights<span class="frm-tag">TD × GACHA · 2019</span></summary>
+    <div class="body">
+      <p style="font-size:13.5px;color:var(--ink-dim);margin:14px 0 6px">回答的问题:<b>塔防如何与角色养成缝合?</b>——干员即塔、部署费用即经济、撤退再部署即塔位移。</p>
+      <ul style="list-style:none;padding-left:0">
+        <li style="font-size:13px;color:var(--ink-dim);padding:5px 0 5px 18px;position:relative">· "阻挡数"把拦截型塔的价值彻底显性化</li>
+        <li style="font-size:13px;color:var(--ink-dim);padding:5px 0 5px 18px;position:relative">· 技能回转 = 塔的第二条 DPS 曲线,制造操作窗口</li>
+        <li style="font-size:13px;color:var(--ink-dim);padding:5px 0 5px 18px;position:relative">· 高难关卡本质是"部署顺序谜题",数值只是入场券</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>保卫萝卜 Carrot Fantasy<span class="frm-tag">CASUAL TD · 2012</span></summary>
+    <div class="body">
+      <p style="font-size:13.5px;color:var(--ink-dim);margin:14px 0 6px">回答的问题:<b>塔防休闲化该降什么?</b>——不是降数值,而是改反馈与节奏。</p>
+      <ul style="list-style:none;padding-left:0">
+        <li style="font-size:13px;color:var(--ink-dim);padding:5px 0 5px 18px;position:relative">· 萝卜被啃 = 可视化、情绪化的容错血量</li>
+        <li style="font-size:13px;color:var(--ink-dim);padding:5px 0 5px 18px;position:relative">· 道具全清奖励把完美主义变成额外目标</li>
+        <li style="font-size:13px;color:var(--ink-dim);padding:5px 0 5px 18px;position:relative">· 单波压缩到 60–90 秒,精确适配碎片时间</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<!-- ============ 08 设计清单 ============ -->
+<section id="s8">
+  <div class="sec-head">
+    <span class="sec-num">08</span>
+    <h2>设计检查清单</h2>
+    <span class="en">Design Checklist</span>
+  </div>
+  <p class="sec-lead">关卡或原型投放前,用以下三组问题做最终自检。任何一项回答"否",都意味着存在可被玩家感知的设计缺陷。</p>
+
+  <div class="grid g3">
+    <div class="card">
+      <h3><span class="tag">LEVEL</span>关卡投放自检</h3>
+      <ul>
+        <li>路径长度是否支持 <b>≥ 3 种</b>差异化布防策略?</li>
+        <li>是否存在"唯一解"塔位?若有,是否已降低其权重?</li>
+        <li>飞行 / 隐身机制是否提前 <b>3 波</b>给出预告?</li>
+        <li>Boss 机制能否在 <b>10 秒内</b>被新手理解?</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="tag">NUMBERS</span>数值自检</h3>
+      <ul>
+        <li>新塔成本效率是否碾压旧塔 <b>30%</b> 以上?</li>
+        <li>满经济速通与均衡发育的通关差距是否 <b>&lt; 40%</b>?</li>
+        <li>容错率是否全程落在 <b>5%–30%</b> 区间?</li>
+        <li>是否存在成本效率为负的"废塔"?</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="tag">EXPERIENCE</span>体验自检</h3>
+      <ul>
+        <li>前 <b>90 秒</b>内是否出现至少 1 次有效决策?</li>
+        <li>失败后玩家能否在 <b>5 秒内</b>说出原因?</li>
+        <li>是否存在无决策的"垃圾时间"(&gt; 20 秒纯等待)?</li>
+        <li>三星/无损目标是否独立于通关目标成立?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout teal">
+    <b>方法论总结:</b>塔防设计 = 用路径定义空间谜题,用塔与敌人的克制矩阵定义答案集合,用经济系统控制决策节奏,最后用难度曲线把三者缝合为情绪曲线。先验证"谜题是否成立",再验证"数值是否诚实"——顺序不可颠倒。
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div><b>TD DOCTRINE ARCHIVE</b> · 塔防游戏全景研究档案</div>
+  <div>VERSION 2.4 · UPDATED 2026-08 · FOR INTERNAL DESIGN REFERENCE</div>
+</footer>
+
+<script>
+/* 滚动监听:导航高亮 */
+(function(){
+  var links=[].slice.call(document.querySelectorAll('nav a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));}).filter(Boolean);
+  function spy(){
+    var y=window.scrollY+90,cur=0;
+    secs.forEach(function(s,i){if(s.offsetTop<=y)cur=i;});
+    links.forEach(function(a,i){a.classList.toggle('active',i===cur);});
+  }
+  window.addEventListener('scroll',spy,{passive:true});
+  spy();
+})();
+
+/* 入场动画 */
+(function(){
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}
+    });
+  },{threshold:.1});
+  document.querySelectorAll('main section, details, footer').forEach(function(el){
+    el.classList.add('reveal');io.observe(el);
+  });
+})();
+
+/* 难度曲线图:敌方强度 vs 玩家战力 */
+(function(){
+  var cv=document.getElementById('diffChart');
+  if(!cv)return;
+  var FONT='"Noto Sans CJK SC","WenQuanYi Micro Hei","Noto Sans SC",sans-serif';
+  function draw(){
+    var dpr=window.devicePixelRatio||1;
+    var w=cv.clientWidth,h=cv.clientHeight;
+    if(!w||!h)return;
+    cv.width=w*dpr;cv.height=h*dpr;
+    var ctx=cv.getContext('2d');
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,w,h);
+    var pad={l:52,r:18,t:30,b:38},W=20,i;
+    var enemy=[],player=[],pw=80;
+    for(i=1;i<=W;i++){
+      enemy.push(100*Math.pow(1.16,i-1));
+      pw*=1.10;
+      if([4,8,12,16].indexOf(i)>=0)pw*=1.38;
+      player.push(pw);
+    }
+    var maxY=Math.max.apply(null,enemy.concat(player))*1.12;
+    var X=function(i){return pad.l+(w-pad.l-pad.r)*(i-1)/(W-1);};
+    var Y=function(v){return h-pad.b-(h-pad.t-pad.b)*v/maxY;};
+    /* 网格与纵轴刻度 */
+    ctx.strokeStyle='rgba(43,50,39,.9)';ctx.lineWidth=1;
+    ctx.fillStyle='#9aa090';ctx.font='11px '+FONT;ctx.textAlign='right';
+    for(var g=0;g<=4;g++){
+      var v=maxY*g/4,y=Y(v);
+      ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();
+      ctx.fillText(String(Math.round(v)),pad.l-8,y+4);
+    }
+    /* 横轴刻度 */
+    ctx.textAlign='center';
+    [1,5,10,15,20].forEach(function(i){ctx.fillText('W'+i,X(i),h-pad.b+20);});
+    ctx.fillText('波次 →',w-pad.r-18,h-8);
+    ctx.save();ctx.translate(14,pad.t+26);ctx.rotate(-Math.PI/2);
+    ctx.fillText('强度',0,0);ctx.restore();
+    /* 容错带(两线之间) */
+    ctx.beginPath();
+    for(i=1;i<=W;i++){var x=X(i),y=Y(player[i-1]);i===1?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    for(i=W;i>=1;i--){ctx.lineTo(X(i),Y(enemy[i-1]));}
+    ctx.closePath();ctx.fillStyle='rgba(255,178,37,.08)';ctx.fill();
+    /* 曲线 */
+    function line(arr,color){
+      ctx.beginPath();
+      arr.forEach(function(v,idx){var x=X(idx+1),y=Y(v);idx===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+      ctx.strokeStyle=color;ctx.lineWidth=2.5;
+      ctx.shadowColor=color;ctx.shadowBlur=8;ctx.stroke();ctx.shadowBlur=0;
+    }
+    line(enemy,'#ff5d3a');
+    line(player,'#46c9a5');
+    /* 关键校验节点 */
+    ctx.font='11px '+FONT;
+    [[5,'精英波'],[10,'双路分流'],[15,'飞行群'],[20,'BOSS']].forEach(function(pair){
+      var i=pair[0],t=pair[1],x=X(i);
+      ctx.strokeStyle='rgba(255,178,37,.45)';ctx.setLineDash([4,4]);
+      ctx.beginPath();ctx.moveTo(x,pad.t);ctx.lineTo(x,h-pad.b);ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle='#ffb225';ctx.fillText(t,x,pad.t-8);
+    });
+  }
+  draw();
+  window.addEventListener('resize',draw);
+})();
+</script>
+
+
+</body></html>
