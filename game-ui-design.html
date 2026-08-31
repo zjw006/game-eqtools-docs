@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UI 美术设计参考档案 · UI Art Design Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0e0c;--bg2:#111411;--panel:#151814;--panel2:#1a1e18;--line:#2b3227;
+  --ink:#e9e5d6;--ink-dim:#9aa090;--amber:#ffb225;--amber-soft:#ffcf6b;
+  --red:#ff5d3a;--teal:#46c9a5;--blue:#5ea8d8;--violet:#b48ce8;
+  --serif:'Noto Serif SC',serif;--sans:'Noto Sans SC',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.85;
+  background-image:linear-gradient(rgba(70,201,165,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(70,201,165,.035) 1px,transparent 1px);
+  background-size:44px 44px;overflow-x:hidden;
+}
+::selection{background:var(--amber);color:#111}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--line);border-radius:5px}
+::-webkit-scrollbar-thumb:hover{background:var(--amber)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(12,14,12,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:4px;padding:0 28px;height:56px;overflow-x:auto}
+nav::-webkit-scrollbar{height:0}
+nav .brand{font-family:var(--serif);font-weight:900;font-size:15px;color:var(--amber);white-space:nowrap;margin-right:18px;display:flex;align-items:center;gap:8px}
+nav .brand::before{content:"";width:10px;height:10px;background:var(--amber);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+nav a{color:var(--ink-dim);text-decoration:none;font-size:12.5px;font-weight:400;padding:6px 11px;white-space:nowrap;border-radius:3px;transition:all .25s;letter-spacing:.04em}
+nav a:hover{color:var(--amber);background:rgba(255,178,37,.08)}
+
+header{min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding:130px 6vw 80px;position:relative}
+header .hero-img{position:absolute;inset:0;z-index:0;opacity:.35;background:url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/377160/ss_910437ac708aed7c028f6e43a6224c633d086b0a.1920x1080.jpg?t=1786648137') center/cover no-repeat;-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 25%,#000 70%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 25%,#000 70%,transparent 100%)}
+header .hero-veil{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 80% 70% at 30% 55%,rgba(12,14,12,.4),var(--bg) 90%)}
+header .inner{position:relative;z-index:2;max-width:1200px}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.35em;color:var(--teal);text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:14px}
+.kicker::before{content:"";width:42px;height:1px;background:var(--teal)}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(40px,6.5vw,86px);line-height:1.18;letter-spacing:.02em}
+h1 em{font-style:normal;color:var(--amber);text-shadow:0 0 40px rgba(255,178,37,.35)}
+header .sub{margin-top:28px;max-width:820px;color:var(--ink-dim);font-size:clamp(14px,1.4vw,17px)}
+header .sub b{color:var(--ink);font-weight:500}
+header .meta-row{margin-top:46px;display:flex;flex-wrap:wrap;gap:14px}
+header .meta-chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;border:1px solid var(--line);padding:8px 16px;border-radius:2px;color:var(--ink-dim);background:rgba(21,24,20,.7)}
+header .meta-chip b{color:var(--amber);font-weight:600}
+
+main{max-width:1280px;margin:0 auto;padding:0 5vw 120px}
+section{margin-top:110px;scroll-margin-top:80px}
+.sec-head{display:flex;align-items:baseline;gap:20px;margin-bottom:14px;border-bottom:1px solid var(--line);padding-bottom:18px;flex-wrap:wrap}
+.sec-num{font-family:var(--mono);font-size:13px;color:var(--red);letter-spacing:.2em}
+.sec-head h2{font-family:var(--serif);font-weight:900;font-size:clamp(26px,3.4vw,44px);line-height:1.25}
+.sec-head .en{font-family:var(--mono);font-size:11px;color:var(--ink-dim);letter-spacing:.3em;text-transform:uppercase;margin-left:auto}
+.sec-lead{color:var(--ink-dim);max-width:860px;margin-bottom:38px;font-size:15px}
+.sec-lead b{color:var(--ink);font-weight:500}
+
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.card{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:6px;padding:26px 24px;position:relative;overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s}
+.card:hover{transform:translateY(-4px);border-color:rgba(255,178,37,.45);box-shadow:0 14px 40px rgba(0,0,0,.4)}
+.card::before{content:"";position:absolute;top:0;left:0;width:34px;height:2px;background:var(--amber)}
+.card h3{font-family:var(--serif);font-weight:700;font-size:19px;margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card .tag{font-family:var(--mono);font-size:10px;letter-spacing:.15em;color:var(--teal);border:1px solid rgba(70,201,165,.4);padding:2px 8px;border-radius:2px;white-space:nowrap}
+.card p{color:var(--ink-dim);font-size:13.5px;margin-top:8px}
+.card p b{color:var(--ink);font-weight:500}
+.card .cases{margin-top:10px;font-size:12px;font-family:var(--mono);color:var(--amber-soft);letter-spacing:.03em}
+.card .glyph{display:block;margin:2px 0 14px;color:var(--amber)}
+.mini{margin-top:14px;display:grid;gap:8px}
+.mini .row{display:flex;gap:10px;font-size:12.5px;color:var(--ink-dim);align-items:baseline}
+.mini .row::before{content:"";width:6px;height:6px;flex:none;background:var(--teal);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);transform:translateY(-1px)}
+.mini .row b{color:var(--ink);font-weight:500}
+
+/* UI 预览框 */
+.ui-preview{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:18px 16px;margin:12px 0;position:relative;overflow:hidden;min-height:100px}
+.ui-preview .scanline{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0,transparent 2px,rgba(0,0,0,.15) 2px,rgba(0,0,0,.15) 3px);pointer-events:none;z-index:1}
+.ui-preview .crt-glow{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(255,178,37,.04),transparent 70%);pointer-events:none;z-index:0}
+.ui-preview .label{font-family:var(--mono);font-size:9px;letter-spacing:.2em;color:var(--ink-dim);opacity:.5;text-transform:uppercase;margin-bottom:8px;position:relative;z-index:2}
+.ui-preview .mock{position:relative;z-index:2;font-family:var(--mono);font-size:11px;line-height:1.6}
+.ui-preview .mock .line{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.ui-preview .mock .cursor{display:inline-block;width:7px;height:13px;background:var(--amber);animation:blink 1s steps(1) infinite;vertical-align:middle}
+@keyframes blink{50%{opacity:0}}
+
+/* 色板预览 */
+.palette{display:flex;gap:0;margin:12px 0;border-radius:4px;overflow:hidden;height:32px}
+.palette .sw{flex:1;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.7);text-shadow:0 1px 2px rgba(0,0,0,.6)}
+
+/* 映射标签 */
+.map-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--amber);border:1px solid rgba(255,178,37,.35);padding:4px 10px;border-radius:2px;margin-top:12px;background:rgba(255,178,37,.06)}
+.map-tag::before{content:"→";font-size:13px}
+
+/* 章节横幅 */
+.sec-banner{width:100%;height:clamp(120px,18vw,220px);object-fit:cover;border-radius:6px;margin:0 0 28px;border:1px solid var(--line);display:block;filter:saturate(.85) brightness(.82)}
+/* 卡片配图 */
+.card-img{width:100%;height:clamp(100px,14vw,160px);object-fit:cover;border-radius:4px;margin:12px 0 0;border:1px solid var(--line);display:block;filter:saturate(.88) brightness(.85)}
+@media(max-width:768px){.sec-banner{height:130px}.card-img{height:110px}}
+
+.callout{border-left:3px solid var(--amber);background:rgba(255,178,37,.06);padding:18px 22px;margin:26px 0;border-radius:0 6px 6px 0;font-size:14px;color:var(--ink)}
+.callout b{color:var(--amber);font-weight:600}
+.callout.teal{border-color:var(--teal);background:rgba(70,201,165,.06)}
+.callout.teal b{color:var(--teal)}
+.callout.red{border-color:var(--red);background:rgba(255,93,58,.06)}
+.callout.red b{color:var(--red)}
+
+h3.sub{font-family:var(--serif);font-weight:700;font-size:clamp(19px,2vw,24px);margin:54px 0 18px;display:flex;align-items:center;gap:12px}
+h3.sub::before{content:"";width:22px;height:2px;background:var(--teal)}
+h3.sub .en{font-family:var(--mono);font-size:10.5px;color:var(--ink-dim);letter-spacing:.25em;font-weight:400}
+
+/* 汇总对比表 */
+.table-wrap{overflow-x:auto;overflow-y:auto;max-height:700px;border:1px solid var(--line);border-radius:6px;background:linear-gradient(160deg,var(--panel),var(--panel2))}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:820px}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--amber);text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);background:rgba(255,178,37,.05);white-space:nowrap;position:sticky;top:0;z-index:3}
+td{padding:13px 16px;border-bottom:1px solid rgba(43,50,39,.6);color:var(--ink-dim);vertical-align:top}
+td:first-child{color:var(--ink);font-weight:500;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td .good{color:var(--teal)}
+td .bad{color:var(--red)}
+td .hl{color:var(--amber);font-weight:500}
+
+footer{padding:50px 5vw 70px;border-top:1px solid var(--line);background:var(--bg2)}
+footer .f-brand{font-family:var(--serif);font-weight:900;font-size:18px;color:var(--amber);margin-bottom:6px}
+footer .f-note{font-size:13px;color:var(--ink-dim);margin-bottom:30px;max-width:680px}
+footer .sources h2{font-family:var(--mono);font-size:11px;letter-spacing:.3em;color:var(--amber);margin-bottom:14px;text-transform:uppercase}
+footer .sources ol{list-style:decimal inside;font-family:var(--sans);font-size:.85rem;color:var(--ink-dim);display:grid;gap:.5rem}
+footer .sources li{line-height:1.6;word-break:break-all}
+footer .sources .src-title{color:var(--ink);font-weight:400}
+footer .sources .src-url{color:var(--blue);font-size:.82rem;text-decoration:none;word-break:break-all}
+footer .sources .src-url:hover{color:var(--amber)}
+sup a{color:var(--amber);text-decoration:none;font-size:.72em;font-weight:600}
+sup a:hover{color:var(--amber-soft)}
+
+/* ====== 平板适配 ====== */
+@media(max-width:1024px){
+  nav{padding:0 16px;gap:2px}
+  nav .brand{font-size:14px;margin-right:12px}
+  nav a{font-size:12px;padding:6px 9px}
+  main{padding:0 4vw 100px}
+  section{margin-top:90px}
+  header{padding:120px 5vw 70px}
+  header .meta-row{gap:10px}
+  header .meta-chip{font-size:11px;padding:7px 13px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .g4{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+}
+
+/* ====== 手机适配 ====== */
+@media(max-width:768px){
+  nav{padding:0 10px;gap:1px;height:52px}
+  nav .brand{font-size:13px;margin-right:8px}
+  nav .brand::before{width:8px;height:8px}
+  nav a{font-size:11.5px;padding:5px 8px}
+  header{min-height:88vh;padding:110px 5vw 60px}
+  header .kicker{font-size:11px;letter-spacing:.25em;gap:10px}
+  header .kicker::before{width:30px}
+  header .sub{margin-top:22px}
+  header .meta-row{margin-top:36px;gap:8px}
+  header .meta-chip{font-size:10.5px;padding:6px 11px;letter-spacing:.05em}
+  main{padding:0 4vw 80px}
+  section{margin-top:75px;scroll-margin-top:64px}
+  .sec-head{gap:12px;padding-bottom:14px}
+  .sec-num{font-size:12px}
+  .sec-head h2{font-size:clamp(22px,5vw,32px)}
+  .sec-head .en{font-size:10px;letter-spacing:.2em}
+  .sec-lead{font-size:14px;margin-bottom:28px}
+  .grid{gap:14px}
+  .g2,.g3{grid-template-columns:1fr}
+  .g4{grid-template-columns:1fr 1fr}
+  .card{padding:22px 20px}
+  .card h3{font-size:17px;gap:8px}
+  .card .tag{font-size:9px;padding:2px 6px}
+  .card p{font-size:13px}
+  .card .glyph{width:140px;height:42px}
+  .mini .row{font-size:12px}
+  .table-wrap{max-height:480px}
+  table{font-size:12.5px;min-width:640px}
+  th{padding:11px 13px;font-size:10px}
+  td{padding:11px 13px}
+  .callout{padding:15px 18px;font-size:13px;margin:22px 0}
+  h3.sub{font-size:clamp(17px,4vw,21px);margin:42px 0 14px}
+  h3.sub::before{width:18px}
+  h3.sub .en{font-size:9.5px}
+  footer{padding:45px 4vw 60px}
+  footer .f-brand{font-size:16px}
+  footer .f-note{font-size:12px}
+  footer .sources ol{font-size:.82rem}
+  footer .sources li{margin-bottom:.4rem}
+  sup a{font-size:.7em}
+}
+
+/* ====== 小屏手机适配 ====== */
+@media(max-width:480px){
+  nav{height:48px;padding:0 8px}
+  nav .brand{font-size:12px;margin-right:6px}
+  nav .brand::before{width:7px;height:7px}
+  nav a{font-size:11px;padding:4px 7px;letter-spacing:.02em}
+  header{min-height:85vh;padding:100px 5vw 50px}
+  header .kicker{font-size:10px;letter-spacing:.2em;gap:8px}
+  header .kicker::before{width:24px}
+  header .sub{margin-top:18px;font-size:13.5px;line-height:1.7}
+  header .meta-row{margin-top:30px;gap:7px}
+  header .meta-chip{font-size:10px;padding:5px 9px;letter-spacing:.03em}
+  main{padding:0 3.5vw 60px}
+  section{margin-top:60px}
+  .sec-head{gap:8px;padding-bottom:12px}
+  .sec-num{font-size:11px}
+  .sec-head h2{font-size:clamp(20px,5.5vw,28px)}
+  .sec-head .en{display:none}
+  .sec-lead{font-size:13.5px;margin-bottom:22px}
+  .grid{gap:12px}
+  .g4{grid-template-columns:1fr}
+  .card{padding:18px 16px}
+  .card h3{font-size:16px;flex-wrap:wrap;gap:6px}
+  .card .tag{font-size:8.5px;padding:1px 5px}
+  .card p{font-size:12.5px}
+  .card .glyph{width:120px;height:36px;margin-bottom:10px}
+  .mini{margin-top:10px;gap:6px}
+  .mini .row{font-size:11.5px;gap:8px}
+  .table-wrap{max-height:380px;border-radius:4px}
+  table{font-size:12px;min-width:560px}
+  th{padding:9px 11px;font-size:9.5px;letter-spacing:.1em}
+  td{padding:9px 11px}
+  .callout{padding:13px 15px;font-size:12.5px;margin:18px 0;border-radius:0 4px 4px 0}
+  h3.sub{font-size:16px;margin:36px 0 12px;gap:8px}
+  h3.sub::before{width:16px}
+  footer{padding:35px 4vw 45px}
+  footer .f-brand{font-size:14px}
+  footer .f-note{font-size:11.5px;margin-bottom:24px}
+  footer .sources h2{font-size:10px;letter-spacing:.2em;margin-bottom:12px}
+  footer .sources ol{font-size:.78rem;padding-left:1rem}
+  footer .sources li{margin-bottom:.35rem}
+  footer .sources .src-url{font-size:.75rem}
+  sup a{font-size:.68em}
+}
+
+/* ====== 触控优化 ====== */
+@media(hover:none)and(pointer:coarse){
+  .card:hover{transform:none;box-shadow:none}
+  nav a:hover{background:none;color:var(--ink-dim)}
+  .card{transition:border-color .3s}
+  .card:active{border-color:rgba(255,178,37,.45)}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand">UI ART ARCHIVE</span>
+  <a href="#s1">废土生存系</a>
+  <a href="#s2">赛博科幻系</a>
+  <a href="#s3">复古终端系</a>
+  <a href="#s4">独立策略系</a>
+  <a href="#s5">汇总矩阵</a>
+  <a href="#s6">检查清单</a>
+</nav>
+
+<header>
+  <div class="hero-img"></div>
+  <div class="hero-veil"></div>
+  <div class="inner">
+    <div class="kicker">GAME UI DESIGN REFERENCE · 16 GAMES × 4 PARADIGMS</div>
+    <h1>UI <em>美术设计</em><br>参考档案</h1>
+    <p class="sub">从<b>废土生存</b>的锈蚀终端到<b>赛博科幻</b>的全息投影，从<b>复古终端</b>的磷光扫描线到<b>独立策略</b>的极简网格——本档案调研全网 16 款标志性游戏的 UI 美术设计，萃取其视觉语言、交互范式与氛围构建手法，映射至塔防游戏的<b>商店、战斗 HUD、图鉴、成就、关卡选择</b>五大界面模块。</p>
+    <div class="meta-row">
+      <div class="meta-chip">参考游戏 <b>16</b> 款</div>
+      <div class="meta-chip">设计范式 <b>4</b> 大系</div>
+      <div class="meta-chip">界面映射 <b>5</b> 模块</div>
+      <div class="meta-chip">全网调研 <b>24</b> 信源</div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ S1 废土生存系 ============ -->
+<section id="s1">
+  <div class="sec-head">
+    <span class="sec-num">SEC.01</span>
+    <h2>废土生存系</h2>
+    <span class="en">Post-Apocalyptic Survival</span>
+  </div>
+  <p class="sec-lead">四款游戏共享一种<b>"文明废墟中拾荒"</b>的视觉气质：锈蚀金属、手写标记、磷光绿屏、胶带修补。它们的 UI 不是被"设计"出来的，而是被"使用过的"——每个界面都带着磨损与岁月，让玩家在打开菜单的瞬间就感受到物资匮乏与生存压力。<b>对应界面：商店卡片边框底色、战斗沉浸 HUD、主界面机械按钮、图鉴磨损做旧。</b></p>
+      <img class="sec-banner" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/377160/ss_f649b8e57749f380cca225db5074edbb1e06d7f5.1920x1080.jpg?t=1786648137" alt="废土生存系 UI 设计参考">
+
+  <div class="grid g2">
+
+    <!-- Fallout -->
+    <div class="card">
+      <svg class="glyph" width="200" height="50" viewBox="0 0 200 50" fill="none">
+        <rect x="4" y="6" width="192" height="38" rx="3" fill="#0a0c08" stroke="#2b3227" stroke-width="1.5"/>
+        <rect x="4" y="6" width="192" height="38" rx="3" fill="url(#fallout-scan)" opacity=".15"/>
+        <defs><pattern id="fallout-scan" width="1" height="3" patternUnits="userSpaceOnUse"><rect width="1" height="1" fill="#30ff50"/></pattern></defs>
+        <text x="14" y="22" font-family="monospace" font-size="8" fill="#30ff50">> VAULT-13 OS v2.1.4</text>
+        <text x="14" y="34" font-family="monospace" font-size="7" fill="#30ff50" opacity=".6">[HP]██████░░ 78%</text>
+        <rect x="120" y="28" width="30" height="6" fill="#1a1e18" stroke="#30ff50" stroke-width=".5"/>
+        <rect x="120" y="28" width="22" height="6" fill="#30ff50" opacity=".5"/>
+        <text x="156" y="34" font-family="monospace" font-size="7" fill="#30ff50" opacity=".6">RAD</text>
+        <circle cx="180" cy="25" r="3" fill="#ffb225"/>
+        <rect x="10" y="2" width="4" height="4" fill="#ffb225" opacity=".3"/>
+        <rect x="186" y="42" width="4" height="4" fill="#ffb225" opacity=".3"/>
+      </svg>
+      <h3>辐射系列 <span class="tag">PIP-BOY CRT</span></h3>
+      <p><b>核心语言：磷光绿 CRT 终端 + 机构黄双色调。</b>Pip-Boy 3000 是腕戴式信息设备，屏幕以阴极射线管的磷光绿为主色（#30FF50），辅以 Vault-Tec 机构黄（#FFB000）作为强调色。等宽字体、扫描线叠层、网格边框将信息"物理容器化"——每个面板都有硬边框和可见角接，信息像档案柜里的实体卡片一样被装入方框。表面不做"干净"处理——锈迹、污渍、划痕是系统性的"受控腐蚀"层，与乐观的机构黄共同构成"封存的核时代乐观主义"美学。</p>
+      <img class="card-img" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/377160/ss_f7861bd71e6c0c218d8ff69fb1c626aec0d187cf.1920x1080.jpg?t=1786648137" alt="辐射 Pip-Boy UI">
+      <div class="ui-preview">
+        <div class="crt-glow"></div>
+        <div class="scanline"></div>
+        <div class="label">PIP-BOY 3000 — STAT / INV / MAP / RADIO</div>
+        <div class="mock" style="color:#30ff50">
+          <div class="line">&gt; <b style="color:#ffb225">VAULT DWELLER</b> // HP 78/100</div>
+          <div class="line">&gt; RAD: 348 // STIMPAK x2</div>
+          <div class="line">&gt; <span style="color:#ffb225">▌</span> INVENTORY: 12/50 lbs</div>
+          <div class="line" style="opacity:.6">&gt; ENCUMBERED — AP DRAINED</div>
+        </div>
+      </div>
+      <div class="palette">
+        <div class="sw" style="background:#30ff50">#30FF50</div>
+        <div class="sw" style="background:#ffb000">#FFB000</div>
+        <div class="sw" style="background:#0a0c08">#0A0C08</div>
+        <div class="sw" style="background:#1a1e18">#1A1E18</div>
+        <div class="sw" style="background:#8b6914">#RUST</div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>字体：</b>等宽字体 + 粗壮平板衬线（标题）</div>
+        <div class="row"><b>质感：</b>CRT 扫描线、磷光余晖、锈蚀边框、铆钉点缀</div>
+        <div class="row"><b>布局：</b>网格化嵌套边框，信息容器化</div>
+        <div class="row"><b>色彩：</b>磷光绿主 + 机构黄强调 + 近黑底</div>
+      </div>
+      <div class="map-tag">商店、成就、关卡选择的卡片边框和底色</div>
+      <div class="cases">Fallout 1–4 · Pip-Boy 3000/Mark IV<sup><a href="#src-1">[1]</a></sup><sup><a href="#src-2">[2]</a></sup></div>
+    </div>
+
+    <!-- Metro -->
+    <div class="card">
+      <svg class="glyph" width="200" height="50" viewBox="0 0 200 50" fill="none">
+        <ellipse cx="100" cy="25" rx="90" ry="22" fill="none" stroke="#2b3227" stroke-width="2"/>
+        <ellipse cx="100" cy="25" rx="82" ry="16" fill="rgba(255,178,37,.04)" stroke="#3a3d33" stroke-width="1"/>
+        <path d="M20 25 Q40 18 60 22 T100 20 T140 24 T180 22" stroke="#ffb225" stroke-width="1" fill="none" opacity=".4"/>
+        <circle cx="100" cy="25" r="3" fill="#ff5d3a" opacity=".7"/>
+        <text x="30" y="44" font-family="monospace" font-size="6" fill="#9aa090" opacity=".5">FILTER 12:34</text>
+        <text x="140" y="44" font-family="monospace" font-size="6" fill="#9aa090" opacity=".5">MASK OK</text>
+        <line x1="14" y1="25" x2="186" y2="25" stroke="#1a1e18" stroke-width=".5" opacity=".3"/>
+      </svg>
+      <h3>地铁系列 <span class="tag">GAS MASK POV</span></h3>
+      <p><b>核心语言：防毒面具视角内的沉浸式 diegetic HUD。</b>地铁系列将所有 UI 信息嵌入角色佩戴的防毒面具圆弧内——计时器、过滤器状态、弹药数都贴合在面具镜片的物理曲面上。镜片会因呼吸起雾、因战斗破裂，玩家需要手动擦拭。手电筒照明是交互的核心：光锥扫过黑暗时才显出可读信息，黑暗中 UI 也在暗处。弹药数贴合在面具的物理弧面上，背包查看需要低头"看向"角色胸前——所有交互都是 diegetic（叙事内嵌）的，UI 不叠加于画面之上，而是存在于角色的物理身体上。</p>
+      <img class="card-img" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/412020/ss_f0297eacbfb4266f311a8cb4137e4ef8b7cdd00b.1920x1080.jpg?t=1750772804" alt="地铁 防毒面具 HUD">
+      <div class="ui-preview">
+        <div class="crt-glow"></div>
+        <div class="scanline"></div>
+        <div class="label">GAS MASK — FILTER / AMMO / COMPASS</div>
+        <div class="mock" style="color:#ffb225;opacity:.8">
+          <div class="line" style="justify-content:space-between"><span style="color:#ff5d3a">▲ FILTER 02:17</span><span>5.45×39</span></div>
+          <div class="line" style="justify-content:center;opacity:.4">· · · · · ·</div>
+          <div class="line" style="justify-content:space-between;opacity:.6"><span>N</span><span style="color:#46c9a5">→</span><span>NE</span></div>
+          <div style="margin-top:6px;font-size:9px;color:#ff5d3a;opacity:.5;text-align:center">[ 镜片裂痕 — 可擦拭 ]</div>
+        </div>
+      </div>
+      <div class="palette">
+        <div class="sw" style="background:#ffb225">#FFB225</div>
+        <div class="sw" style="background:#ff5d3a">#FF5D3A</div>
+        <div class="sw" style="background:#0a0c08">#0A0C08</div>
+        <div class="sw" style="background:#2a2820">#DUST</div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>视角：</b>第一人称面具内，UI 贴合圆弧曲面</div>
+        <div class="row"><b>交互：</b>手动擦拭镜片、手电筒照明式信息读取</div>
+        <div class="row"><b>质感：</b>呼吸雾气、裂纹玻璃、破旧手写</div>
+        <div class="row"><b>色彩：</b>琥珀黄暗光 + 警示红 + 近黑</div>
+      </div>
+      <div class="map-tag">战斗界面的沉浸感 HUD 设计</div>
+      <div class="cases">Metro 2033 / Last Light / Exodus<sup><a href="#src-3">[3]</a></sup><sup><a href="#src-4">[4]</a></sup></div>
+    </div>
+
+    <!-- STALKER -->
+    <div class="card">
+      <svg class="glyph" width="200" height="50" viewBox="0 0 200 50" fill="none">
+        <rect x="4" y="4" width="192" height="42" rx="0" fill="#151814" stroke="#3a3d33" stroke-width="1.5"/>
+        <rect x="4" y="4" width="192" height="42" rx="0" fill="url(#stal-rust)" opacity=".08"/>
+        <defs><pattern id="stal-rust" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="2" height="2" fill="#8b6914" opacity=".3"/></pattern></defs>
+        <text x="14" y="18" font-family="monospace" font-size="7" fill="#9aa090" opacity=".7">PDA v3.2 // ЗОНА</text>
+        <rect x="14" y="22" width="60" height="3" fill="#2b3227"/>
+        <rect x="14" y="22" width="40" height="3" fill="#46c9a5" opacity=".5"/>
+        <text x="80" y="25" font-family="monospace" font-size="6" fill="#9aa090" opacity=".5">RAD 0.42</text>
+        <text x="14" y="38" font-family="monospace" font-size="6" fill="#ff5d3a" opacity=".6">⚠ АНОМАЛИЯ</text>
+        <text x="90" y="38" font-family="monospace" font-size="6" fill="#9aa090" opacity=".5">ART: ◆</text>
+        <circle cx="160" cy="25" r="14" fill="none" stroke="#2b3227" stroke-width="1"/>
+        <circle cx="160" cy="25" r="8" fill="none" stroke="#3a3d33" stroke-width=".8"/>
+        <circle cx="160" cy="25" r="2" fill="#ffb225" opacity=".5"/>
+      </svg>
+      <h3>潜行者 <span class="tag">PDA INDUSTRIAL</span></h3>
+      <p><b>核心语言：苏式工业风 PDA + 粗糙金属面板。</b>潜行者的 PDA 是变异区里最重要的信息终端：俄文乱码装饰、磁带录音机质感、粗糙金属面板与磨损按钮。异常探测器的脉冲圈在黑暗中一圈圈扩散，势力声望用苏式机构简洁列表呈现。PDA 的界面总带着"随时可能故障"的不稳定感。势力声望用简洁列表呈现，日志条目以磁带录音质感播放，地图以粗糙等高线与手绘标注呈现——整个 PDA 像"从废墟里捡回来的"，而非"出厂全新的"。</p>
+      <img class="card-img" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4500/0000002182.1920x1080.jpg?t=1747756056" alt="潜行者 PDA 界面">
+      <div class="ui-preview">
+        <div class="crt-glow"></div>
+        <div class="scanline"></div>
+        <div class="label">PDA — CONTACTS / MAP / LOG / FACTIONS</div>
+        <div class="mock" style="color:#9aa090">
+          <div class="line" style="color:#46c9a5">▶ ЗОНА — CORDON</div>
+          <div class="line" style="opacity:.6">[LONERS] Friendly ●●●○○</div>
+          <div class="line" style="opacity:.6">[DUTY] Neutral ●●○○○</div>
+          <div class="line" style="color:#ff5d3a">⚠ ANOMALY DETECTED — 40m NE</div>
+          <div class="line" style="opacity:.4">▌ LAST TRANSMISSION: ...брях... по... силён...</div>
+        </div>
+      </div>
+      <div class="palette">
+        <div class="sw" style="background:#46c9a5">#46C9A5</div>
+        <div class="sw" style="background:#9aa090">#9AA090</div>
+        <div class="sw" style="background:#151814">#151814</div>
+        <div class="sw" style="background:#3a3d33">#3A3D33</div>
+        <div class="sw" style="background:#8b6914">#RUST</div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>字体：</b>俄文西里尔装饰 + 等宽英文字符</div>
+        <div class="row"><b>质感：</b>粗糙金属面板、磁带质感、信号干扰</div>
+        <div class="row"><b>布局：</b>列表式信息 + 雷达圈异常探测</div>
+        <div class="row"><b>色彩：</b>暗灰绿 + 铁锈棕 + 警示红</div>
+      </div>
+      <div class="map-tag">主界面的机械按钮和背景氛围</div>
+      <div class="cases">STALKER SOC / CS / CoP<sup><a href="#src-5">[5]</a></sup></div>
+    </div>
+
+    <!-- The Last of Us -->
+    <div class="card">
+      <svg class="glyph" width="200" height="50" viewBox="0 0 200 50" fill="none">
+        <rect x="30" y="8" width="140" height="34" rx="2" fill="#151814" stroke="#3a3d33" stroke-width="1"/>
+        <path d="M30 8 L30 42" stroke="#8b6914" stroke-width="2" opacity=".4"/>
+        <path d="M34 42 L36 42 M40 42 L44 42" stroke="#8b6914" stroke-width="1" opacity=".5"/>
+        <text x="42" y="20" font-family="sans-serif" font-size="7" fill="#e9e5d6" opacity=".8">CRAFTING</text>
+        <rect x="42" y="24" width="20" height="12" fill="none" stroke="#e9e5d6" stroke-width=".8" opacity=".4"/>
+        <line x1="52" y1="24" x2="52" y2="36" stroke="#e9e5d6" stroke-width=".5" opacity=".3"/>
+        <text x="70" y="28" font-family="sans-serif" font-size="6" fill="#9aa090">→ BLADE + BINDING</text>
+        <text x="70" y="36" font-family="sans-serif" font-size="6" fill="#9aa090" opacity=".5">RAG ×2 / BLADE ×1</text>
+        <circle cx="150" cy="30" r="3" fill="none" stroke="#e9e5d6" stroke-width="1" opacity=".5"/>
+      </svg>
+      <h3>最后生还者 <span class="tag">HAND-DRAWN SURVIVAL</span></h3>
+      <p><b>核心语言：手写涂鸦 + 胶带修补 + 极简克制 HUD。</b>顽皮狗的 UI 哲学是"少即多"——步行时 HUD 几乎完全消失，可交互物品仅以一条白色细线圈标示。制作菜单的素材与成品分列两栏，当前物品高亮为白底灰透明，克制到极致。HUD 圆形生命条贴边放置，不干扰画面中心。UI 的每个元素都像"用胶带临时粘上去的"，带着物资匮乏的真实手感。Part II 进一步极简化：圆形生命条更细、更贴边，制作菜单更克制—— Naughty Dog 的设计哲学是"UI 越少，沉浸越深"。</p>
+      <img class="card-img" src="https://cdn.akamai.steamstatic.com/steam/apps/1888930/ss_c2853eee7ca824c42e008e83f3f45ad42d9e8547.1920x1080.jpg?t=1697567304" alt="最后生还者 手写 UI">
+      <div class="ui-preview">
+        <div class="crt-glow"></div>
+        <div class="scanline"></div>
+        <div class="label">CRAFTING — MINIMAL & SURVIVAL</div>
+        <div class="mock" style="color:#e9e5d6">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="opacity:.4">RESOURCES</span><span style="opacity:.4">→</span><span>CRAFT</span>
+          </div>
+          <div style="display:flex;gap:8px;font-size:10px;opacity:.6">
+            <span>RAG ×3</span><span style="color:#e9e5d6;opacity:1">BLADE ×1</span><span>ALCOHOL ×1</span>
+          </div>
+          <div style="margin-top:6px;font-size:10px;color:#46c9a5">▶ HEALTH KIT [READY]</div>
+        </div>
+      </div>
+      <div class="palette">
+        <div class="sw" style="background:#e9e5d6">#E9E5D6</div>
+        <div class="sw" style="background:#9aa090">#9AA090</div>
+        <div class="sw" style="background:#151814">#151814</div>
+        <div class="sw" style="background:#8b6914">#TAPE</div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>理念：</b>HUD 极简克制，不干扰沉浸</div>
+        <div class="row"><b>质感：</b>手写涂鸦、胶带修补、磨损做旧</div>
+        <div class="row"><b>布局：</b>素材/成品双栏，高亮当前选择</div>
+        <div class="row"><b>色彩：</b>白 + 灰 + 暗棕，低饱和</div>
+      </div>
+      <div class="map-tag">图鉴卡片的磨损做旧细节</div>
+      <div class="cases">The Last of Us Part I & II<sup><a href="#src-6">[6]</a></sup><sup><a href="#src-7">[7]</a></sup></div>
+    </div>
+
+  </div>
+
+  <div class="callout teal">
+    <b>废土系共性：</b>四款游戏都将 UI 视为<b>世界观的一部分</b>而非叠加层——Pip-Boy 是角色佩戴的实体设备，防毒面具是玩家眼前的物理镜片，PDA 是变异区里的故障终端，制作菜单是末日幸存者的临时工作台。UI 的磨损、锈蚀、手写痕迹不是装饰，而是叙事。核心配色围绕<b>磷光绿/琥珀黄/铁锈棕/近黑</b>展开，低饱和度营造"使用过的"真实感。
+  </div>
+</section>
+
+<!-- ============ S2 赛博科幻系 ============ -->
+<section id="s2">
+  <div class="sec-head">
+    <span class="sec-num">SEC.02</span>
+    <h2>赛博科幻系</h2>
+    <span class="en">Cyberpunk Sci-Fi</span>
+  </div>
+  <p class="sec-lead">四款游戏代表<b>"技术渗透肉体"</b>的视觉谱系：全息投影边框、霓虹配色、人体扫描、神经可视化。它们的 UI 不是屏幕上的层，而是空间中的光——浮空、故障、扫描、入侵，每帧都在暗示"你的身体已被数据化"。<b>对应界面：战斗全息 HUD、商店终端质感、关卡数据面板、图鉴 3D 扫描展示。</b></p>
+      <img class="sec-banner" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/ss_2f649b68d579bf87011487d29bc4ccbfdd97d34f.1920x1080.jpg?t=1784714077" alt="赛博科幻系 UI 设计参考">
+
+  <div class="grid g2">
+
+    <!-- Cyberpunk 2077 -->
+    <div class="card">
+      <svg class="glyph" width="200" height="50" viewBox="0 0 200 50" fill="none">
+        <rect x="4" y="4" width="192" height="42" rx="0" fill="#0c0e0c" stroke="#ff003e" stroke-width="1" opacity=".8"/>
+        <rect x="4" y="4" width="192" height="42" rx="0" fill="url(#cp2077-glitch)" opacity=".06"/>
+        <defs><pattern id="cp2077-glitch" width="3" height="2" patternUnits="userSpaceOnUse"><rect width="1" height="1" fill="#00f0ff"/><rect x="2" width="1" height="1" fill="#ff003e"/></pattern></defs>
+        <text x="14" y="18" font-family="monospace" font-size="7" fill="#00f0ff" opacity=".8">SHARD // ENCRYPTED</text>
+        <rect x="14" y="22" width="50" height="3" fill="#1a1e18" stroke="#ff003e" stroke-width=".5"/>
+        <rect x="14" y="22" width="35" height="3" fill="#ff003e" opacity=".6"/>
+        <text x="70" y="25" font-family="monospace" font-size="6" fill="#00f0ff" opacity=".6">ICE: RED</text>
+        <text x="14" y="38" font-family="monospace" font-size="6" fill="#ff003e" opacity=".5">⚠ DAEMON DETECTED</text>
+        <polygon points="150,8 160,8 155,14" fill="#00f0ff" opacity=".6"/>
+        <polygon points="165,35 175,35 170,42" fill="#ff003e" opacity=".4"/>
+      </svg>
+      <h3>赛博朋克 2077 <span class="tag">HOLO GLITCH</span></h3>
+      <p><b>核心语言：全息投影浮空 UI + 故障艺术 + 红青双色霓虹。</b>夜之城的 UI 不贴在屏幕上，而是悬浮在空气中——电话面板、任务日志、对话选项都是全息投影，边缘带 chromatic aberration（色差）和 scanline 故障条纹。血量/护甲以青色光弧呈现，黑客入侵时的代码瀑布与 ICE 防御层级用红色警告。Glitch 效果不是随机损坏，而是"数字世界的不稳定存在"的视觉隐喻。血量/护甲以青色光弧呈现，技能栏图标带霓虹发光边框，对话选项以全息文字浮在角色面前。整个 UI 体系暗示：在 2077 年的夜之城，信息不是被"显示"的，而是被"投影"在空气中的光。</p>
+      <img class="card-img" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/ss_2f649b68d579bf87011487d29bc4ccbfdd97d34f.1920x1080.jpg?t=1784714077" alt="赛博朋克2077 全息 UI">
+      <div class="ui-preview">
+        <div class="crt-glow" style="background:radial-gradient(ellipse at center,rgba(0,240,255,.04),transparent 70%)"></div>
+        <div class="scanline"></div>
+        <div class="label">HOLO PHONE — CALLS / SHARDS / HACK</div>
+        <div class="mock" style="color:#00f0ff">
+          <div class="line" style="justify-content:space-between"><span>QUEST: GIG — FLATHEAD</span><span style="color:#ff003e">⚠</span></div>
+          <div class="line" style="opacity:.6;justify-content:space-between"><span>ICE TYPE: RED</span><span>3.2s</span></div>
+          <div class="line" style="color:#ff003e;opacity:.7">[ DAEMON: OVERHEAT — UPLOADING... ]</div>
+          <div class="line" style="opacity:.4;font-size:9px">01010111 01100001 01101011 01100101</div>
+        </div>
+      </div>
+      <div class="palette">
+        <div class="sw" style="background:#ff003e">#FF003E</div>
+        <div class="sw" style="background:#00f0ff">#00F0FF</div>
+        <div class="sw" style="background:#0c0e0c">#0C0E0C</div>
+        <div class="sw" style="background:#1a1e18">#1A1E18</div>
+        <div class="sw" style="background:#fcee0a">#FCEE0A</div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>字体：</b>等宽科技体 + 大写霓虹标题</div>
+        <div class="row"><b>质感：</b>色差边缘、扫描线、Glitch 故障条纹</div>
+        <div class="row"><b>布局：</b>浮空面板、无固定边框、自由角度</div>
+        <div class="row"><b>色彩：</b>霓虹红 + 青蓝 + 黄警告 + 近黑</div>
+      </div>
+      <div class="map-tag">战斗 HUD 的全息血条、锁定圈、技能栏发光</div>
+      <div class="cases">Cyberpunk 2077<sup><a href="#src-8">[8]</a></sup><sup><a href="#src-9">[9]</a></sup></div>
+    </div>
+
+    <!-- Watch Dogs -->
+    <div class="card">
+      <svg class="glyph" width="200" height="50" viewBox="0 0 200 50" fill="none">
+        <rect x="4" y="6" width="192" height="38" rx="4" fill="#0c0e0c" stroke="#46c9a5" stroke-width="1" opacity=".6"/>
+        <rect x="8" y="10" width="56" height="30" rx="2" fill="#151814" stroke="#2b3227" stroke-width=".8"/>
+        <text x="12" y="18" font-family="monospace" font-size="6" fill="#46c9a5" opacity=".7">ctOS</text>
+        <rect x="12" y="22" width="30" height="2" fill="#46c9a5" opacity=".5"/>
+        <rect x="12" y="26" width="20" height="2" fill="#9aa090" opacity=".3"/>
+        <rect x="12" y="30" width="40" height="2" fill="#9aa090" opacity=".3"/>
+        <rect x="70" y="10" width="60" height="30" rx="2" fill="#151814" stroke="#2b3227" stroke-width=".8"/>
+        <text x="74" y="18" font-family="monospace" font-size="6" fill="#00f0ff" opacity=".6">HACK</text>
+        <circle cx="100" cy="28" r="8" fill="none" stroke="#00f0ff" stroke-width="1" opacity=".4"/>
+        <circle cx="100" cy="28" r="4" fill="none" stroke="#00f0ff" stroke-width=".8" opacity=".6"/>
+        <circle cx="100" cy="28" r="1.5" fill="#ff003e"/>
+        <rect x="136" y="10" width="56" height="30" rx="2" fill="#151814" stroke="#2b3227" stroke-width=".8"/>
+        <text x="140" y="18" font-family="monospace" font-size="6" fill="#46c9a5" opacity=".7">SIGNAL</text>
+        <rect x="140" y="22" width="40" height="2" fill="#46c9a5" opacity=".4"/>
+        <rect x="140" y="26" width="30" height="2" fill="#ff003e" opacity=".4"/>
+        <rect x="140" y="30" width="35" height="2" fill="#9aa090" opacity=".3"/>
+      </svg>
+      <h3>看门狗系列 <span class="tag">PHONE AR HACK</span></h3>
+      <p><b>核心语言：手机终端界面 + 黑客代码流 + AR 增强现实。</b>看门狗把玩家的手机变成万能黑入终端：ctOS 系统界面以深绿底色呈现，黑客入侵时的代码瀑布流从屏幕顶部倾泻，信号干扰效果用 RGB 错位与噪声纹理模拟。AR 投影把信息叠加在真实世界上——人物头像浮空标注、可黑入对象以青色光圈标出、摄像头视角带信号噪点。UI 的每个元素都在暗示"你正在入侵这个系统"。入侵成功时界面闪烁绿光确认，入侵被追踪时红色警告条从屏幕边缘逼近——UI 状态本身即是游戏机制。</p>
+      <img class="card-img" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/243470/ss_752aefdfdf2c55dfc8a94d1e9b8d9f6dd42a359c.1920x1080.jpg?t=1739177057" alt="看门狗 手机黑客界面">
+      <div class="ui-preview">
+        <div class="crt-glow" style="background:radial-gradient(ellipse at center,rgba(70,201,165,.04),transparent 70%)"></div>
+        <div class="scanline"></div>
+        <div class="label">ctOS PHONE — HACK / SIGNAL / CAM</div>
+        <div class="mock" style="color:#46c9a5">
+          <div class="line" style="justify-content:space-between"><span style="color:#00f0ff">▶ HACK TARGET</span><span style="color:#ff003e">●REC</span></div>
+          <div class="line" style="opacity:.5;font-size:9px">0x4A 0x3B 0x00 0xFF 0x12 0xCD...</div>
+          <div class="line" style="opacity:.7;justify-content:space-between"><span>SIGNAL: 87%</span><span style="color:#00f0ff">UNLOCKED</span></div>
+          <div class="line" style="color:#ff003e;opacity:.5;font-size:9px">⚠ TRACE INITIATED — 8.3s</div>
+        </div>
+      </div>
+      <div class="palette">
+        <div class="sw" style="background:#46c9a5">#46C9A5</div>
+        <div class="sw" style="background:#00f0ff">#00F0FF</div>
+        <div class="sw" style="background:#ff003e">#FF003E</div>
+        <div class="sw" style="background:#0c0e0c">#0C0E0C</div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>字体：</b>等宽终端体 + 小号无衬线</div>
+        <div class="row"><b>质感：</b>代码瀑布流、RGB 错位、信号噪点</div>
+        <div class="row"><b>布局：</b>三栏终端面板 + AR 浮空标注</div>
+        <div class="row"><b>色彩：</b>深绿 + 青蓝 + 警示红 + 近黑</div>
+      </div>
+      <div class="map-tag">商店和主界面的终端屏幕质感</div>
+      <div class="cases">Watch Dogs 1 / 2 / Legion<sup><a href="#src-10">[10]</a></sup></div>
+    </div>
+
+    <!-- Deus Ex -->
+    <div class="card">
+      <svg class="glyph" width="200" height="50" viewBox="0 0 200 50" fill="none">
+        <rect x="4" y="4" width="192" height="42" rx="0" fill="#0c0e0c" stroke="#1a3a3a" stroke-width="1"/>
+        <circle cx="40" cy="25" r="16" fill="none" stroke="#5ea8d8" stroke-width="1" opacity=".4"/>
+        <circle cx="40" cy="25" r="10" fill="none" stroke="#5ea8d8" stroke-width="1" opacity=".5"/>
+        <circle cx="40" cy="25" r="4" fill="#5ea8d8" opacity=".3"/>
+        <line x1="24" y1="25" x2="56" y2="25" stroke="#5ea8d8" stroke-width=".5" opacity=".3"/>
+        <line x1="40" y1="9" x2="40" y2="41" stroke="#5ea8d8" stroke-width=".5" opacity=".3"/>
+        <text x="64" y="14" font-family="monospace" font-size="7" fill="#5ea8d8" opacity=".7">AUGMENTATION</text>
+        <rect x="64" y="18" width="40" height="2" fill="#5ea8d8" opacity=".4"/>
+        <rect x="64" y="22" width="30" height="2" fill="#5ea8d8" opacity=".3"/>
+        <text x="64" y="32" font-family="monospace" font-size="6" fill="#5ea8d8" opacity=".5">PRAXIS ×3</text>
+        <rect x="64" y="36" width="60" height="2" fill="#1a3a3a" opacity=".5"/>
+        <rect x="64" y="36" width="25" height="2" fill="#5ea8d8" opacity=".5"/>
+        <text x="140" y="14" font-family="monospace" font-size="6" fill="#5ea8d8" opacity=".5">LIMB CLINIC</text>
+        <rect x="140" y="18" width="50" height="20" fill="none" stroke="#1a3a3a" stroke-width=".8" opacity=".4"/>
+        <text x="144" y="28" font-family="monospace" font-size="6" fill="#5ea8d8" opacity=".4">SCAN: OK</text>
+      </svg>
+      <h3>Deus Ex 系列 <span class="tag">AUG MEDICAL</span></h3>
+      <p><b>核心语言：人体扫描界面 + 器官改造树 + 医疗蓝绿色调。</b>Deus Ex 的改造诊所用蓝绿色调（#5EA8D8）构建"科技医疗"的冷静感。Praxis 改造树以人体扫描图为骨架——骨骼、肌束、神经路径在半透明人体模型上发光，每个改造节点钉在对应解剖位置。LIMB 诊所的界面像一台高级医疗扫描仪，冷光、精密、无感情。UI 在暗示一个核心命题：你的身体是可编辑的数据。改造节点以 Praxis 点数解锁，每解锁一个节点，人体模型上对应区域的肌束/骨骼会发光——UI 的"进度"即角色的"肉体改造"。</p>
+      <img class="card-img" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/238010/ss_33f23de4cf18cbf6f676902096337716f9e19a52.1920x1080.jpg?t=1779722099" alt="Deus Ex 改造界面">
+      <div class="ui-preview">
+        <div class="crt-glow" style="background:radial-gradient(ellipse at center,rgba(94,168,216,.04),transparent 70%)"></div>
+        <div class="scanline"></div>
+        <div class="label">AUGMENTATION — PRAXIS / SCAN / TREE</div>
+        <div class="mock" style="color:#5ea8d8">
+          <div class="line" style="justify-content:space-between"><span>HUMAN SCAN: COMPLETE</span><span style="color:#46c9a5">✓</span></div>
+          <div class="line" style="opacity:.6">▶ ARM — TYRANT 67% ▶ EYE — SMART 100%</div>
+          <div class="line" style="opacity:.5;font-size:9px">PRAXIS KITS AVAILABLE: 3</div>
+          <div class="line" style="color:#5ea8d8;opacity:.4">[ SELECT AUGMENTATION NODE ]</div>
+        </div>
+      </div>
+      <div class="palette">
+        <div class="sw" style="background:#5ea8d8">#5EA8D8</div>
+        <div class="sw" style="background:#1a3a3a">#1A3A3A</div>
+        <div class="sw" style="background:#0c0e0c">#0C0E0C</div>
+        <div class="sw" style="background:#ffb225">#FFB225</div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>字体：</b>等宽医疗扫描体 + 无衬线标签</div>
+        <div class="row"><b>质感：</b>半透明人体模型、解剖路径发光</div>
+        <div class="row"><b>布局：</b>改造树钉在扫描骨架上、节点-连线</div>
+        <div class="row"><b>色彩：</b>蓝绿医疗色 + 冷光白 + 琥珀节点</div>
+      </div>
+      <div class="map-tag">关卡选择、图鉴的数据面板布局</div>
+      <div class="cases">Deus Ex HR / MD<sup><a href="#src-11">[11]</a></sup></div>
+    </div>
+
+    <!-- Observer -->
+    <div class="card">
+      <svg class="glyph" width="200" height="50" viewBox="0 0 200 50" fill="none">
+        <rect x="4" y="4" width="192" height="42" rx="0" fill="#0c0e0c" stroke="#b48ce8" stroke-width="1" opacity=".5"/>
+        <path d="M20 25 Q30 10 50 25 Q70 40 90 25 Q110 10 130 25 Q150 40 170 25" stroke="#b48ce8" stroke-width="1" fill="none" opacity=".4"/>
+        <circle cx="50" cy="25" r="3" fill="#b48ce8" opacity=".5"/>
+        <circle cx="90" cy="25" r="3" fill="#ff5d3a" opacity=".5"/>
+        <circle cx="130" cy="25" r="3" fill="#5ea8d8" opacity=".5"/>
+        <text x="14" y="40" font-family="monospace" font-size="6" fill="#b48ce8" opacity=".5">NEURAL // BIO</text>
+        <text x="120" y="40" font-family="monospace" font-size="6" fill="#b48ce8" opacity=".5">FEAR LEVEL: 7</text>
+        <line x1="14" y1="20" x2="20" y2="20" stroke="#b48ce8" stroke-width=".5" opacity=".3"/>
+        <line x1="14" y1="30" x2="20" y2="30" stroke="#b48ce8" stroke-width=".5" opacity=".3"/>
+      </svg>
+      <h3>Observer <span class="tag">NEURAL BIO</span></h3>
+      <p><b>核心语言：神经可视化 + 脑内界面 + 生物机械融合。</b>Bloober Team 的 Observer 把玩家变成一名"神经警察"——直接侵入死者的意识，在他们的记忆、恐惧与谎言中搜证。UI 是"脑内的界面"：脑电波图形在暗紫色背景上波动，恐惧等级以生物读数呈现，记忆碎片以 3D 全息扫描展示。赛博朋克的冷硬与生物恐怖的有机性在此融合——界面像活的，像在呼吸。记忆碎片以 3D 全息形式在空间中漂浮，玩家可以旋转、放大、深入——每次"查看记忆"都是一次意识潜入。UI 的紫色光晕与赛博朋克的青/红霓虹形成对比：它不是"技术"的光，而是"生物"的光。</p>
+      <img class="card-img" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1386900/ss_8f033105425489bb6ed3323dba45d8f18524c86a.1920x1080.jpg?t=1773944484" alt="Observer 神经可视化">
+      <div class="ui-preview">
+        <div class="crt-glow" style="background:radial-gradient(ellipse at center,rgba(180,140,232,.04),transparent 70%)"></div>
+        <div class="scanline"></div>
+        <div class="label">DREAM EATER — NEURAL SCAN</div>
+        <div class="mock" style="color:#b48ce8">
+          <div class="line" style="justify-content:space-between"><span>NEURAL DEPTH: L3</span><span style="color:#ff5d3a">FEAR 7/10</span></div>
+          <div class="line" style="opacity:.5;font-size:9px">~~~ EEG 12Hz ~~~ theta wave detected ~~~</div>
+          <div class="line" style="opacity:.7;justify-content:space-between"><span>MEMORY FRAGMENT</span><span style="color:#5ea8d8">3D SCAN</span></div>
+          <div class="line" style="color:#ff5d3a;opacity:.5;font-size:9px">⚠ SUBJECT RESISTING — STABILIZE</div>
+        </div>
+      </div>
+      <div class="palette">
+        <div class="sw" style="background:#b48ce8">#B48CE8</div>
+        <div class="sw" style="background:#ff5d3a">#FF5D3A</div>
+        <div class="sw" style="background:#5ea8d8">#5EA8D8</div>
+        <div class="sw" style="background:#0c0e0c">#0C0E0C</div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>字体：</b>等宽生物读数体 + 手写残留</div>
+        <div class="row"><b>质感：</b>脑电波图形、有机波动、全息呼吸感</div>
+        <div class="row"><b>布局：</b>3D 全息记忆碎片 + 层级深入</div>
+        <div class="row"><b>色彩：</b>暗紫 + 警示红 + 冷蓝 + 近黑</div>
+      </div>
+      <div class="map-tag">图鉴系统的 3D 全息扫描展示</div>
+      <div class="cases">Observer / System Redux<sup><a href="#src-12">[12]</a></sup></div>
+    </div>
+
+  </div>
+
+  <div class="callout">
+    <b>赛博系共性：</b>四款游戏的 UI 都超越了"屏幕上的层"——它们是<b>空间中的光</b>（全息投影）、<b>侵入中的系统</b>（黑客代码流）、<b>编辑中的肉体</b>（改造扫描树）、<b>潜入中的意识</b>（神经可视化）。核心色彩从暖色（红/黄）到冷色（青/蓝/紫）构成完整霓虹光谱，全部以近黑为底，强调"光从黑暗中浮出"的存在感。Glitch/故障/扫描不是装饰，而是"数字世界脆弱性"的视觉宣言。
+  </div>
+</section>
+
+<!-- ============ S3 复古终端系 ============ -->
+<section id="s3">
+  <div class="sec-head">
+    <span class="sec-num">SEC.03</span>
+    <h2>复古终端系</h2>
+    <span class="en">Retro Terminal</span>
+  </div>
+  <p class="sec-lead">四款游戏从不同年代提取<b>"过时技术作为美学归宿"</b>的设计语言：DOS 绿字黑屏、极简红白黑、70 年代磁带科幻、PS1 时代低多边形 CRT。它们证明了一件事——<b>技术限制本身就是一种设计风格</b>，而且是情感最强的那种。<b>对应界面：成就终端字体、战斗警告色、主界面复古按钮、全局扫描线特效。</b></p>
+      <img class="sec-banner" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322500/ss_ae4a994de7b15e3cec3e56ae714cf7a44c7188cf.1920x1080.jpg?t=1726509130" alt="复古终端系 UI 设计参考">
+
+  <div class="grid g2">
+
+    <!-- Pony Island -->
+    <div class="card">
+      <svg class="glyph" width="200" height="50" viewBox="0 0 200 50" fill="none">
+        <rect x="4" y="4" width="192" height="42" fill="#000" stroke="#30ff50" stroke-width="1" opacity=".6"/>
+        <text x="12" y="16" font-family="monospace" font-size="7" fill="#30ff50" opacity=".8">C:\PONY\engine.exe</text>
+        <text x="12" y="26" font-family="monospace" font-size="7" fill="#30ff50" opacity=".6">RUNNING...</text>
+        <text x="12" y="36" font-family="monospace" font-size="6" fill="#ff003e" opacity=".7">ERR: SOUL REQUIRED</text>
+        <text x="12" y="42" font-family="monospace" font-size="6" fill="#30ff50" opacity=".4">>_</text>
+        <rect x="80" y="10" width="30" height="20" fill="none" stroke="#30ff50" stroke-width=".5" opacity=".3"/>
+        <text x="86" y="22" font-family="monospace" font-size="5" fill="#30ff50" opacity=".4">PONY.EXE</text>
+      </svg>
+      <h3>Pony Island <span class="tag">DOS GREEN-ON-BLACK</span></h3>
+      <p><b>核心语言：老式 DOS 界面 + 黑底绿字 + 伪代码装饰。</b>Pony Island 把玩家关进一台被恶魔附身的街机里，整个游戏以 DOS 操作系统的外壳运行。绿底黑字（实为黑底绿字 #30FF50）的终端窗口、伪代码命令行、灰度像素小马与故障图像混合——它用最原始的计算机界面语言制造恐怖。玩家需要"修改游戏代码"来逃出，代码编辑界面以伪汇编语言呈现，无需编程知识但充满"我在黑入系统"的紧张感。恶魔会通过修改游戏代码来阻挠你——UI 本身就是战场。</p>
+      <img class="card-img" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/405640/ss_c9745cc5f077e5e49b83d3afc42337e187dcaae2.1920x1080.jpg?t=1784911389" alt="Pony Island DOS 界面">
+      <div class="ui-preview">
+        <div class="crt-glow" style="background:radial-gradient(ellipse at center,rgba(48,255,80,.04),transparent 70%)"></div>
+        <div class="scanline"></div>
+        <div class="label">DOS TERMINAL — PONY ISLAND ENGINE</div>
+        <div class="mock" style="color:#30ff50">
+          <div class="line">C:\PONY&gt; engine.exe --run</div>
+          <div class="line" style="opacity:.7">LOADING ASSETS... ████░░ 67%</div>
+          <div class="line" style="color:#ff003e;opacity:.7">ERR: SOUL.DLL NOT FOUND</div>
+          <div class="line" style="opacity:.5">&gt;_ <span class="cursor"></span></div>
+        </div>
+      </div>
+      <div class="palette">
+        <div class="sw" style="background:#30ff50">#30FF50</div>
+        <div class="sw" style="background:#000000">#000000</div>
+        <div class="sw" style="background:#ff003e">#FF003E</div>
+        <div class="sw" style="background:#9aa090">#9AA090</div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>字体：</b>等宽终端体 + 伪汇编命令行</div>
+        <div class="row"><b>质感：</b>灰度像素 + 故障条纹 + CRT 余晖</div>
+        <div class="row"><b>布局：</b>DOS 窗口 + 代码编辑器切换</div>
+        <div class="row"><b>色彩：</b>磷光绿 + 纯黑 + 错误红</div>
+      </div>
+      <div class="map-tag">成就系统的终端字体和乱码装饰</div>
+      <div class="cases">Pony Island<sup><a href="#src-13">[13]</a></sup></div>
+    </div>
+
+    <!-- Superhot -->
+    <div class="card">
+      <svg class="glyph" width="200" height="50" viewBox="0 0 200 50" fill="none">
+        <rect x="4" y="4" width="192" height="42" fill="#f5f5f5" stroke="#000" stroke-width="1"/>
+        <rect x="4" y="4" width="192" height="42" fill="url(#sh-red)" opacity=".05"/>
+        <defs><pattern id="sh-red" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="2" height="2" fill="#ff003e"/></pattern></defs>
+        <text x="14" y="16" font-family="sans-serif" font-size="9" font-weight="900" fill="#000">SUPERHOT</text>
+        <rect x="14" y="22" width="40" height="3" fill="#ff003e"/>
+        <text x="60" y="25" font-family="monospace" font-size="7" fill="#000" opacity=".5">TIME MOVES WHEN YOU MOVE</text>
+        <circle cx="160" cy="25" r="8" fill="#ff003e" opacity=".6"/>
+        <text x="14" y="40" font-family="sans-serif" font-size="6" fill="#ff003e" opacity=".7">▼ SYSTEM // SHOOT.Core v2</text>
+      </svg>
+      <h3>Superhot <span class="tag">MINIMAL RED-WHITE</span></h3>
+      <p><b>核心语言：极简三色 + 粗体无衬线 + MSDOS 式系统外壳。</b>Superhot 的美术总监 Marcin Surma 确立了三色法则：白色环境、红色敌人、黑色武器——除此之外别无他色。UI 以 MSDOS 风格的系统外壳呈现，但比原始终端更"风格化、更可理解"。粗体无衬线大字、红色警示条、极简状态信息——一切都为了把注意力锁死在"时间仅随你移动而流动"这一核心机制上。UI 文字极少——系统壳用粗体大写传递关键状态，战斗界面几乎无文字，全靠红/白/黑三色的空间对比传达信息。</p>
+      <img class="card-img" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322500/ss_ae4a994de7b15e3cec3e56ae714cf7a44c7188cf.1920x1080.jpg?t=1726509130" alt="Superhot 极简 UI">
+      <div class="ui-preview" style="background:#1a1a1a">
+        <div class="scanline"></div>
+        <div class="label" style="color:#9aa090">SUPERHOT — SYSTEM SHELL</div>
+        <div class="mock">
+          <div class="line" style="color:#ff003e;font-weight:700;font-size:13px">SUPERHOT</div>
+          <div class="line" style="color:#9aa090;opacity:.6;font-size:10px">TIME MOVES WHEN YOU MOVE</div>
+          <div class="line" style="color:#ff003e;opacity:.5;font-size:9px">▼ LEVEL 03 // BAR.CORE</div>
+        </div>
+      </div>
+      <div class="palette">
+        <div class="sw" style="background:#ff003e">#FF003E</div>
+        <div class="sw" style="background:#ffffff">#FFFFFF</div>
+        <div class="sw" style="background:#000000">#000000</div>
+        <div class="sw" style="background:#9aa090">#9AA090</div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>字体：</b>粗体无衬线 + 极少文字</div>
+        <div class="row"><b>质感：</b>纯色填充、无纹理、无渐变</div>
+        <div class="row"><b>布局：</b>居中大字 + MSDOS 系统壳</div>
+        <div class="row"><b>色彩：</b>红 + 白 + 黑，三色即全部</div>
+      </div>
+      <div class="map-tag">战斗界面的警告色运用</div>
+      <div class="cases">Superhot<sup><a href="#src-14">[14]</a></sup></div>
+    </div>
+
+    <!-- Alien Isolation -->
+    <div class="card">
+      <svg class="glyph" width="200" height="50" viewBox="0 0 200 50" fill="none">
+        <rect x="4" y="4" width="192" height="42" fill="#0c0e0c" stroke="#ffb000" stroke-width="1" opacity=".5"/>
+        <text x="12" y="16" font-family="monospace" font-size="7" fill="#ffb000" opacity=".7">SEVASTOPOLO STN</text>
+        <rect x="12" y="20" width="40" height="20" fill="none" stroke="#ffb000" stroke-width=".5" opacity=".4"/>
+        <circle cx="32" cy="30" r="8" fill="none" stroke="#ffb000" stroke-width="1" opacity=".4"/>
+        <circle cx="32" cy="30" r="4" fill="none" stroke="#ffb000" stroke-width=".8" opacity=".5"/>
+        <line x1="32" y1="22" x2="32" y2="38" stroke="#ffb000" stroke-width=".5" opacity=".3"/>
+        <text x="60" y="24" font-family="monospace" font-size="6" fill="#ffb000" opacity=".5">MOTION TRACKER</text>
+        <text x="60" y="34" font-family="monospace" font-size="6" fill="#ff5d3a" opacity=".5">⚠ CONTACT 15m</text>
+        <rect x="140" y="20" width="50" height="20" fill="none" stroke="#ffb000" stroke-width=".5" opacity=".3"/>
+        <text x="144" y="30" font-family="monospace" font-size="6" fill="#ffb000" opacity=".4">TAPE // SAV</text>
+      </svg>
+      <h3>Alien: Isolation <span class="tag">70s RETROFUTURE</span></h3>
+      <p><b>核心语言：70 年代复古未来 + 琥珀 CRT + 磁带存档机。</b>《异形：隔离》把 1979 年雷德利·斯科特电影的视觉语言重建为完整设计系统：粗壮等宽终端字体、琥珀磷光（#FFB000）与绿色双色调、扫描线雾化、闪烁光标——全部呈现在永远不干净的 CRT 底色上。动作追踪器以模拟雷达圆扫描呈现，存档用磁带录音机，开门用菲林扫描仪——每一台设备都"有重量、有气味、有年代"。动作追踪器只显示移动物体的距离方向而非精确位置——如果异形停止移动，它就从屏幕上消失。这种"不完整信息"本身即是恐怖的引擎。</p>
+      <img class="card-img" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/214490/ss_5ff8ca35914eca8f51f3303cf5d94a9f85279e2a.1920x1080.jpg?t=1763647113" alt="Alien Isolation 复古科幻 UI">
+      <div class="ui-preview">
+        <div class="crt-glow" style="background:radial-gradient(ellipse at center,rgba(255,176,0,.04),transparent 70%)"></div>
+        <div class="scanline"></div>
+        <div class="label">SEVASTOPOLO — MOTION TRACKER / TAPE</div>
+        <div class="mock" style="color:#ffb000">
+          <div class="line" style="justify-content:space-between"><span>STATION LOG</span><span style="color:#ff5d3a">⚠</span></div>
+          <div class="line" style="opacity:.6">▶ MOTION TRACK: ● 15m SE MOVING</div>
+          <div class="line" style="opacity:.5;font-size:9px">SAVE TAPE — SIDE A / 00:03:42</div>
+          <div class="line" style="opacity:.4;font-size:9px">▌ ACCESS TUNER — CALIBRATING...</div>
+        </div>
+      </div>
+      <div class="palette">
+        <div class="sw" style="background:#ffb000">#FFB000</div>
+        <div class="sw" style="background:#30ff50">#30FF50</div>
+        <div class="sw" style="background:#0c0e0c">#0C0E0C</div>
+        <div class="sw" style="background:#ff5d3a">#FF5D3A</div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>字体：</b>粗壮等宽终端体 + 全大写</div>
+        <div class="row"><b>质感：</b>CRT 污渍、扫描线雾化、磁带机械感</div>
+        <div class="row"><b>布局：</b>雷达圆扫描 + 磁带存档 + 菲林开门</div>
+        <div class="row"><b>色彩：</b>琥珀 + 磷光绿 + 近黑 + 警示红</div>
+      </div>
+      <div class="map-tag">主界面的复古机械按钮</div>
+      <div class="cases">Alien: Isolation<sup><a href="#src-15">[15]</a></sup><sup><a href="#src-16">[16]</a></sup></div>
+    </div>
+
+    <!-- Signalis -->
+    <div class="card">
+      <svg class="glyph" width="200" height="50" viewBox="0 0 200 50" fill="none">
+        <rect x="4" y="4" width="192" height="42" fill="#0c0e0c" stroke="#ff5d3a" stroke-width="1" opacity=".4"/>
+        <rect x="4" y="4" width="192" height="42" fill="url(#sig-scan)" opacity=".1"/>
+        <defs><pattern id="sig-scan" width="1" height="2" patternUnits="userSpaceOnUse"><rect width="1" height="1" fill="#ff5d3a"/></pattern></defs>
+        <text x="12" y="16" font-family="monospace" font-size="7" fill="#9aa090" opacity=".6">SIGNAL // LOST</text>
+        <rect x="12" y="20" width="40" height="3" fill="#ff5d3a" opacity=".4"/>
+        <text x="12" y="32" font-family="monospace" font-size="6" fill="#ff5d3a" opacity=".5">⚠ CONTAINMENT BREACH</text>
+        <text x="12" y="40" font-family="monospace" font-size="6" fill="#9aa090" opacity=".4">REPLICANT ID: 740-IL</text>
+        <circle cx="150" cy="25" r="3" fill="#ff5d3a" opacity=".6"/>
+        <circle cx="150" cy="25" r="6" fill="none" stroke="#ff5d3a" stroke-width=".5" opacity=".3"/>
+        <circle cx="150" cy="25" r="10" fill="none" stroke="#ff5d3a" stroke-width=".3" opacity=".2"/>
+      </svg>
+      <h3>Signalis <span class="tag">PS1 CRT PIXEL</span></h3>
+      <p><b>核心语言：低多边形 CRT + 扫描线 + 像素字体 + 红色警报灯。</b>Rose Engine 的 Signalis 刻意降分辨率——低多边形 3D 环境 + 2D 精灵动画 + 像素字体，配合 CRT 后处理（扫描线、胶片颗粒、色调分级）营造"冷战东德科幻恐怖"氛围。视觉语言本身就是叙事：劣化屏幕、闪烁灯光、被腐蚀的文字和抽象梦境序列传达心理 deterioration（精神退化）。UI 以红色警报灯为核心情绪信号，故障文字、乱码是故意的。存档界面像一台冷战时期的东德终端机——方形 CRT、扫描线、像素字符，一切都在暗示"系统正在崩溃，你正在被同化"。</p>
+      <img class="card-img" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1262350/ss_a2603694154878b8260c1dd498a06168cad012a4.1920x1080.jpg?t=1773697315" alt="Signalis PS1 CRT 界面">
+      <div class="ui-preview">
+        <div class="crt-glow" style="background:radial-gradient(ellipse at center,rgba(255,93,58,.04),transparent 70%)"></div>
+        <div class="scanline" style="background:repeating-linear-gradient(0deg,transparent 0,transparent 1px,rgba(255,93,58,.1) 1px,rgba(255,93,58,.1) 2px)"></div>
+        <div class="label" style="color:#ff5d3a;opacity:.5">SIGNALIS — CRT // ALERT</div>
+        <div class="mock" style="color:#9aa090">
+          <div class="line" style="color:#ff5d3a">⚠ SIGNAL: LOST</div>
+          <div class="line" style="opacity:.5;font-size:9px">ERR0R: C0NTA1NM3NT BR34CH</div>
+          <div class="line" style="opacity:.4;font-size:9px">R3PL1C4NT 1D: 740-1L</div>
+          <div class="line" style="color:#ff5d3a;opacity:.6;font-size:9px">● ALERT ● ALERT ●</div>
+        </div>
+      </div>
+      <div class="palette">
+        <div class="sw" style="background:#ff5d3a">#FF5D3A</div>
+        <div class="sw" style="background:#9aa090">#9AA090</div>
+        <div class="sw" style="background:#0c0e0c">#0C0E0C</div>
+        <div class="sw" style="background:#1a1e18">#1A1E18</div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>字体：</b>像素字体 + 乱码腐蚀文字</div>
+        <div class="row"><b>质感：</b>CRT 扫描线、胶片颗粒、低多边形</div>
+        <div class="row"><b>布局：</b>极简信息 + 红色警报灯为核心</div>
+        <div class="row"><b>色彩：</b>红警报 + 灰 + 近黑，冷峻东德风</div>
+      </div>
+      <div class="map-tag">全局的扫描线和故障特效</div>
+      <div class="cases">Signalis<sup><a href="#src-17">[17]</a></sup><sup><a href="#src-18">[18]</a></sup></div>
+    </div>
+
+  </div>
+
+  <div class="callout red">
+    <b>复古系共性：</b>四款游戏都把<b>技术限制当作设计语言</b>——DOS 绿字、三色极简、70 年代琥珀 CRT、PS1 像素扫描线。它们不追求"现代精致"，反而在过时技术的纹理中找到最强的情感共鸣。扫描线、像素化、故障条纹这些"技术瑕疵"被升格为美学特征，证明了一个核心洞察：<b>UI 的"不完美"比"完美"更有记忆点</b>。
+  </div>
+</section>
+
+<!-- ============ S4 独立策略系 ============ -->
+<section id="s4">
+  <div class="sec-head">
+    <span class="sec-num">SEC.04</span>
+    <h2>独立策略系</h2>
+    <span class="en">Indie & Strategy</span>
+  </div>
+  <p class="sec-lead">四款独立游戏代表了<b>"信息即设计"</b>的极致：极简像素战棋网格、横版卷轴状态栏、工业管道建造面板、竖屏卡牌遗物列表。它们的 UI 不做氛围渲染，只做一件事——<b>把信息用最少的像素最清晰地推到你眼前</b>。<b>对应界面：战斗竖屏信息排布、顶部状态栏、商店列表卡片、图鉴网格列表切换。</b></p>
+      <img class="sec-banner" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/590380/ss_6113590509c195f98fa64cd738df534762e0c358.1920x1080.jpg?t=1755610784" alt="独立策略系 UI 设计参考">
+
+  <div class="grid g2">
+
+    <!-- Into the Breach -->
+    <div class="card">
+      <svg class="glyph" width="200" height="50" viewBox="0 0 200 50" fill="none">
+        <rect x="40" y="4" width="120" height="42" fill="#0c0e0c" stroke="#2b3227" stroke-width="1"/>
+        <line x1="40" y1="18" x2="160" y2="18" stroke="#2b3227" stroke-width=".5"/>
+        <line x1="40" y1="32" x2="160" y2="32" stroke="#2b3227" stroke-width=".5"/>
+        <line x1="70" y1="4" x2="70" y2="46" stroke="#2b3227" stroke-width=".5"/>
+        <line x1="100" y1="4" x2="100" y2="46" stroke="#2b3227" stroke-width=".5"/>
+        <line x1="130" y1="4" x2="130" y2="46" stroke="#2b3227" stroke-width=".5"/>
+        <circle cx="55" cy="11" r="3" fill="#46c9a5" opacity=".6"/>
+        <circle cx="115" cy="25" r="3" fill="#ff5d3a" opacity=".6"/>
+        <text x="55" y="42" font-family="monospace" font-size="5" fill="#9aa090" opacity=".5">MECH-A</text>
+        <path d="M115 25 L85 39" stroke="#ff5d3a" stroke-width=".5" opacity=".4" stroke-dasharray="2 2"/>
+        <text x="125" y="42" font-family="monospace" font-size="5" fill="#9aa090" opacity=".5">VEK</text>
+      </svg>
+      <h3>Into the Breach <span class="tag">PIXEL GRID INFO</span></h3>
+      <p><b>核心语言：极简像素战棋 + 清晰网格信息 + 完全透明博弈。</b>开发者 Matthew Davis 和 Justin Ma 在测试中发现"必须把'谁在做什么'展示得特别清楚"——于是所有攻击以循环抛物线/点线/箭头标注，敌人意图在回合开始前完全公开。8×8 小网格让每一步都是精密推演。UI 的最高追求是"零认知负担"——你需要的信息全在屏幕上，一目了然。攻击轨迹用不同线型区分：抛物线=抛射、点线=远程、箭头=近战推进，颜色编码区分友/敌/建筑。</p>
+      <img class="card-img" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/590380/ss_6113590509c195f98fa64cd738df534762e0c358.1920x1080.jpg?t=1755610784" alt="Into the Breach 像素战棋 UI">
+      <div class="ui-preview">
+        <div class="scanline"></div>
+        <div class="label">GRID INFO — VISION / DAMAGE / PATH</div>
+        <div class="mock" style="color:#9aa090">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;font-size:10px;text-align:center">
+            <span style="color:#46c9a5">◎</span><span style="opacity:.3">·</span><span style="color:#ff5d3a">▼</span><span style="opacity:.3">·</span>
+            <span style="opacity:.3">·</span><span style="color:#ff5d3a">↓</span><span style="opacity:.3">·</span><span style="color:#46c9a5">◎</span>
+          </div>
+          <div class="line" style="margin-top:4px;font-size:9px;opacity:.6">VEK ATTACK: → [2 DMG] BUILDING</div>
+        </div>
+      </div>
+      <div class="palette">
+        <div class="sw" style="background:#46c9a5">#46C9A5</div>
+        <div class="sw" style="background:#ff5d3a">#FF5D3A</div>
+        <div class="sw" style="background:#ffb225">#FFB225</div>
+        <div class="sw" style="background:#0c0e0c">#0C0E0C</div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>字体：</b>像素体 + 小号无衬线</div>
+        <div class="row"><b>质感：</b>纯色像素、无纹理、网格即设计</div>
+        <div class="row"><b>布局：</b>8×8 小网格 + 攻击轨迹可视化</div>
+        <div class="row"><b>色彩：</b>绿(友)+红(敌)+黄(建筑)+黑底</div>
+      </div>
+      <div class="map-tag">战斗界面的竖屏信息排布</div>
+      <div class="cases">Into the Breach<sup><a href="#src-19">[19]</a></sup><sup><a href="#src-20">[20]</a></sup></div>
+    </div>
+
+    <!-- Dead Cells -->
+    <div class="card">
+      <svg class="glyph" width="200" height="50" viewBox="0 0 200 50" fill="none">
+        <rect x="4" y="4" width="192" height="8" fill="#151814" stroke="#2b3227" stroke-width=".5"/>
+        <rect x="8" y="7" width="30" height="2" fill="#ff5d3a" opacity=".6"/>
+        <text x="42" y="11" font-family="monospace" font-size="6" fill="#9aa090" opacity=".5">HP 45/100</text>
+        <circle cx="110" cy="8" r="3" fill="#ffb225" opacity=".6"/>
+        <text x="118" y="11" font-family="monospace" font-size="6" fill="#9aa090" opacity=".5">328</text>
+        <rect x="140" y="6" width="12" height="4" fill="#5ea8d8" opacity=".4"/>
+        <rect x="155" y="6" width="12" height="4" fill="#5ea8d8" opacity=".4"/>
+        <rect x="170" y="6" width="12" height="4" fill="#5ea8d8" opacity=".2"/>
+        <text x="14" y="28" font-family="monospace" font-size="6" fill="#9aa090" opacity=".4">[1] SWORD</text>
+        <text x="14" y="36" font-family="monospace" font-size="6" fill="#9aa090" opacity=".4">[2] BOW</text>
+        <text x="14" y="44" font-family="monospace" font-size="6" fill="#9aa090" opacity=".4">[3] TRAP</text>
+        <rect x="100" y="20" width="50" height="26" fill="none" stroke="#2b3227" stroke-width=".5" opacity=".3"/>
+        <text x="108" y="34" font-family="monospace" font-size="6" fill="#9aa090" opacity=".3">SKILL BAR</text>
+      </svg>
+      <h3>Dead Cells <span class="tag">SIDESCROLL HUD</span></h3>
+      <p><b>核心语言：横版卷轴顶部状态栏 + 血条/金币/技能三段排布。</b>Dead Cells 的 HUD 是 roguelite 横版的教科书：顶部一行容纳所有关键信息——左侧血条（红/黄/绿三色分段）、中部金币计数、右侧三个技能槽。角色/暂停界面在 Update 5 后拆分为 Options/Equipment/Inventory 三屏，加入变异选择与游玩时长。整个 HUD 紧贴屏幕顶边，不遮挡卷轴动作的视野中心，所有数值一目了然。变异选择界面简洁到只有图标和数值——"看一眼就懂"是 Motion Twin 的设计信条。</p>
+      <img class="card-img" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/588650/ss_ac28000ade40cc2fe5c128f32ac98ba33c008a7a.1920x1080.jpg?t=1779086887" alt="Dead Cells 横版 HUD">
+      <div class="ui-preview">
+        <div class="scanline"></div>
+        <div class="label">TOP HUD — HP / GOLD / SKILLS</div>
+        <div class="mock" style="display:flex;justify-content:space-between;align-items:center">
+          <div style="display:flex;align-items:center;gap:6px">
+            <div style="width:60px;height:6px;background:#1a1e18;border:1px solid #2b3227;border-radius:3px"><div style="width:35%;height:100%;background:#ff5d3a;border-radius:3px"></div></div>
+            <span style="font-size:9px;color:#9aa090">45/100</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:4px"><span style="color:#ffb225">●</span><span style="font-size:9px;color:#9aa090">328</span></div>
+          <div style="display:flex;gap:3px">
+            <div style="width:10px;height:10px;background:#5ea8d8;opacity:.5;border-radius:2px"></div>
+            <div style="width:10px;height:10px;background:#5ea8d8;opacity:.5;border-radius:2px"></div>
+            <div style="width:10px;height:10px;background:#1a1e18;border:1px solid #2b3227;border-radius:2px"></div>
+          </div>
+        </div>
+      </div>
+      <div class="palette">
+        <div class="sw" style="background:#ff5d3a">#FF5D3A</div>
+        <div class="sw" style="background:#ffb225">#FFB225</div>
+        <div class="sw" style="background:#5ea8d8">#5EA8D8</div>
+        <div class="sw" style="background:#0c0e0c">#0C0E0C</div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>字体：</b>无衬线小号 + 像素数字</div>
+        <div class="row"><b>质感：</b>像素风、鲜艳色块、无纹理</div>
+        <div class="row"><b>布局：</b>顶部一行：血条 + 金币 + 技能槽</div>
+        <div class="row"><b>色彩：</b>红血 + 金币 + 蓝技能 + 黑底</div>
+      </div>
+      <div class="map-tag">战斗顶部的状态栏布局</div>
+      <div class="cases">Dead Cells<sup><a href="#src-21">[21]</a></sup></div>
+    </div>
+
+    <!-- Mindustry -->
+    <div class="card">
+      <svg class="glyph" width="200" height="50" viewBox="0 0 200 50" fill="none">
+        <rect x="4" y="4" width="192" height="42" fill="#0c0e0c" stroke="#2b3227" stroke-width="1"/>
+        <rect x="10" y="10" width="30" height="14" fill="#151814" stroke="#3a3d33" stroke-width=".5"/>
+        <text x="14" y="19" font-family="monospace" font-size="6" fill="#9aa090" opacity=".5">CORE</text>
+        <rect x="10" y="28" width="12" height="12" fill="#151814" stroke="#3a3d33" stroke-width=".5"/>
+        <rect x="26" y="28" width="12" height="12" fill="#151814" stroke="#3a3d33" stroke-width=".5"/>
+        <path d="M40 17 L60 17 M40 34 L60 34" stroke="#5ea8d8" stroke-width="1" opacity=".4"/>
+        <path d="M55 14 L65 14 L65 24" stroke="#5ea8d8" stroke-width="1" fill="none" opacity=".3"/>
+        <rect x="70" y="10" width="30" height="14" fill="#151814" stroke="#3a3d33" stroke-width=".5"/>
+        <text x="74" y="19" font-family="monospace" font-size="6" fill="#9aa090" opacity=".5">DRILL</text>
+        <path d="M100 17 L120 17" stroke="#5ea8d8" stroke-width="1" opacity=".4"/>
+        <rect x="130" y="10" width="20" height="14" fill="#151814" stroke="#3a3d33" stroke-width=".5"/>
+        <text x="134" y="19" font-family="monospace" font-size="6" fill="#9aa090" opacity=".5">SMELT</text>
+        <text x="10" y="46" font-family="monospace" font-size="5" fill="#9aa090" opacity=".3">Cu: 240  Fe: 180  Si: 95</text>
+      </svg>
+      <h3>Mindustry <span class="tag">INDUSTRIAL PIPE</span></h3>
+      <p><b>核心语言：工业风建造 UI + 管道连接感 + 资源面板。</b>Mindustry 的建造以传送带和管道连接为核心——UI 反映了这种"物质流动"的设计哲学。圆盘快捷建造 Mod 让高频建造不停顿，核心库存即时可用。资源面板在底部以列表呈现铜/铁/硅等数值，建筑图标设计为工厂模块的迷你俯视图。整个 UI 像一张工业蓝图，每个数字都是一个管道的流量读数。建筑放置时自动连接相邻的输入/输出口——连线即数据流，玩家不需要额外的"连接"操作，只管放置。</p>
+      <img class="card-img" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1127400/ss_19dbb62a615fc63788cf499ab948947fe365a9d2.1920x1080.jpg?t=1784823019" alt="Mindustry 工业建造 UI">
+      <div class="ui-preview">
+        <div class="scanline"></div>
+        <div class="label">INDUSTRIAL — RESOURCES / BUILD / FLOW</div>
+        <div class="mock" style="color:#9aa090">
+          <div style="display:flex;justify-content:space-between;font-size:10px">
+            <span>Cu: <b style="color:#5ea8d8">240</b></span>
+            <span>Fe: <b style="color:#5ea8d8">180</b></span>
+            <span>Si: <b style="color:#5ea8d8">95</b></span>
+            <span>Ti: <b style="color:#ff5d3a">12</b></span>
+          </div>
+          <div class="line" style="margin-top:4px;font-size:9px;opacity:.6">[E] BUILD ▶ [Q] ROTATE ▶ [E] LINK</div>
+        </div>
+      </div>
+      <div class="palette">
+        <div class="sw" style="background:#5ea8d8">#5EA8D8</div>
+        <div class="sw" style="background:#ff5d3a">#FF5D3A</div>
+        <div class="sw" style="background:#9aa090">#9AA090</div>
+        <div class="sw" style="background:#151814">#151814</div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>字体：</b>等宽数字 + 小号无衬线标签</div>
+        <div class="row"><b>质感：</b>建筑俯视图标、管道连线</div>
+        <div class="row"><b>布局：</b>底部资源条 + 建造圆盘菜单</div>
+        <div class="row"><b>色彩：</b>蓝资源 + 红低量 + 灰标签 + 暗底</div>
+      </div>
+      <div class="map-tag">商店和关卡选择的列表卡片</div>
+      <div class="cases">Mindustry<sup><a href="#src-22">[22]</a></sup></div>
+    </div>
+
+    <!-- Slay the Spire -->
+    <div class="card">
+      <svg class="glyph" width="200" height="50" viewBox="0 0 200 50" fill="none">
+        <rect x="60" y="4" width="80" height="42" fill="#0c0e0c" stroke="#2b3227" stroke-width="1"/>
+        <rect x="64" y="8" width="20" height="28" rx="2" fill="#151814" stroke="#5ea8d8" stroke-width=".8" opacity=".5"/>
+        <rect x="68" y="12" width="12" height="2" fill="#5ea8d8" opacity=".4"/>
+        <rect x="68" y="16" width="8" height="2" fill="#5ea8d8" opacity=".3"/>
+        <text x="66" y="44" font-family="monospace" font-size="5" fill="#9aa090" opacity=".4">CARD</text>
+        <rect x="88" y="8" width="20" height="28" rx="2" fill="#151814" stroke="#ffb225" stroke-width=".8" opacity=".5"/>
+        <rect x="92" y="12" width="12" height="2" fill="#ffb225" opacity=".4"/>
+        <text x="90" y="44" font-family="monospace" font-size="5" fill="#9aa090" opacity=".4">RELIC</text>
+        <rect x="112" y="8" width="24" height="6" fill="#151814" stroke="#2b3227" stroke-width=".5"/>
+        <rect x="112" y="8" width="15" height="6" fill="#ff5d3a" opacity=".4"/>
+        <text x="116" y="13" font-family="monospace" font-size="5" fill="#9aa090" opacity=".5">HP 60</text>
+        <circle cx="120" cy="24" r="3" fill="#ffb225" opacity=".5"/>
+        <text x="116" y="36" font-family="monospace" font-size="5" fill="#9aa090" opacity=".4">145g</text>
+      </svg>
+      <h3>Slay the Spire <span class="tag">CARD LIST SIMPLE</span></h3>
+      <p><b>核心语言：竖屏卡牌/遗物列表 + 简洁数值 + 分支地图导航。</b>杀戮尖塔把所有信息压缩为竖屏列表：顶部血条 + 金币 + 药水栏三槽，卡组以纵向列表浏览，遗物以图标行排列。地图是可缩放的分支节点图——骷髅(精英)、篝火(休息)、问号(事件)、商店($)各有明确图标。点击卡牌放大显示完整 tooltip，拖拽出牌。UI 的核心理念是"每个工具都在伸手可及处"，信息密度高但层级清晰。药水栏三个槽位提醒"药不是传家宝，该喝就喝"——UI 本身在教导玩家行为模式。</p>
+      <img class="card-img" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/646570/ss_c171816f7ecd35b5b46d2fa27532f4c5b8ca3cc5.1920x1080.jpg?t=1774015376" alt="Slay the Spire 卡牌列表 UI">
+      <div class="ui-preview">
+        <div class="scanline"></div>
+        <div class="label">VERTICAL — HP / GOLD / DECK / MAP</div>
+        <div class="mock" style="color:#9aa090">
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:10px">
+            <span style="color:#ff5d3a">♥ 60/75</span>
+            <span style="color:#ffb225">● 145g</span>
+          </div>
+          <div style="display:flex;gap:3px;margin-top:4px">
+            <div style="width:8px;height:8px;background:#5ea8d8;opacity:.5;border-radius:2px"></div>
+            <div style="width:8px;height:8px;background:#1a1e18;border:1px solid #2b3227;border-radius:2px"></div>
+            <div style="width:8px;height:8px;background:#5ea8d8;opacity:.5;border-radius:2px"></div>
+          </div>
+          <div class="line" style="margin-top:3px;font-size:9px;opacity:.5">DECK: 20 | RELICS: 7</div>
+        </div>
+      </div>
+      <div class="palette">
+        <div class="sw" style="background:#ff5d3a">#FF5D3A</div>
+        <div class="sw" style="background:#ffb225">#FFB225</div>
+        <div class="sw" style="background:#5ea8d8">#5EA8D8</div>
+        <div class="sw" style="background:#0c0e0c">#0C0E0C</div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>字体：</b>无衬线小号 + 数字优先</div>
+        <div class="row"><b>质感：</b>卡牌圆角 + 图标行 + 无纹理</div>
+        <div class="row"><b>布局：</b>竖屏：顶部状态 → 中部手牌 → 底部地图</div>
+        <div class="row"><b>色彩：</b>红血 + 金币 + 蓝卡牌 + 黑底</div>
+      </div>
+      <div class="map-tag">图鉴和成就的网格/列表切换</div>
+      <div class="cases">Slay the Spire<sup><a href="#src-23">[23]</a></sup></div>
+    </div>
+
+  </div>
+
+  <div class="callout teal">
+    <b>独立系共性：</b>四款游戏都践行<b>"信息即设计"</b>——不做氛围渲染，只用最少的像素最清晰地传递信息。Into the Breach 用 8×8 网格实现"零认知负担"，Dead Cells 用顶部一行容纳所有状态，Mindustry 用管道连接感组织建造，Slay the Spire 用竖屏列表压缩全部数值。它们的设计哲学与前三系（废土/赛博/复古）的最大差异是：<b>UI 不叙事，UI 只传递信息</b>——清晰到极致本身就是美。
+  </div>
+</section>
+
+<!-- ============ S5 汇总矩阵 ============ -->
+<section id="s5">
+  <div class="sec-head">
+    <span class="sec-num">SEC.05</span>
+    <h2>汇总矩阵</h2>
+    <span class="en">Cross-Reference Matrix</span>
+  </div>
+  <p class="sec-lead">将 16 款游戏的核心视觉语言、色彩体系、字体策略与对应界面模块交叉对比，一表掌握全部参考点。</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>游戏</th>
+          <th>范式</th>
+          <th>核心视觉语言</th>
+          <th>主色调</th>
+          <th>字体策略</th>
+          <th>对应界面</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>辐射系列</td>
+          <td>废土生存</td>
+          <td>磷光绿 CRT 终端 + 机构黄 + 网格边框<sup><a href="#src-1">[1]</a></sup></td>
+          <td><span class="hl">#30FF50</span> / <span class="hl">#FFB000</span> / #0A0C08</td>
+          <td>等宽 + 粗壮平板衬线</td>
+          <td><span class="good">商店/成就/关卡 — 卡片边框底色</span></td>
+        </tr>
+        <tr>
+          <td>地铁系列</td>
+          <td>废土生存</td>
+          <td>面具视角 diegetic HUD + 镜片擦拭<sup><a href="#src-3">[3]</a></sup></td>
+          <td><span class="hl">#FFB225</span> / <span class="hl">#FF5D3A</span> / #0A0C08</td>
+          <td>等宽暗光体 + 手写</td>
+          <td><span class="good">战斗 — 沉浸感 HUD</span></td>
+        </tr>
+        <tr>
+          <td>潜行者</td>
+          <td>废土生存</td>
+          <td>苏式 PDA + 粗糙金属 + 异常脉冲圈<sup><a href="#src-5">[5]</a></sup></td>
+          <td><span class="hl">#46C9A5</span> / #9AA090 / #RUST</td>
+          <td>俄文等宽 + 乱码装饰</td>
+          <td><span class="good">主界面 — 机械按钮/背景氛围</span></td>
+        </tr>
+        <tr>
+          <td>最后生还者</td>
+          <td>废土生存</td>
+          <td>极简克制 + 手写涂鸦 + 胶带修补<sup><a href="#src-6">[6]</a></sup></td>
+          <td><span class="hl">#E9E5D6</span> / #9AA090 / #TAPE</td>
+          <td>无衬线小号 + 手写体</td>
+          <td><span class="good">图鉴 — 磨损做旧细节</span></td>
+        </tr>
+        <tr>
+          <td>赛博朋克 2077</td>
+          <td>赛博科幻</td>
+          <td>全息浮空 UI + Glitch 故障 + 色差<sup><a href="#src-8">[8]</a></sup></td>
+          <td><span class="hl">#FF003E</span> / <span class="hl">#00F0FF</span> / #0C0E0C</td>
+          <td>等宽科技体 + 霓虹大写</td>
+          <td><span class="good">战斗 HUD — 全息血条/锁定圈/技能栏</span></td>
+        </tr>
+        <tr>
+          <td>看门狗系列</td>
+          <td>赛博科幻</td>
+          <td>手机终端 + 代码瀑布 + AR 浮空标注<sup><a href="#src-10">[10]</a></sup></td>
+          <td><span class="hl">#46C9A5</span> / <span class="hl">#00F0FF</span> / #FF003E</td>
+          <td>等宽终端 + 小号无衬线</td>
+          <td><span class="good">商店/主界面 — 终端屏幕质感</span></td>
+        </tr>
+        <tr>
+          <td>Deus Ex 系列</td>
+          <td>赛博科幻</td>
+          <td>人体扫描 + 改造树 + 医疗蓝绿<sup><a href="#src-11">[11]</a></sup></td>
+          <td><span class="hl">#5EA8D8</span> / #1A3A3A / #FFB225</td>
+          <td>等宽医疗扫描体</td>
+          <td><span class="good">关卡/图鉴 — 数据面板布局</span></td>
+        </tr>
+        <tr>
+          <td>Observer</td>
+          <td>赛博科幻</td>
+          <td>神经可视化 + 脑电波 + 3D 全息记忆<sup><a href="#src-12">[12]</a></sup></td>
+          <td><span class="hl">#B48CE8</span> / <span class="hl">#FF5D3A</span> / #5EA8D8</td>
+          <td>等宽生物读数 + 手写残留</td>
+          <td><span class="good">图鉴 — 3D 全息扫描展示</span></td>
+        </tr>
+        <tr>
+          <td>Pony Island</td>
+          <td>复古终端</td>
+          <td>DOS 绿字黑屏 + 伪代码 + 灰度像素<sup><a href="#src-13">[13]</a></sup></td>
+          <td><span class="hl">#30FF50</span> / #000000 / #FF003E</td>
+          <td>等宽终端 + 伪汇编</td>
+          <td><span class="good">成就 — 终端字体/乱码装饰</span></td>
+        </tr>
+        <tr>
+          <td>Superhot</td>
+          <td>复古终端</td>
+          <td>三色极简 + 粗体无衬线 + MSDOS 壳<sup><a href="#src-14">[14]</a></sup></td>
+          <td><span class="hl">#FF003E</span> / <span class="hl">#FFFFFF</span> / #000000</td>
+          <td>粗体无衬线大写</td>
+          <td><span class="good">战斗 — 警告色运用</span></td>
+        </tr>
+        <tr>
+          <td>Alien: Isolation</td>
+          <td>复古终端</td>
+          <td>70s 复古未来 + 琥珀 CRT + 磁带存档<sup><a href="#src-15">[15]</a></sup></td>
+          <td><span class="hl">#FFB000</span> / <span class="hl">#30FF50</span> / #0C0E0C</td>
+          <td>粗壮等宽终端 + 全大写</td>
+          <td><span class="good">主界面 — 复古机械按钮</span></td>
+        </tr>
+        <tr>
+          <td>Signalis</td>
+          <td>复古终端</td>
+          <td>PS1 低多边形 + 扫描线 + 乱码 + 红警报<sup><a href="#src-17">[17]</a></sup></td>
+          <td><span class="hl">#FF5D3A</span> / #9AA090 / #0C0E0C</td>
+          <td>像素字体 + 腐蚀乱码</td>
+          <td><span class="good">全局 — 扫描线/故障特效</span></td>
+        </tr>
+        <tr>
+          <td>Into the Breach</td>
+          <td>独立策略</td>
+          <td>极简像素战棋 + 8×8 网格 + 完全透明博弈<sup><a href="#src-19">[19]</a></sup></td>
+          <td><span class="hl">#46C9A5</span> / <span class="hl">#FF5D3A</span> / #FFB225</td>
+          <td>像素体 + 小号无衬线</td>
+          <td><span class="good">战斗 — 竖屏信息排布</span></td>
+        </tr>
+        <tr>
+          <td>Dead Cells</td>
+          <td>独立策略</td>
+          <td>横版顶部状态栏 + 血条/金币/技能三段<sup><a href="#src-21">[21]</a></sup></td>
+          <td><span class="hl">#FF5D3A</span> / <span class="hl">#FFB225</span> / #5EA8D8</td>
+          <td>无衬线小号 + 像素数字</td>
+          <td><span class="good">战斗 — 顶部状态栏布局</span></td>
+        </tr>
+        <tr>
+          <td>Mindustry</td>
+          <td>独立策略</td>
+          <td>工业管道连接 + 建造圆盘 + 资源面板<sup><a href="#src-22">[22]</a></sup></td>
+          <td><span class="hl">#5EA8D8</span> / #FF5D3A / #9AA090</td>
+          <td>等宽数字 + 小号标签</td>
+          <td><span class="good">商店/关卡 — 列表卡片</span></td>
+        </tr>
+        <tr>
+          <td>Slay the Spire</td>
+          <td>独立策略</td>
+          <td>竖屏卡牌/遗物列表 + 分支地图 + 简洁数值<sup><a href="#src-23">[23]</a></sup></td>
+          <td><span class="hl">#FF5D3A</span> / <span class="hl">#FFB225</span> / #5EA8D8</td>
+          <td>无衬线小号 + 数字优先</td>
+          <td><span class="good">图鉴/成就 — 网格/列表切换</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">界面模块映射总览 <span class="en">INTERFACE MODULE MAPPING</span></h3>
+  <div class="grid g3">
+    <div class="card">
+      <h3>商店界面</h3>
+      <p>参考<b>辐射 Pip-Boy</b>的网格边框 + 磷光绿底色做卡片边框；参考<b>看门狗 ctOS</b>的三栏终端面板做商店布局；参考<b>Mindustry</b>的工业列表卡片做商品呈现。</p>
+    </div>
+    <div class="card">
+      <h3>战斗 HUD</h3>
+      <p>参考<b>地铁</b>的面具视角 diegetic HUD 做沉浸感；参考<b>赛博朋克</b>的全息血条/锁定圈/技能栏发光做战斗状态；参考<b>Superhot</b>的红色警告色运用；参考<b>Into the Breach</b>的竖屏网格信息排布；参考<b>Dead Cells</b>的顶部状态栏。</p>
+    </div>
+    <div class="card">
+      <h3>主界面</h3>
+      <p>参考<b>潜行者 PDA</b>的粗糙金属面板与机械按钮做背景氛围；参考<b>Alien: Isolation</b>的 70 年代复古机械按钮；参考<b>看门狗</b>的终端屏幕质感。</p>
+    </div>
+    <div class="card">
+      <h3>图鉴系统</h3>
+      <p>参考<b>最后生还者</b>的手写涂鸦与胶带做磨损做旧；参考<b>Deus Ex</b>的数据面板布局与人体扫描式分类；参考<b>Observer</b>的 3D 全息扫描展示；参考<b>Slay the Spire</b>的网格/列表切换。</p>
+    </div>
+    <div class="card">
+      <h3>成就系统</h3>
+      <p>参考<b>Pony Island</b>的 DOS 终端字体与乱码装饰；参考<b>辐射</b>的机构黄边框与磷光绿底色；参考<b>Slay the Spire</b>的竖屏数值列表。</p>
+    </div>
+    <div class="card">
+      <h3>关卡选择</h3>
+      <p>参考<b>辐射 Pip-Boy</b>的网格化嵌套边框做关卡卡片；参考<b>Deus Ex</b>的数据面板布局；参考<b>Mindustry</b>的工业列表卡片；参考<b>Slay the Spire</b>的分支地图导航。</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <b>全局特效参考：</b><b>Signalis</b> 的 CRT 扫描线 + 故障条纹可作为全局叠层特效，在特定事件（如 Boss 出场、成就解锁）时触发闪烁与乱码，增强戏剧性。而 <b>赛博朋克 2077</b> 的 Glitch 色差效果可用于加载界面与场景切换，暗示"数字世界的不稳定性"。
+  </div>
+</section>
+
+<!-- ============ S6 检查清单 ============ -->
+<section id="s6">
+  <div class="sec-head">
+    <span class="sec-num">SEC.06</span>
+    <h2>设计检查清单</h2>
+    <span class="en">Design Checklist</span>
+  </div>
+  <p class="sec-lead">将 16 款游戏的调研结论提炼为可操作的检查项——在落地任何界面模块前，用这组问题自检。</p>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>① 色彩一致性</h3>
+      <p>□ 是否从四系中选定<b>一个主范式</b>（废土/赛博/复古/独立）作为全局色彩基底？<br>
+      □ 辅助色是否限定在 <b>3–5 色</b>以内，且有明确语义（友方/敌方/警告/资源）？<br>
+      □ 是否避免了跨范式混用（如废土锈蚀 + 赛博霓虹 = 视觉冲突）？<br>
+      □ 色板是否已在<b>所有界面模块</b>（商店/战斗/图鉴/成就/关卡）中统一？</p>
+    </div>
+    <div class="card">
+      <h3>② 字体策略</h3>
+      <p>□ 标题与正文是否<b>双字体系统</b>（如粗壮衬线标题 + 等宽正文）？<br>
+      □ 等宽字体是否用于数值/终端/代码场景？<br>
+      □ 像素字体是否仅用于特定复古模块（如成就/全局特效）？<br>
+      □ 字号层级是否 ≤ <b>4 级</b>，避免碎片化？</p>
+    </div>
+    <div class="card">
+      <h3>③ 质感与氛围</h3>
+      <p>□ 卡片边框是否带有<b>物理质感</b>（锈蚀/铆钉/磨损/胶带）而非纯平面？<br>
+      □ 扫描线/故障特效是否<b>仅在特定场景触发</b>（加载/事件/Boss），不全局常驻？<br>
+      □ Diegetic 元素（面具/PDA/终端）是否<b>融入世界观</b>而非浮于其上？<br>
+      □ 是否有至少 <b>1 处</b>"可交互的物理质感"（擦拭镜片/磁带存档/按钮按压）？</p>
+    </div>
+    <div class="card">
+      <h3>④ 信息层级</h3>
+      <p>□ 战斗 HUD 是否遵循 <b>Into the Breach 原则</b>——所有决策所需信息一目了然？<br>
+      □ 状态栏是否<b>贴边放置</b>（Dead Cells 模式），不遮挡核心视野？<br>
+      □ 图鉴是否支持<b>网格/列表双视图</b>切换（Slay the Spire 模式）？<br>
+      □ 数值展示是否<b>简洁到极致</b>——每个数字都有语义图标？</p>
+    </div>
+    <div class="card">
+      <h3>⑤ 界面模块映射</h3>
+      <p>□ 商店界面是否参考了 <b>辐射网格边框 + 看门狗终端面板</b>？<br>
+      □ 战斗 HUD 是否融合了 <b>地铁沉浸感 + 赛博全息发光 + Superhot 警告色</b>？<br>
+      □ 图鉴是否采用了 <b>Deus Ex 数据面板 + Observer 3D 扫描</b>布局？<br>
+      □ 成就系统是否使用了 <b>Pony Island 终端字体 + 乱码装饰</b>？</p>
+    </div>
+    <div class="card">
+      <h3>⑥ 全局一致性</h3>
+      <p>□ 所有模块是否共享同一<b>色板、字体、边框圆角、间距系统</b>？<br>
+      □ Hover/Active/Disabled 状态是否<b>四系统一</b>（如统一用琥珀色高亮）？<br>
+      □ 动画时长是否<b>≤ 0.3s</b>（即时反馈），避免过度装饰？<br>
+      □ 移动端是否做了 <b>触控优化</b>（目标 ≥ 44px，禁用 hover 位移）？</p>
+    </div>
+  </div>
+
+  <div class="callout teal">
+    <b>终极原则：</b>16 款游戏给出的最大启示是——<b>UI 不是叠加层，UI 是世界观的延伸</b>。辐射的 Pip-Boy 是角色佩戴的设备，地铁的面具是玩家眼前的物理镜片，潜行者的 PDA 是变异区里的故障终端。无论选择哪个范式，让 UI 成为<b>游戏世界的一部分</b>而非浮于其上的界面，才是最好的美术设计。
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="f-brand">UI ART DESIGN ARCHIVE</div>
+  <p class="f-note">本档案调研全网 16 款标志性游戏的 UI 美术设计，萃取四范式的视觉语言、交互范式与氛围构建手法，映射至塔防游戏五大界面模块。信源截至 2026 年 8 月。</p>
+  <div class="sources">
+    <h2>REFERENCES &amp; SOURCES</h2>
+    <ol>
+      <li id="src-1"><span class="src-title">Curio Design, "Fallout Vault-Tec Pip-Boy (1997)" — 磷光绿/机构黄双色调、CRT 扫描线、网格边框、包浆受控腐蚀。</span><a class="src-url" href="https://designbycurio.com/learn/fallout-vault-tec-pip-boy-1997" target="_blank" rel="noopener">https://designbycurio.com/learn/fallout-vault-tec-pip-boy-1997</a></li>
+      <li id="src-2"><span class="src-title">Pip-Boy 3000 Terminal CLI (GitHub) — CRT 效果、磷光绿色板 (#30FF50/#FFB000)、扫描线叠层。</span><a class="src-url" href="https://github.com/toughlink109/Pip-Boy_terminal_CLI" target="_blank" rel="noopener">https://github.com/toughlink109/Pip-Boy_terminal_CLI</a></li>
+      <li id="src-3"><span class="src-title">Metro Wiki — 防毒面具视角、过滤器计时器、手电筒照明式交互、镜片起雾与擦拭。</span><a class="src-url" href="https://metro.fandom.com/wiki/Gas_mask" target="_blank" rel="noopener">https://metro.fandom.com/wiki/Gas_mask</a></li>
+      <li id="src-4"><span class="src-title">GameGrin, "Metro Last Light Review" — 面具视角 HUD 沉浸感、破旧手写标记、暗光环境信息读取。</span><a class="src-url" href="https://www.gamegrin.com/reviews/metro-last-light-review/" target="_blank" rel="noopener">https://www.gamegrin.com/reviews/metro-last-light-review/</a></li>
+      <li id="src-5"><span class="src-title">STALKER Wiki — PDA 界面、苏式工业风、异常探测器脉冲圈、势力声望列表、俄文乱码。</span><a class="src-url" href="https://stalker.fandom.com/wiki/PDA" target="_blank" rel="noopener">https://stalker.fandom.com/wiki/PDA</a></li>
+      <li id="src-6"><span class="src-title">PlayStation Lifestyle, "How The Last of Us UI Came to Be" — 极简克制 HUD、手写涂鸦、胶带修补、制作菜单双栏布局。</span><a class="src-url" href="https://www.playstationlifestyle.net/2014/05/07/how-the-last-of-us-ui-system-came-to-be/" target="_blank" rel="noopener">https://www.playstationlifestyle.net/2014/05/07/how-the-last-of-us-ui-system-came-to-be/</a></li>
+      <li id="src-7"><span class="src-title">"The Last of Us: A User Interface Review" — HUD 几乎不存在、白色细线圈标示可交互物、圆形生命条贴边。</span><a class="src-url" href="https://sarcasticjuice.wordpress.com/2016/07/19/the-last-of-us-a-user-interface-review/" target="_blank" rel="noopener">https://sarcasticjuice.wordpress.com/2016/07/19/the-last-of-us-a-user-interface-review/</a></li>
+      <li id="src-8"><span class="src-title">Curio Design, "Cyberpunk 2077 Screen" — 全息投影浮空 UI、红青霓虹双色、Glitch 故障艺术、色差边缘。</span><a class="src-url" href="https://designbycurio.com/learn/cyberpunk-2077-screen" target="_blank" rel="noopener">https://designbycurio.com/learn/cyberpunk-2077-screen</a></li>
+      <li id="src-9"><span class="src-title">Cyberpunk Wiki — 手机面板、任务日志、对话选项全息投影、ICE 防御层级。</span><a class="src-url" href="https://cyberpunk.fandom.com/wiki/Cyberpunk_2077" target="_blank" rel="noopener">https://cyberpunk.fandom.com/wiki/Cyberpunk_2077</a></li>
+      <li id="src-10"><span class="src-title">Watch Dogs Wiki — ctOS 手机终端、AR 增强现实投影、黑客代码流、信号干扰 RGB 错位。</span><a class="src-url" href="https://watchdogs.fandom.com/wiki/CtOS" target="_blank" rel="noopener">https://watchdogs.fandom.com/wiki/CtOS</a></li>
+      <li id="src-11"><span class="src-title">Deus Ex Wiki — Praxis 改造树、人体扫描界面、LIMB 诊所、蓝绿医疗色调、器官改造节点。</span><a class="src-url" href="https://deusex.fandom.com/wiki/Augmentations" target="_blank" rel="noopener">https://deusex.fandom.com/wiki/Augmentations</a></li>
+      <li id="src-12"><span class="src-title">Bloober Team, "Observer" — 神经可视化、Dream Eater 脑内界面、脑电波图形、3D 全息记忆碎片、恐惧等级生物读数。</span><a class="src-url" href="https://www.blooberteam.com/observer-redux" target="_blank" rel="noopener">https://www.blooberteam.com/observer-redux</a></li>
+      <li id="src-13"><span class="src-title">GameSetWatch, "How Pony Island Teaches Players to Break a Game" — DOS 绿字黑屏、伪代码修改、恶魔附身街机、灰度像素。</span><a class="src-url" href="http://www.gamesetwatch.com/design/how-i-pony-island-i-teaches-players-to-break-a-game" target="_blank" rel="noopener">http://www.gamesetwatch.com/design/how-i-pony-island-i-teaches-players-to-break-a-game</a></li>
+      <li id="src-14"><span class="src-title">Superhot Wiki / Xbox News — 三色法则（白/红/黑）、粗体无衬线、MSDOS 式系统壳、极简风格化。</span><a class="src-url" href="https://handwiki.org/wiki/Software:Superhot" target="_blank" rel="noopener">https://handwiki.org/wiki/Software:Superhot</a></li>
+      <li id="src-15"><span class="src-title">Curio Design, "Alien: Isolation (Sevastopol)" — 70 年代复古未来、琥珀磷光 CRT、粗壮等宽终端体、磁带存档机、动作追踪器雷达。</span><a class="src-url" href="https://designbycurio.com/learn/alien-isolation-sevastopol" target="_blank" rel="noopener">https://designbycurio.com/learn/alien-isolation-sevastopol</a></li>
+      <li id="src-16"><span class="src-title">Curio Design, "Alien Isolation Sevastopol Design System" — lo-fi 科幻美学、CRT 污渍、扫描线雾化、菲林扫描仪。</span><a class="src-url" href="https://designbycurio.com/alien-isolation-sevastopol" target="_blank" rel="noopener">https://designbycurio.com/alien-isolation-sevastopol</a></li>
+      <li id="src-17"><span class="src-title">Rose Engine, "SIGNALIS Presskit" — 低多边形 3D + 2D 精灵、像素字体、CRT 后处理、冷战东德科幻恐怖。</span><a class="src-url" href="https://rose-engine.org/press/Presskit_SIGNALIS.html" target="_blank" rel="noopener">https://rose-engine.org/press/Presskit_SIGNALIS.html</a></li>
+      <li id="src-18"><span class="src-title">Games.gg, "Signalis" — 劣化屏幕/闪烁灯光/被腐蚀文字/抽象梦境序列传达心理退化，视觉设计即叙事。</span><a class="src-url" href="https://games.gg/signalis/" target="_blank" rel="noopener">https://games.gg/signalis/</a></li>
+      <li id="src-19"><span class="src-title">GameRes, "开发者谈《Into the Breach》中的 UI 设计" — 攻击轨迹可视化、完全透明博弈、零认知负担。</span><a class="src-url" href="https://www.gameres.com/802132.html" target="_blank" rel="noopener">https://www.gameres.com/802132.html</a></li>
+      <li id="src-20"><span class="src-title">GamerMatters, "Into The Breach Review" — 极简 UI、清晰网格、所有信息一目了然、攻击/移动/影响区域全公开。</span><a class="src-url" href="https://gamermatters.com/into-the-breach-review/" target="_blank" rel="noopener">https://gamermatters.com/into-the-breach-review/</a></li>
+      <li id="src-21"><span class="src-title">Dead Cells Official, "The Foundry Update" — 新角色/暂停 UI 拆分三屏、变异选择、锻造与收集 UI 修复。</span><a class="src-url" href="https://deadcells.com/patchnotes/5" target="_blank" rel="noopener">https://deadcells.com/patchnotes/5</a></li>
+      <li id="src-22"><span class="src-title">Mindustry Wiki, "Basics" — 传送带连接、核心库存即时可用、钻头→传送带→熔炉→核心资源流。</span><a class="src-url" href="https://mindustryv4.github.io/wiki/Beginner%20Tutorials/Basics/" target="_blank" rel="noopener">https://mindustryv4.github.io/wiki/Beginner%20Tutorials/Basics/</a></li>
+      <li id="src-23"><span class="src-title">Spire of Chaos, "杀戮尖塔入门指南" — 顶部血条+金币+药水三槽、卡组纵向列表、分支地图图例、遗物图标行。</span><a class="src-url" href="https://spireofchaos.com/guide/slay-the-spire-beginner-guide-mechanics" target="_blank" rel="noopener">https://spireofchaos.com/guide/slay-the-spire-beginner-guide-mechanics</a></li>
+      <li id="src-24"><span class="src-title">GameFive, "Slay the Spire" — 分支地图节点导航、卡牌悬停放大 tooltip、拖拽出牌、移动端触控适配。</span><a class="src-url" href="https://gamefive.org/slay-the-spire/" target="_blank" rel="noopener">https://gamefive.org/slay-the-spire/</a></li>
+    </ol>
+  </div>
+</footer>
+
+</body>
+</html>
