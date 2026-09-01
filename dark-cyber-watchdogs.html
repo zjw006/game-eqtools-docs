@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>看门狗系列 · UI 风格分析</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080c12;--bg2:#0c1118;--panel:#101820;--panel2:#141c28;--line:#1a2330;
+  --ink:#d8e0e8;--ink-dim:#5a6878;
+  --wd-blue:#00abe7;--wd-cyan:#00f0ff;--wd-orange:#ff6b00;--wd-purple:#bd00ff;--wd-red:#ff2a3c;
+  --serif:'Noto Serif SC',serif;--sans:'Noto Sans SC',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.85;background-image:linear-gradient(rgba(0,171,231,.012) 1px,transparent 1px),linear-gradient(90deg,rgba(0,171,231,.012) 1px,transparent 1px);background-size:48px 48px;overflow-x:hidden}
+::selection{background:var(--wd-blue);color:#000}
+::-webkit-scrollbar{width:10px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--line);border-radius:5px}::-webkit-scrollbar-thumb:hover{background:var(--wd-blue)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,12,18,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:4px;padding:0 28px;height:56px;overflow-x:auto}
+nav::-webkit-scrollbar{height:0}
+nav .brand{font-family:var(--serif);font-weight:900;font-size:15px;color:var(--wd-blue);white-space:nowrap;margin-right:18px;display:flex;align-items:center;gap:8px}
+nav .brand::before{content:"";width:10px;height:10px;background:var(--wd-blue);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);box-shadow:0 0 12px var(--wd-blue)}
+nav a{color:var(--ink-dim);text-decoration:none;font-size:12.5px;font-weight:400;padding:6px 11px;white-space:nowrap;border-radius:3px;transition:all .25s;letter-spacing:.04em}
+nav a:hover{color:var(--wd-blue);background:rgba(0,171,231,.08);text-shadow:0 0 8px rgba(0,171,231,.4)}
+header{min-height:82vh;display:flex;flex-direction:column;justify-content:center;padding:130px 6vw 80px;position:relative;overflow:hidden}
+header::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 20% 50%,rgba(0,171,231,.04),transparent 60%),radial-gradient(ellipse 50% 50% at 80% 30%,rgba(189,0,255,.03),transparent 50%);z-index:0}
+header .inner{position:relative;z-index:2;max-width:1200px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.4em;color:var(--wd-orange);text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:14px}
+.kicker::before{content:"";width:42px;height:1px;background:var(--wd-orange);box-shadow:0 0 6px var(--wd-orange)}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(34px,5.4vw,68px);line-height:1.15;letter-spacing:.02em}
+h1 em{font-style:normal;color:var(--wd-blue);text-shadow:0 0 50px rgba(0,171,231,.35)}
+h1 .sub-line{display:block;font-size:clamp(16px,2.2vw,28px);color:var(--ink-dim);margin-top:8px;font-weight:400;font-family:var(--sans)}
+header .sub{margin-top:28px;max-width:820px;color:var(--ink-dim);font-size:clamp(14px,1.3vw,16px)}
+header .sub b{color:var(--ink);font-weight:500}
+header .meta-row{margin-top:42px;display:flex;flex-wrap:wrap;gap:14px}
+header .meta-chip{font-family:var(--mono);font-size:11px;letter-spacing:.08em;border:1px solid var(--line);padding:8px 16px;border-radius:2px;color:var(--ink-dim);background:rgba(16,24,32,.7)}
+header .meta-chip b{color:var(--wd-blue);font-weight:600}
+main{max-width:1280px;margin:0 auto;padding:0 5vw 120px}
+section{margin-top:100px;scroll-margin-top:80px}
+.sec-head{display:flex;align-items:baseline;gap:20px;margin-bottom:14px;border-bottom:1px solid var(--line);padding-bottom:18px;flex-wrap:wrap}
+.sec-num{font-family:var(--mono);font-size:13px;color:var(--wd-orange);letter-spacing:.2em}
+.sec-head h2{font-family:var(--serif);font-weight:900;font-size:clamp(26px,3.4vw,44px);line-height:1.25}
+.sec-head .en{font-family:var(--mono);font-size:11px;color:var(--ink-dim);letter-spacing:.3em;text-transform:uppercase;margin-left:auto}
+.sec-lead{color:var(--ink-dim);max-width:860px;margin-bottom:38px;font-size:15px}
+.sec-lead b{color:var(--ink);font-weight:500}
+h3.sub{font-family:var(--serif);font-weight:700;font-size:22px;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:14px}
+h3.sub .en{font-family:var(--mono);font-size:10px;color:var(--ink-dim);letter-spacing:.25em;text-transform:uppercase;font-weight:400}
+.card{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:6px;padding:24px;margin-bottom:18px}
+.card h3{font-family:var(--serif);font-size:17px;margin-bottom:10px;color:var(--ink)}
+.tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;color:var(--wd-cyan);border:1px solid rgba(0,240,255,.3);padding:2px 8px;border-radius:2px;margin-left:10px;vertical-align:middle}
+.tag.org{color:var(--wd-orange);border-color:rgba(255,107,0,.3)}
+.tag.pur{color:var(--wd-purple);border-color:rgba(189,0,255,.3)}
+.mini{display:flex;flex-direction:column;gap:6px}
+.mini .row{font-size:13px;color:var(--ink-dim);line-height:1.8;padding-left:14px;border-left:2px solid var(--line)}
+.mini .row b{color:var(--ink);font-weight:500}
+.mini .row .keep{color:var(--wd-cyan);font-family:var(--mono);font-size:10px;border:1px solid rgba(0,240,255,.3);padding:1px 6px;border-radius:2px;margin-right:4px}
+.grid{display:grid;gap:18px}.grid.g2{grid-template-columns:repeat(2,1fr)}.grid.g3{grid-template-columns:repeat(3,1fr)}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:18px}
+.feature-item{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:6px;padding:22px}
+.feature-item .feat-icon{width:36px;height:36px;border-radius:6px;background:rgba(0,171,231,.1);border:1px solid rgba(0,171,231,.3);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;color:var(--wd-blue);margin-bottom:12px}
+.feature-item .feat-icon.org{background:rgba(255,107,0,.1);border-color:rgba(255,107,0,.3);color:var(--wd-orange)}
+.feature-item .feat-icon.pur{background:rgba(189,0,255,.1);border-color:rgba(189,0,255,.3);color:var(--wd-purple)}
+.feature-item h4{font-family:var(--serif);font-size:15px;margin-bottom:6px;color:var(--ink)}
+.feature-item p{font-size:12.5px;color:var(--ink-dim);line-height:1.7}
+.glitch-line{height:1px;background:linear-gradient(90deg,transparent,var(--wd-orange),var(--wd-blue),transparent);margin:30px 0;opacity:.3}
+.palette{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.sw{width:72px;height:72px;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid rgba(255,255,255,.08)}
+.sw .hex{font-family:var(--mono);font-size:9px;color:rgba(0,0,0,.7);font-weight:600}
+.sw span:last-child{font-size:9px;color:rgba(0,0,0,.5)}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:linear-gradient(160deg,var(--panel),var(--panel2))}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:680px}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--wd-blue);text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);background:rgba(0,171,231,.05);white-space:nowrap}
+td{padding:13px 16px;border-bottom:1px solid rgba(26,35,48,.6);color:var(--ink-dim);vertical-align:top}
+td:first-child{color:var(--ink);font-weight:500;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+.callout{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-left:3px solid var(--wd-blue);border-radius:6px;padding:22px 26px;font-size:14px;color:var(--ink-dim);line-height:1.8}
+.callout b{color:var(--ink);font-weight:500}
+footer{padding:50px 5vw 70px;border-top:1px solid var(--line);background:var(--bg2)}
+footer .f-brand{font-family:var(--serif);font-weight:900;font-size:18px;color:var(--wd-blue);margin-bottom:6px;text-shadow:0 0 20px rgba(0,171,231,.2)}
+footer .f-note{font-size:13px;color:var(--ink-dim);margin-bottom:30px;max-width:680px}
+@media(max-width:1024px){nav{padding:0 16px;gap:2px}nav .brand{font-size:14px;margin-right:12px}nav a{font-size:12px;padding:6px 9px}main{padding:0 4vw 100px}section{margin-top:80px}header{padding:120px 5vw 70px}}
+@media(max-width:768px){.feature-grid{grid-template-columns:1fr}.grid.g2,.grid.g3{grid-template-columns:1fr}.table-wrap{font-size:12px}}
+
+/* Screenshots */
+.ss-group{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.ss-group img{width:100%;border-radius:4px;border:1px solid var(--line);display:block;filter:saturate(.9) brightness(.88);transition:filter .3s;height:clamp(100px,12vw,150px);object-fit:cover}
+.ss-group img:hover{filter:saturate(1) brightness(1)}
+.shot-wrap{margin:18px 0 4px}
+.shot-full{width:100%;border-radius:4px;border:1px solid var(--line);display:block;filter:saturate(.9) brightness(.88);transition:filter .3s;max-height:480px;object-fit:cover}
+.shot-full:hover{filter:saturate(1) brightness(1)}
+.shot-cap{font-family:var(--mono);font-size:10.5px;color:var(--ink-dim);letter-spacing:.12em;margin-top:8px;text-align:center}
+.shot-cap::before{content:"// ";color:var(--wd-blue)}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;z-index:9999;background:rgba(4,6,10,.95);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility 0s linear .3s;cursor:zoom-out}
+.lightbox.show{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .3s ease}
+.lightbox img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 0 1px var(--line);animation:lbIn .35s ease}
+.lightbox .lb-close{position:absolute;top:20px;right:24px;font-size:28px;color:var(--ink-dim);cursor:pointer;z-index:2}
+.lightbox .lb-caption{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:12px;color:var(--ink-dim);max-width:80vw;text-align:center}
+@keyframes lbIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+@media(max-width:768px){.ss-group img{height:100px}.shot-full{max-height:300px}}
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">WATCH DOGS</span>
+  <a href="#s1">游戏概述</a>
+  <a href="#s2">设计哲学</a>
+  <a href="#s3">界面分析</a>
+  <a href="#s4">视觉系统</a>
+  <a href="#s5">设计令牌</a>
+</nav>
+<header>
+  <div class="inner">
+    <div class="kicker">UI STYLE ANALYSIS · WATCH DOGS SERIES</div>
+    <h1>看门狗 <em>系列</em><span class="sub-line">Ubisoft · 从 DOS 极简到智能手机操作系统的黑客 UI 演变</span></h1>
+    <p class="sub">Ubisoft 打造的开放世界黑客动作系列。从 2014 年芝加哥的阴暗沉重（《看门狗 1》），到 2016 年旧金山的明亮街头（《看门狗 2》），再到 2020 年伦敦的抵抗组织（《看门狗：军团》），三作核心 UI 始终围绕<b>「手机即武器」</b>这一概念展开——玩家掏出智能手机即可控制整座城市。其 UI 从<b>DOS/命令行式极简</b>，演变为<b>智能手机操作系统拟真</b>，再到<b>街头抵抗组织视觉体系</b>，贯穿始终的是<b>故障美学、网络线、数字噪点与 DedSec 品牌视觉</b>。</p>
+    <div class="meta-row">
+      <div class="meta-chip">开发商 <b>Ubisoft</b></div>
+      <div class="meta-chip">WD1 <b>2014</b></div>
+      <div class="meta-chip">WD2 <b>2016</b></div>
+      <div class="meta-chip">Legion <b>2020</b></div>
+      <div class="meta-chip">核心隐喻 <b>智能手机</b></div>
+    </div>
+  </div>
+</header>
+<main>
+<section id="s1">
+  <div class="sec-head"><span class="sec-num">SEC.01</span><h2>游戏概述 <span class="en">GAME OVERVIEW</span></h2></div>
+  <p class="sec-lead">看门狗系列将「黑客/数字反抗」主题转化为可交互的视觉语言。三作以<b>智能手机</b>为 UI 核心隐喻，通过故障美学、网络线与数字噪点营造「世界即界面」的沉浸感。</p>
+  <div class="feature-grid">
+    <div class="feature-item">
+      <div class="feat-icon">01</div>
+      <h4>WD1 · DOS 极简</h4>
+      <p>芝加哥阴暗色调，UI 采用「barebones」排版与 8-bit/DOS 编程字体，粗糙原始的 hack 感，与精致画面形成对比。圆形黑客模块 + Botnet Meter。</p>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon org">02</div>
+      <h4>WD2 · 手机 OS</h4>
+      <p>旧金山明亮街头，UI 参考 Android Material Design，所有功能包装为手机应用，环形技能选择器 + 三面板布局，融入涂鸦/故障艺术/ASCII 艺术。</p>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon pur">03</div>
+      <h4>Legion · 抵抗组织</h4>
+      <p>伦敦街头抵抗，深色+红蓝霓虹对比，Mission App/Team App 基准统一视觉语言，Wheel Menu 选择角色与装备，可定制 HUD 元素。</p>
+    </div>
+  </div>
+</section>
+<div class="glitch-line"></div>
+<section id="s2">
+  <div class="sec-head"><span class="sec-num">SEC.02</span><h2>设计哲学 <span class="en">DESIGN PHILOSOPHY</span></h2></div>
+  <p class="sec-lead">看门狗系列的 UI 哲学可归纳为<b>「手机即武器，世界即界面」</b>——玩家掏出手机即掌控城市，环境中散布的图标提示可黑客对象。</p>
+  <div class="grid g2">
+    <div class="card">
+      <h3>手机即武器 <span class="tag">PHONE AS WEAPON</span></h3>
+      <div class="mini">
+        <div class="row"><b>WD2 核心理念</b>——Alexander Karpazis 强调智能手机是 WD2 UI 设计的核心交互体验</div>
+        <div class="row"><b>应用化功能</b>——所有游戏功能（地图/任务/研究/商店）包装为手机应用图标</div>
+        <div class="row"><b>不暂停游戏</b>——WD2 打开手机菜单时游戏不暂停，强化「随时随地掏出手机」感</div>
+        <div class="row"><b>模糊背景</b>——智能手机应用使用模糊背景处理，保持一致外形和框架</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>世界即界面 <span class="tag org">WORLD AS UI</span></h3>
+      <div class="mini">
+        <div class="row"><b>环境图标</b>——WD1 环境中散布图标提示可黑客对象，世界自带接口感</div>
+        <div class="row"><b>网络线</b>——黑客视觉效果以「网络线」形式展示数据连接，表现黑客复杂性</div>
+        <div class="row"><b>低干扰 HUD</b>——三作均强调 HUD 集中在屏幕边缘，避免遮挡核心画面</div>
+        <div class="row"><b>可定制</b>——Legion 支持开关 Mission Icons/Minimap/Enemy Health/GPS Line 等元素</div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="glitch-line"></div>
+<section id="s3">
+  <div class="sec-head"><span class="sec-num">SEC.03</span><h2>界面分析 <span class="en">INTERFACE ANALYSIS</span></h2></div>
+  <p class="sec-lead">逐项分析 10 个核心界面元素的视觉风格与设计逻辑。</p>
+
+  <h3 class="sub">① 加载界面 <span class="en">LOADING SCREEN</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>WD2</b>——中心进度条动画，加载过程在屏幕中心进行，与手机操作系统概念一致</div>
+    <div class="row"><b>整体设计</b>——简洁、功能性，不使用复杂过场，强调「系统启动中」感</div>
+    <div class="row"><b>WD1 延续</b>——DOS 式极简加载，像素化文字与原始计算质感</div>
+  </div></div>
+  <div class="shot-wrap">
+  <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Watch%20Dogs%202%20style%20loading%20screen%2C%20dark%20background%2C%20central%20progress%20bar%20animation%2C%20smartphone%20OS%20boot%20concept%2C%20blue%20neon%20glow%2C%20glitch%20effects%2C%20pixelated%20text%2C%20digital%20noise%2C%20cyberpunk%20hacker%20aesthetic&image_size=landscape_16_9" alt="看门狗加载界面：中心进度条动画，智能手机启动概念，蓝色霓虹与故障效果">
+  <div class="shot-cap">① 加载界面 · 中心进度条 + 手机启动概念（风格示意图）</div>
+  </div>
+
+  <h3 class="sub">② 主菜单 <span class="en">MAIN MENU</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>WD2</b>——以智能手机界面为框架，类似手机桌面，选择应用图标进入功能模块</div>
+    <div class="row"><b>WD1</b>——barebones 排版与图标，类似早期手机图标/8-bit/DOS 编程字体，「基本计算」质感</div>
+    <div class="row"><b>Legion</b>——Mission App 与 Team App 基准设定统一菜单视觉语言</div>
+    <div class="row"><b>设计演变</b>——从 DOS/命令行极简 → 智能手机 OS 拟真 → 统一应用框架</div>
+  </div></div>
+  <div class="shot-wrap">
+  <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Watch%20Dogs%202%20style%20main%20menu%2C%20smartphone%20home%20screen%20interface%2C%20app%20icons%20grid%2C%20dark%20theme%20with%20blue%20cyan%20neon%20accents%2C%20DedSec%20logo%2C%20Material%20Design%20inspired%2C%20hacker%20aesthetic%2C%20glitch%20effects&image_size=landscape_16_9" alt="看门狗主菜单：智能手机桌面式应用图标，蓝色霓虹高亮，DedSec Logo，故障美学">
+  <div class="shot-cap">② 主菜单 · 智能手机 OS 拟真界面（风格示意图）</div>
+  </div>
+
+  <h3 class="sub">③ 战斗界面 / HUD <span class="en">COMBAT HUD</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>WD2</b>——左下角小地图+快速槽，右下角能量槽（黑客攻击消耗），战斗时提供武器/弹药/目标/能量</div>
+    <div class="row"><b>Legion</b>——追踪任务/小地图/已选武器及弹药/已选 gadget，更精简仅显示必要信息</div>
+    <div class="row"><b>WD1</b>——武器状态/投掷物目标/手机电池/Focus 槽/小地图/Aiden 热度等级</div>
+    <div class="row"><b>准星</b>——Legion 可自定义颜色/大小（100%-150%），支持色盲预设与对比度选项</div>
+    <div class="row"><b>设计目标</b>——「随时可用、不打扰玩家」，游戏几乎可无 UI 运行，UI 只反映游戏状态</div>
+  </div></div>
+
+  <h3 class="sub">④ 关卡 / 任务选择 <span class="en">MISSION SELECTION</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>WD2 地图</b>——类似 Google Maps 设计风格，地标建筑悬停显示说明文字，与手机应用系统融为一体</div>
+    <div class="row"><b>Legion</b>——右键/操作进入任务列表，追踪任务并在地图查看，可调整 GPS Line 等辅助</div>
+    <div class="row"><b>WD1</b>——目标/奖励/战斗/任务融入小地图和 HUD，强调信息即时可用</div>
+  </div></div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Watch%20Dogs%20style%20combat%20HUD%2C%20minimal%20edge%20layout%2C%20bottom%20left%20minimap%2C%20right%20side%20energy%20bar%2C%20weapon%20ammo%20display%2C%20low%20interference%20design%2C%20blue%20neon%20elements%20on%20dark%20background&image_size=landscape_4_3" alt="看门狗战斗HUD：低干扰边缘布局，左下小地图，右侧能量槽">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Watch%20Dogs%202%20style%20city%20map%2C%20Google%20Maps%20inspired%20interface%2C%20dark%20theme%2C%20blue%20highlighted%20locations%2C%20mission%20markers%2C%20GPS%20route%20line%2C%20smartphone%20app%20overlay&image_size=landscape_4_3" alt="看门狗任务地图：类 Google Maps 风格，蓝色标记与 GPS 路线">
+  </div>
+  <div class="shot-cap">③④ 战斗 HUD + 任务地图 · 低干扰 + 类 Google Maps（风格示意图）</div>
+
+  <h3 class="sub">⑤ 商店 <span class="en">SHOP</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>WD2</b>——在线商店目录风格，八家服装店各有品牌形象，600+ 件服装，与手机应用系统一致</div>
+    <div class="row"><b>Legion</b>——货币 ETO 通过任务/快递/收集获得，购买后服装进衣柜，可预览/购买/更换外观</div>
+    <div class="row"><b>设计</b>——强调「在线购物」熟悉感，融入黑客/城市文化品牌元素</div>
+  </div></div>
+
+  <h3 class="sub">⑥ 天赋 / 技能树 <span class="en">SKILL TREE</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>WD2 研究应用</b>——通过手机中 Research App 进入，环形选择器选 7 个技能分支</div>
+    <div class="row"><b>三面板布局</b>——环形选择器 + 技能列表 + 技能预览/说明区域，预览以动画循环展示</div>
+    <div class="row"><b>WD1</b>——传统树状结构，升级方向：驾驶/黑客/物品制作/战斗</div>
+    <div class="row"><b>设计要点</b>——WD2 的技能树是「研究」和「黑客」概念核心体现</div>
+  </div></div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Watch%20Dogs%202%20style%20skill%20tree%2C%20ring%20selector%20circular%20interface%2C%20three%20panel%20layout%2C%20research%20app%2C%20blue%20cyan%20nodes%2C%20dark%20background%2C%20hacker%20upgrade%20concept&image_size=landscape_4_3" alt="看门狗技能树：环形选择器 + 三面板布局，研究应用">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Watch%20Dogs%20style%20online%20shop%20interface%2C%20clothing%20store%20catalog%2C%20dark%20theme%20grid%20layout%2C%20brand%20logos%2C%20blue%20neon%20accents%2C%20smartphone%20app%20style%2C%20urban%20streetwear&image_size=landscape_4_3" alt="看门狗商店：在线目录风格，品牌形象与服装预览">
+  </div>
+  <div class="shot-cap">⑤⑥ 商店 + 技能树 · 在线购物 + 环形研究（风格示意图）</div>
+
+  <h3 class="sub">⑦ 成就系统 <span class="en">ACHIEVEMENTS</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>Legion</b>——219 个奖杯（含 18 个线上），按 Bronze/Silver/Gold/Platinum 分类</div>
+    <div class="row"><b>内容</b>——故事完成/支线任务/科技点收集/装备购买/服装消费/收藏品收集</div>
+    <div class="row"><b>视觉</b>——更偏功能化平台通用 UI，非完全融入游戏世界的 diegetic UI</div>
+  </div></div>
+
+  <h3 class="sub">⑧ 数据库 / 收集品 <span class="en">CODEX / COLLECTIBLES</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>WD1 黑客模块</b>——圆形模块设计，与 Botnet Meter 相连，可作为快速黑客入口</div>
+    <div class="row"><b>WD2 手机应用</b>——大量应用/图标/动画/加载内容/信息窗口，通过智能手机方式访问</div>
+    <div class="row"><b>环境接口</b>——WD1 世界本身带有「接口化」感觉，图标散布提示可黑客对象</div>
+  </div></div>
+
+  <h3 class="sub">⑨ 战斗生命条 <span class="en">HEALTH BAR</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>Legion</b>——HUD 选项含 Enemy Health Bars 开关，Combat Awareness Module 含 Detection Meter/Hit Detection/Blood Effect</div>
+    <div class="row"><b>低干扰</b>——三作生命值显示均遵循低干扰原则，不使用大面积血条</div>
+    <div class="row"><b>可定制</b>——可关闭/显示敌人血条，与其他 HUD 元素同等可定制</div>
+  </div></div>
+
+  <h3 class="sub">⑩ 视觉特效 <span class="en">VISUAL EFFECTS</span></h3>
+  <div class="grid g2">
+    <div class="card">
+      <h3>故障美学 <span class="tag pur">GLITCH</span></h3>
+      <div class="mini">
+        <div class="row"><b>像素化文字</b>——8-bit 字体、DOS 编程风格</div>
+        <div class="row"><b>网络线</b>——节点连接图展示数据连接与黑客过程</div>
+        <div class="row"><b>信号干扰</b>——屏幕闪烁、信号干扰效果</div>
+        <div class="row"><b>数字噪点</b>——暗色背景+高对比度文本</div>
+        <div class="row"><b>霓虹光效</b>——蓝色/青色霓虹，黑客时屏幕发霓虹蓝色能量</div>
+        <div class="row"><b>故障 Logo</b>——像素化/故障风格标题与图标</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>DedSec 品牌视觉 <span class="tag">DEDSEC</span></h3>
+      <div class="mini">
+        <div class="row"><b>Logo</b>——粗体无衬线字体+像素化/故障效果+几何/像素化动物图形</div>
+        <div class="row"><b>WD2 街头艺术</b>——涂鸦/网络梗文化/ASCII 艺术/故障艺术融入 UI</div>
+        <div class="row"><b>Material Design</b>——WD2 参考 Android Material Design 风格，简洁布局+高饱和度色彩</div>
+        <div class="row"><b>Legion 抵抗</b>——深色/故障/街头抵抗/数字暴力的视觉语言</div>
+      </div>
+    </div>
+  </div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Watch%20Dogs%20style%20glitch%20aesthetic%2C%20pixelated%208-bit%20text%2C%20network%20connection%20lines%2C%20digital%20noise%2C%20signal%20distortion%2C%20blue%20neon%20glitch%20effects%20on%20dark%20background%2C%20hacker%20visual&image_size=landscape_4_3" alt="看门狗故障美学：像素化文字、网络线、数字噪点">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Watch%20Dogs%20DedSec%20brand%20visual%2C%20skull%20logo%2C%20purple%20magenta%20neon%2C%20graffiti%20street%20art%20style%2C%20glitch%20pixelated%20text%2C%20resistance%20movement%20aesthetic%2C%20dark%20background&image_size=landscape_4_3" alt="DedSec品牌视觉：紫色霓虹骷髅Logo、涂鸦街头艺术">
+  </div>
+  <div class="shot-cap">⑩ 故障美学 + DedSec 品牌视觉（风格示意图）</div>
+</section>
+<div class="glitch-line"></div>
+<section id="s4">
+  <div class="sec-head"><span class="sec-num">SEC.04</span><h2>视觉系统 <span class="en">VISUAL SYSTEM</span></h2></div>
+  <p class="sec-lead">看门狗系列色彩随城市氛围变化——蓝色代表技术/控制/黑客能力，红色代表危险/抵抗/警报，绿色代表系统内部运作。</p>
+  <div class="grid g2">
+    <div class="card">
+      <h3>色彩体系 <span class="tag">COLOR PALETTE</span></h3>
+      <div class="palette">
+        <div class="sw" style="background:#080c12"><span class="hex" style="color:#666">#080C12</span><span style="color:#444">底色</span></div>
+        <div class="sw" style="background:#00abe7"><span class="hex">#00ABE7</span><span>WD 蓝</span></div>
+        <div class="sw" style="background:#00f0ff"><span class="hex">#00F0FF</span><span>青色</span></div>
+        <div class="sw" style="background:#ff6b00"><span class="hex">#FF6B00</span><span>WD1 橙</span></div>
+        <div class="sw" style="background:#bd00ff"><span class="hex">#BD00FF</span><span>DedSec 紫</span></div>
+        <div class="sw" style="background:#ff2a3c"><span class="hex">#FF2A3C</span><span>警示</span></div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>WD1</b>——深灰/黑色/冷蓝色高亮/绿色代码感</div>
+        <div class="row"><b>WD2</b>——明亮/高饱和/蓝青霓虹/Android Material Design</div>
+        <div class="row"><b>Legion</b>——深色/红蓝霓虹对比/故障街头</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>字体与排版 <span class="tag org">TYPOGRAPHY</span></h3>
+      <div class="mini">
+        <div class="row"><b>WD1</b>——8-bit/DOS 编程字体风格，「基本计算」质感</div>
+        <div class="row"><b>WD2</b>——Android Material Design 风格，现代/清晰/扁平化排版</div>
+        <div class="row"><b>Legion</b>——统一视觉语言，Mission/Team App 基准</div>
+        <div class="row"><b>系列通用</b>——标题 Logo 粗体无衬线+像素化/故障效果</div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="glitch-line"></div>
+<section id="s5">
+  <div class="sec-head"><span class="sec-num">SEC.05</span><h2>设计令牌 <span class="en">DESIGN TOKENS</span></h2></div>
+  <p class="sec-lead">可直接用于程序实现的设计令牌对照表。</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>令牌</th><th>值</th><th>用途</th></tr></thead>
+      <tbody>
+        <tr><td>底色</td><td>#080C12</td><td>所有界面背景</td></tr>
+        <tr><td>面板底</td><td>#101820</td><td>卡片/面板背景</td></tr>
+        <tr><td>主强调色</td><td>#00ABE7 (WD 蓝)</td><td>HUD、选中态、主信息</td></tr>
+        <tr><td>次强调色</td><td>#00F0FF (青色)</td><td>系统状态、骇入信息</td></tr>
+        <tr><td>WD1 色</td><td>#FF6B00 (橙)</td><td>WD1 专属暖色调</td></tr>
+        <tr><td>DedSec 色</td><td>#BD00FF (紫)</td><td>DedSec 品牌标识</td></tr>
+        <tr><td>警示色</td><td>#FF2A3C (红)</td><td>危险、警报</td></tr>
+        <tr><td>核心隐喻</td><td>智能手机 OS</td><td>UI 组织逻辑</td></tr>
+        <tr><td>HUD 风格</td><td>低干扰 + 边缘布局</td><td>避免遮挡核心画面</td></tr>
+        <tr><td>特效</td><td>故障位移 + 像素化 + 网络线 + 噪点</td><td>黑客视觉修辞</td></tr>
+        <tr><td>技能树</td><td>环形选择器 + 三面板</td><td>WD2 研究应用</td></tr>
+        <tr><td>地图</td><td>类 Google Maps</td><td>WD2 城市导航</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout" style="margin-top:30px">
+    <b>总结：</b>看门狗系列成功将「黑客/数字反抗」主题转化为可交互的视觉语言。从 WD1 的 DOS 极简到 WD2 的手机 OS 拟真，再到 Legion 的街头抵抗体系，核心始终是<b>「手机即武器，世界即界面」</b>——故障美学贯穿三作，色彩随城市氛围演变，但「玩家是黑客」的角色代入从未改变。
+  </div>
+</section>
+</main>
+<footer>
+  <div style="max-width:1280px;margin:0 auto;padding:0 5vw">
+    <div class="f-brand">WATCH DOGS · UI ANALYSIS</div>
+    <div class="f-note">Ubisoft · 手机即武器 · 世界即界面 · 故障美学 · DedSec 品牌视觉 · 智能手机 OS 拟真</div>
+  </div>
+</footer>
+<!-- Lightbox -->
+<div class="lightbox" id="lb"><span class="lb-close">&times;</span><img id="lbImg" src="" alt=""><div class="lb-caption" id="lbCap"></div></div>
+<script>
+(function(){
+  var lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg'),lbCap=document.getElementById('lbCap');
+  document.querySelectorAll('.zoomable').forEach(function(img){
+    img.style.cursor='zoom-in';
+    img.addEventListener('click',function(){
+      lbImg.src=this.src;lbCap.textContent=this.alt||'';lb.classList.add('show');
+    });
+  });
+  lb.addEventListener('click',function(e){if(e.target===lb||e.target.classList.contains('lb-close'))lb.classList.remove('show');});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('show');});
+})();
+</script>
+</body>
+</html>

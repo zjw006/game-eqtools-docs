@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>赛博朋克 2077 · UI 风格分析</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0f;--bg2:#0f0f18;--panel:#12121e;--panel2:#181826;--line:#1a1a2e;
+  --ink:#e8e8f0;--ink-dim:#5a5a6e;
+  --cp-yellow:#fcee0a;--cp-magenta:#ff003c;--cp-cyan:#00f5ff;--cp-blue:#0099ff;
+  --dim-yellow:#3a3500;--dim-magenta:#2a0010;--dim-cyan:#003a40;
+  --serif:'Noto Serif SC',serif;--sans:'Noto Sans SC',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.85;
+  background-image:
+    linear-gradient(rgba(252,238,10,.012) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(252,238,10,.012) 1px,transparent 1px);
+  background-size:48px 48px;overflow-x:hidden;
+}
+::selection{background:var(--cp-yellow);color:#000}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--line);border-radius:5px}
+::-webkit-scrollbar-thumb:hover{background:var(--cp-yellow)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:4px;padding:0 28px;height:56px;overflow-x:auto}
+nav::-webkit-scrollbar{height:0}
+nav .brand{font-family:var(--serif);font-weight:900;font-size:15px;color:var(--cp-yellow);white-space:nowrap;margin-right:18px;display:flex;align-items:center;gap:8px}
+nav .brand::before{content:"";width:10px;height:10px;background:var(--cp-yellow);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);box-shadow:0 0 12px var(--cp-yellow)}
+nav a{color:var(--ink-dim);text-decoration:none;font-size:12.5px;font-weight:400;padding:6px 11px;white-space:nowrap;border-radius:3px;transition:all .25s;letter-spacing:.04em}
+nav a:hover{color:var(--cp-yellow);background:rgba(252,238,10,.08);text-shadow:0 0 8px rgba(252,238,10,.4)}
+
+header{min-height:82vh;display:flex;flex-direction:column;justify-content:center;padding:130px 6vw 80px;position:relative;overflow:hidden}
+header::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 20% 50%,rgba(252,238,10,.04),transparent 60%),radial-gradient(ellipse 50% 50% at 80% 30%,rgba(255,0,60,.03),transparent 50%);z-index:0}
+header .inner{position:relative;z-index:2;max-width:1200px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.4em;color:var(--cp-magenta);text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:14px}
+.kicker::before{content:"";width:42px;height:1px;background:var(--cp-magenta);box-shadow:0 0 6px var(--cp-magenta)}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(34px,5.4vw,68px);line-height:1.15;letter-spacing:.02em}
+h1 em{font-style:normal;color:var(--cp-yellow);text-shadow:0 0 50px rgba(252,238,10,.35)}
+h1 .sub-line{display:block;font-size:clamp(16px,2.2vw,28px);color:var(--ink-dim);margin-top:8px;font-weight:400;font-family:var(--sans)}
+header .sub{margin-top:28px;max-width:820px;color:var(--ink-dim);font-size:clamp(14px,1.3vw,16px)}
+header .sub b{color:var(--ink);font-weight:500}
+header .meta-row{margin-top:42px;display:flex;flex-wrap:wrap;gap:14px}
+header .meta-chip{font-family:var(--mono);font-size:11px;letter-spacing:.08em;border:1px solid var(--line);padding:8px 16px;border-radius:2px;color:var(--ink-dim);background:rgba(17,17,30,.7)}
+header .meta-chip b{color:var(--cp-yellow);font-weight:600}
+
+main{max-width:1280px;margin:0 auto;padding:0 5vw 120px}
+section{margin-top:100px;scroll-margin-top:80px}
+.sec-head{display:flex;align-items:baseline;gap:20px;margin-bottom:14px;border-bottom:1px solid var(--line);padding-bottom:18px;flex-wrap:wrap}
+.sec-num{font-family:var(--mono);font-size:13px;color:var(--cp-magenta);letter-spacing:.2em}
+.sec-head h2{font-family:var(--serif);font-weight:900;font-size:clamp(26px,3.4vw,44px);line-height:1.25}
+.sec-head .en{font-family:var(--mono);font-size:11px;color:var(--ink-dim);letter-spacing:.3em;text-transform:uppercase;margin-left:auto}
+.sec-lead{color:var(--ink-dim);max-width:860px;margin-bottom:38px;font-size:15px}
+.sec-lead b{color:var(--ink);font-weight:500}
+
+h3.sub{font-family:var(--serif);font-weight:700;font-size:22px;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:14px}
+h3.sub .en{font-family:var(--mono);font-size:10px;color:var(--ink-dim);letter-spacing:.25em;text-transform:uppercase;font-weight:400}
+
+.card{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:6px;padding:24px;margin-bottom:18px}
+.card h3{font-family:var(--serif);font-size:17px;margin-bottom:10px;color:var(--ink)}
+.tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;color:var(--cp-cyan);border:1px solid rgba(0,245,255,.3);padding:2px 8px;border-radius:2px;margin-left:10px;vertical-align:middle}
+.tag.mag{color:var(--cp-magenta);border-color:rgba(255,0,60,.3)}
+.tag.yel{color:var(--cp-yellow);border-color:rgba(252,238,10,.3)}
+
+.mini{display:flex;flex-direction:column;gap:6px}
+.mini .row{font-size:13px;color:var(--ink-dim);line-height:1.8;padding-left:14px;border-left:2px solid var(--line)}
+.mini .row b{color:var(--ink);font-weight:500}
+.mini .row .keep{color:var(--cp-cyan);font-family:var(--mono);font-size:10px;border:1px solid rgba(0,245,255,.3);padding:1px 6px;border-radius:2px;margin-right:4px}
+
+.grid{display:grid;gap:18px}
+.grid.g2{grid-template-columns:repeat(2,1fr)}
+.grid.g3{grid-template-columns:repeat(3,1fr)}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:18px}
+.feature-item{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:6px;padding:22px}
+.feature-item .feat-icon{width:36px;height:36px;border-radius:6px;background:rgba(252,238,10,.1);border:1px solid rgba(252,238,10,.3);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;color:var(--cp-yellow);margin-bottom:12px}
+.feature-item .feat-icon.mag{background:rgba(255,0,60,.1);border-color:rgba(255,0,60,.3);color:var(--cp-magenta)}
+.feature-item .feat-icon.cyn{background:rgba(0,245,255,.1);border-color:rgba(0,245,255,.3);color:var(--cp-cyan)}
+.feature-item h4{font-family:var(--serif);font-size:15px;margin-bottom:6px;color:var(--ink)}
+.feature-item p{font-size:12.5px;color:var(--ink-dim);line-height:1.7}
+
+.glitch-line{height:1px;background:linear-gradient(90deg,transparent,var(--cp-magenta),var(--cp-yellow),transparent);margin:30px 0;opacity:.3}
+
+.palette{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.sw{width:72px;height:72px;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid rgba(255,255,255,.08)}
+.sw .hex{font-family:var(--mono);font-size:9px;color:rgba(0,0,0,.7);font-weight:600}
+.sw span:last-child{font-size:9px;color:rgba(0,0,0,.5)}
+
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:linear-gradient(160deg,var(--panel),var(--panel2))}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:680px}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--cp-yellow);text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);background:rgba(252,238,10,.05);white-space:nowrap}
+td{padding:13px 16px;border-bottom:1px solid rgba(26,26,46,.6);color:var(--ink-dim);vertical-align:top}
+td:first-child{color:var(--ink);font-weight:500;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+
+.callout{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-left:3px solid var(--cp-yellow);border-radius:6px;padding:22px 26px;font-size:14px;color:var(--ink-dim);line-height:1.8}
+.callout b{color:var(--ink);font-weight:500}
+
+footer{padding:50px 5vw 70px;border-top:1px solid var(--line);background:var(--bg2)}
+footer .f-brand{font-family:var(--serif);font-weight:900;font-size:18px;color:var(--cp-yellow);margin-bottom:6px;text-shadow:0 0 20px rgba(252,238,10,.2)}
+footer .f-note{font-size:13px;color:var(--ink-dim);margin-bottom:30px;max-width:680px}
+
+@media(max-width:1024px){nav{padding:0 16px;gap:2px}nav .brand{font-size:14px;margin-right:12px}nav a{font-size:12px;padding:6px 9px}main{padding:0 4vw 100px}section{margin-top:80px}header{padding:120px 5vw 70px}}
+@media(max-width:768px){.feature-grid{grid-template-columns:1fr}.grid.g2,.grid.g3{grid-template-columns:1fr}.table-wrap{font-size:12px}}
+
+/* Screenshots */
+.ss-group{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.ss-group img{width:100%;border-radius:4px;border:1px solid var(--line);display:block;filter:saturate(.9) brightness(.88);transition:filter .3s;height:clamp(100px,12vw,150px);object-fit:cover}
+.ss-group img:hover{filter:saturate(1) brightness(1)}
+.shot-wrap{margin:18px 0 4px}
+.shot-full{width:100%;border-radius:4px;border:1px solid var(--line);display:block;filter:saturate(.9) brightness(.88);transition:filter .3s;max-height:480px;object-fit:cover}
+.shot-full:hover{filter:saturate(1) brightness(1)}
+.shot-cap{font-family:var(--mono);font-size:10.5px;color:var(--ink-dim);letter-spacing:.12em;margin-top:8px;text-align:center}
+.shot-cap::before{content:"// ";color:var(--cp-yellow)}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;z-index:9999;background:rgba(4,6,10,.95);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility 0s linear .3s;cursor:zoom-out}
+.lightbox.show{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .3s ease}
+.lightbox img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 0 1px var(--line);animation:lbIn .35s ease}
+.lightbox .lb-close{position:absolute;top:20px;right:24px;font-size:28px;color:var(--ink-dim);cursor:pointer;z-index:2}
+.lightbox .lb-caption{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:12px;color:var(--ink-dim);max-width:80vw;text-align:center}
+@keyframes lbIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+@media(max-width:768px){.ss-group img{height:100px}.shot-full{max-height:300px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand">CP2077</span>
+  <a href="#s1">游戏概述</a>
+  <a href="#s2">设计哲学</a>
+  <a href="#s3">界面分析</a>
+  <a href="#s4">视觉系统</a>
+  <a href="#s5">设计令牌</a>
+</nav>
+
+<header>
+  <div class="inner">
+    <div class="kicker">UI STYLE ANALYSIS · CYBERPUNK 2077</div>
+    <h1>赛博朋克 <em>2077</em><span class="sub-line">CD Projekt RED · 夜之城的霓虹终端操作系统</span></h1>
+    <p class="sub">CD Projekt RED 打造的开放世界 RPG 巨作。玩家扮演雇佣兵 <b>V</b>，在赛博朋克都市「夜之城」中追逐不朽的传奇。其 UI 设计是一套<b>企业操作系统视觉语言</b>——纯黑底、荧光黄主导、洋红警示、青色系统状态，配合 L 形 HUD 方括号框架与扫描线噪点，将夜之城的<b>霓虹广告、军事终端与数据面板</b>融为一体。这不是「深色模式」，而是刻意保留高密度、强对比、故障感的<b>夜之城界面系统</b>。</p>
+    <div class="meta-row">
+      <div class="meta-chip">开发商 <b>CD Projekt RED</b></div>
+      <div class="meta-chip">首发 <b>2020</b></div>
+      <div class="meta-chip">更新 <b>2.0 / Phantom Liberty</b></div>
+      <div class="meta-chip">主色 <b>荧光黄</b></div>
+      <div class="meta-chip">字体 <b>Rajdhani / Orbitron</b></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ S1 游戏概述 ============ -->
+<section id="s1">
+  <div class="sec-head">
+    <span class="sec-num">SEC.01</span>
+    <h2>游戏概述 <span class="en">GAME OVERVIEW</span></h2>
+  </div>
+  <p class="sec-lead">《赛博朋克 2077》的 UI 不是传统游戏的「简洁深色模式」，而是 CD Projekt RED 为夜之城世界观量身打造的<b>企业操作系统视觉语言</b>。它融合了军事终端的高密度信息、企业数据屏的冷感以及夜之城霓虹广告的视觉冲击，构成了一个完整、自洽的界面系统。</p>
+
+  <div class="feature-grid">
+    <div class="feature-item">
+      <div class="feat-icon">01</div>
+      <h4>纯黑底色</h4>
+      <p>背景以纯黑/近黑为基调，模拟「屏幕在数据激活前的关闭状态」。所有面板、卡片、HUD 都浮于深空之上，强调<b>数据即光</b>。</p>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon mag">02</div>
+      <h4>荧光黄主导</h4>
+      <p>荧光黄/近黄绿色是 V 的标识色——HUD 文字、主要操作、弹药数字、伤害反馈、任务路径全部统一为黄色系，在暗底上形成<b>最强可读性</b>。</p>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon cyn">03</div>
+      <h4>三色功能码</h4>
+      <p>洋红=危险/入侵/警报，青色=系统/骇入/网络状态，蓝色=经验/RAM 容量。颜色即信息，玩家<b>扫一眼即知状态</b>。</p>
+    </div>
+  </div>
+</section>
+
+<div class="glitch-line"></div>
+
+<!-- ============ S2 设计哲学 ============ -->
+<section id="s2">
+  <div class="sec-head">
+    <span class="sec-num">SEC.02</span>
+    <h2>设计哲学 <span class="en">DESIGN PHILOSOPHY</span></h2>
+  </div>
+  <p class="sec-lead">赛博朋克 2077 的 UI 哲学可归纳为<b>「信息密度优先」</b>——尽量减少空白，将生命、弹药、任务、地图、状态等信息尽量贴近玩家视线，形成高密度、高紧迫感的终端式界面。</p>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>L 形方括号框架 <span class="tag yel">HUD BRACKETS</span></h3>
+      <div class="mini">
+        <div class="row"><b>方括号容器</b>——HUD 元素以 L 形方括号包裹，模拟瞄准镜、卫星层和数据面板，是赛博朋克 2077 最核心的视觉签名</div>
+        <div class="row"><b>信息锚定</b>——方括号将信息「锚定」在屏幕四角，减少中央干扰，同时暗示「画面被系统标记」</div>
+        <div class="row"><b>等宽终端排版</b>——全大写、宽字距、等宽数据排版，使界面更像企业终端或军事显示面板</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>世界观即界面 <span class="tag mag">DIEGETIC UI</span></h3>
+      <div class="mini">
+        <div class="row"><b>夜之城即 UI</b>——菜单和暂停界面使用半透明面板，让玩家仍可看到背景中的夜之城场景，形成「世界即 UI」效果</div>
+        <div class="row"><b>义体即身体</b>——Ripperdoc 界面将义体改装呈现为身体终端，安装义体时 V 坐入手术椅，通过动画增强沉浸感</div>
+        <div class="row"><b>超梦即调查</b>——超梦界面分为视觉层（橙）、热成像层（蓝）、音频层（绿），用颜色层叠加实现「多感官回放」</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glitch-line"></div>
+
+<!-- ============ S3 界面分析 ============ -->
+<section id="s3">
+  <div class="sec-head">
+    <span class="sec-num">SEC.03</span>
+    <h2>界面分析 <span class="en">INTERFACE ANALYSIS</span></h2>
+  </div>
+  <p class="sec-lead">以下逐项分析 10 个核心界面元素的视觉风格、布局特征与设计逻辑。</p>
+
+  <!-- 1 加载界面 -->
+  <h3 class="sub">① 加载界面 <span class="en">LOADING SCREEN</span></h3>
+  <div class="card">
+    <div class="mini">
+      <div class="row"><b>动画化纹理</b>——加载屏幕并非静态背景，而是通过纹理动画、视频文件与引擎内局部动画循环播放，要求轻量、优化、循环自然</div>
+      <div class="row"><b>品牌化开场</b>——游戏 logo 以霓虹 LED、色彩闪烁和动态进场呈现，与夜之城的霓虹广告视觉一致</div>
+      <div class="row"><b>暗色基调</b>——延续纯黑/近黑背景，强调屏幕被数据激活前的等待感</div>
+      <div class="row"><b>终端氛围</b>——HUD 方括号、扫描线、故障位移、霓虹发光等元素强化加载界面的「终端运行中」错觉</div>
+    </div>
+  </div>
+  <div class="shot-wrap">
+  <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Cyberpunk%202077%20style%20loading%20screen%2C%20pure%20black%20background%2C%20neon%20yellow%20LED%20logo%2C%20scan%20lines%2C%20glitch%20displacement%2C%20RGB%20chromatic%20aberration%2C%20futuristic%20terminal%20atmosphere&image_size=landscape_16_9" alt="赛博朋克2077加载界面：纯黑底荧光黄LED logo，扫描线与故障位移">
+  <div class="shot-cap">① 加载界面 · 纯黑底 + 荧光黄 LED + 故障位移（风格示意图）</div>
+  </div>
+
+  <!-- 2 主界面 -->
+  <h3 class="sub">② 主菜单 / 暂停菜单 <span class="en">MAIN MENU</span></h3>
+  <div class="card">
+    <div class="mini">
+      <div class="row"><b>半透明面板</b>——主菜单使用半透明 UI 面板，让玩家仍可看到背景中的夜之城场景，形成「世界即 UI」效果</div>
+      <div class="row"><b>按钮风格</b>——低饱和、窄矩形条状按钮，悬停时强化发光或边框反馈，材质接近半透明玻璃/数据终端面板</div>
+      <div class="row"><b>品牌标识</b>——标题 logo 以 LED 霓虹风格呈现，颜色由荧光黄、霓虹粉、青色构成</div>
+      <div class="row"><b>菜单布局</b>——暂停菜单条目纵向排列，以荧光黄、青色、洋红作为高亮/选中/警告反馈</div>
+      <div class="row"><b>字体</b>——主字体 Rajdhani（HUD/任务/统计），次要字体 Orbitron（标签/装饰/小尺寸信息），全大写宽字距</div>
+    </div>
+  </div>
+  <div class="shot-wrap">
+  <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Cyberpunk%202077%20style%20pause%20menu%2C%20semi-transparent%20panel%20over%20night%20city%20background%2C%20narrow%20rectangular%20buttons%2C%20yellow%20neon%20glow%2C%20data%20terminal%20aesthetic%2C%20dark%20sci-fi&image_size=landscape_16_9" alt="赛博朋克2077主菜单：半透明面板覆盖夜之城背景，荧光黄按钮">
+  <div class="shot-cap">② 主菜单 · 半透明面板 + 夜之城背景可见（风格示意图）</div>
+  </div>
+
+  <!-- 3 战斗界面 -->
+  <h3 class="sub">③ 战斗界面 / HUD <span class="en">COMBAT HUD</span></h3>
+  <div class="card">
+    <div class="mini">
+      <div class="row"><b>信息密度优先</b>——尽量减少空白，将生命、弹药、任务、地图、状态等信息贴近玩家视线</div>
+      <div class="row"><b>小地图</b>——右上角圆形局部地图，主任务路径黄色虚线、自定义标记蓝色虚线，危险区域红色提示框</div>
+      <div class="row"><b>任务信息</b>——屏幕右侧中部，Rajdhani 字体显示任务名称与目标，状态通过颜色变化反馈</div>
+      <div class="row"><b>武器/弹药</b>——右下角显示当前武器与弹药，弹药以红色数字（弹匣）/蓝色数字（备弹）区分</div>
+      <div class="row"><b>状态效果</b>——角色信息区附近显示正面/负面状态图标，中毒/失血/义体过载/药效/增益/负面</div>
+      <div class="row"><b>伤害数字</b>——高饱和荧光黄色浮动数字，确保复杂场景中清晰可见，是 HUD 信息密度的一部分</div>
+    </div>
+  </div>
+  <div class="shot-wrap">
+  <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Cyberpunk%202077%20style%20combat%20HUD%2C%20L-shaped%20bracket%20frames%2C%20high%20information%20density%2C%20top%20right%20circular%20minimap%2C%20yellow%20ammo%20numbers%2C%20red%20magazine%20blue%20reserve%2C%20dark%20background&image_size=landscape_16_9" alt="赛博朋克2077战斗HUD：L形方括号框架，高信息密度，右上小地图，黄色弹药数字">
+  <div class="shot-cap">③ 战斗 HUD · L 形方括号 + 高信息密度（风格示意图）</div>
+  </div>
+
+  <!-- 4 关卡/任务选择 -->
+  <h3 class="sub">④ 任务日志 / 关卡选择 <span class="en">JOURNAL / QUEST LOG</span></h3>
+  <div class="card">
+    <div class="mini">
+      <div class="row"><b>层级结构</b>——通过主菜单 → 角色界面 → 任务日志等层级组织信息，任务分为主线/支线/世界事件</div>
+      <div class="row"><b>经验与等级</b>——左上角显示角色等级与蓝色经验条，升级/获得经验时通过高亮与进度条变化提示</div>
+      <div class="row"><b>任务状态</b>——标题、状态说明与进度条区分当前目标/已完成/可接受/失败，形成信息密集型终端界面</div>
+      <div class="row"><b>任务路径</b>——小地图上黄色虚线引导主任务路径，蓝色虚线引导自定义标记</div>
+    </div>
+  </div>
+
+  <!-- 5 商店 -->
+  <h3 class="sub">⑤ 商店 / Ripperdoc <span class="en">SHOP / RIPPERDOC</span></h3>
+  <div class="card">
+    <div class="mini">
+      <div class="row"><b>商品展示</b>——物品以网格或列表形式呈现，可浏览商品详情、属性与价格</div>
+      <div class="row"><b>货币</b>——Eurodollars（eddies），玩家资金/商品价格/购买后余额变化构成主要交互反馈</div>
+      <div class="row"><b>Ripperdoc 界面</b>——义体改装核心入口，按身体系统分类（头部/循环/免疫/神经/皮肤/骨骼/四肢）</div>
+      <div class="row"><b>义体容量</b>——左侧黄色条显示当前义体使用上限，右侧蓝色条显示护甲值（2.0 后义体与护甲绑定）</div>
+      <div class="row"><b>沉浸感</b>——安装义体时 V 坐入手术椅，通过不同植入类型动画增强场景沉浸感</div>
+    </div>
+  </div>
+
+  <!-- 6 天赋/技能树 -->
+  <h3 class="sub">⑥ 天赋 / 技能树 <span class="en">PERK TREE</span></h3>
+  <div class="card">
+    <div class="mini">
+      <div class="row"><b>属性与技能</b>——技能树按属性组织，技能分为 4 级（需 4/9/15/20 点对应属性），2.0 更新后重新组织</div>
+      <div class="row"><b>层级结构</b>——Tier 1 基础（4 点）→ Tier 2 中级（9 点）→ Tier 3 高级（15 点）→ Tier 4 顶级（20 点），部分末端分裂为两分支</div>
+      <div class="row"><b>视觉组织</b>——分支、层级与连接线组织，可购买/已购买/锁定/奖励型技能通过颜色与边框区分</div>
+      <div class="row"><b>UI 层级</b>——纯黑背景、荧光黄标题、青色系统信息、洋红警告，符合夜之城数据终端美学</div>
+    </div>
+  </div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Cyberpunk%202077%20ripperdoc%20interface%2C%20body%20terminal%20display%2C%20cyberware%20installation%20categories%2C%20yellow%20capacity%20bar%2C%20blue%20armor%20bar%2C%20surgical%20chair%20concept%2C%20dark%20aesthetic&image_size=landscape_4_3" alt="赛博朋克2077 Ripperdoc界面：义体改装终端，身体系统分类，黄色容量条与蓝色护甲条">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Cyberpunk%202077%20perk%20tree%2C%20tier-based%20skill%20branches%2C%20yellow%20connection%20lines%2C%20dark%20background%2C%20terminal%20style%20upgrade%20nodes%2C%20attribute%20requirements%2C%20futuristic%20data%20panel&image_size=landscape_4_3" alt="赛博朋克2077技能树：层级分支结构，黄色连接线，终端式升级节点">
+  </div>
+  <div class="shot-cap">⑤⑥ Ripperdoc + 技能树 · 身体终端 + 层级分支（风格示意图）</div>
+
+  <!-- 7 成就 -->
+  <h3 class="sub">⑦ 成就系统 <span class="en">ACHIEVEMENTS</span></h3>
+  <div class="card">
+    <div class="mini">
+      <div class="row"><b>平台列表</b>——Steam/PS/Xbox 平台列表显示成就总数、获得率与玩家进度</div>
+      <div class="row"><b>图标与描述</b>——每个成就对应一个风格化图标与达成条件说明，隐藏成就达成前隐藏描述</div>
+      <div class="row"><b>稀有度</b>——显示稀有度（如 Very Rare）与达成率</div>
+      <div class="row"><b>视觉风格</b>——延续终端式信息展示，图标/数字/状态/稀有度作为核心反馈</div>
+    </div>
+  </div>
+
+  <!-- 8 图鉴 -->
+  <h3 class="sub">⑧ 数据库 / 碎片 / 图鉴 <span class="en">CODEX / SHARDS</span></h3>
+  <div class="card">
+    <div class="mini">
+      <div class="row"><b>碎片 Shards</b>——游戏内阅读内容（文章/传单/笔记/世界信息/技术资料），按 Articles/Leaflets/Notes/World/Technology 分类</div>
+      <div class="row"><b>数据库 Codex</b>——查看角色/世界/事件/背景资料，通过分类→条目列表→详情页组织，终端式排版</div>
+      <div class="row"><b>车辆目录</b>——车辆以卡片/缩略图/列表形式呈现，显示名称/状态/归属/任务关联</div>
+      <div class="row"><b>视觉风格</b>——深色背景、Rajdhani/Orbitron 字体、细线边框、少量高亮，强化数据档案感</div>
+    </div>
+  </div>
+  <div class="shot-wrap">
+  <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Cyberpunk%202077%20database%20codex%2C%20terminal%20style%20data%20archive%2C%20dark%20background%20with%20yellow%20text%2C%20shard%20reading%20interface%2C%20categorized%20list%2C%20thin%20borders&image_size=landscape_16_9" alt="赛博朋克2077数据库图鉴：终端式数据档案，黄色文字，碎片阅读界面">
+  <div class="shot-cap">⑧ 数据库 / 图鉴 · 终端式数据档案（风格示意图）</div>
+  </div>
+
+  <!-- 9 血条 -->
+  <h3 class="sub">⑨ 战斗生命条 <span class="en">HEALTH BAR</span></h3>
+  <div class="card">
+    <div class="mini">
+      <div class="row"><b>位置</b>——左上角，与经验条、状态图标、Cyberdeck RAM 容量并列显示</div>
+      <div class="row"><b>生命值</b>——横向条状，通过长度与颜色变化反映当前生命状态</div>
+      <div class="row"><b>RAM 容量</b>——蓝色竖线/竖条显示义体骇入系统 RAM 容量，与生命条相邻</div>
+      <div class="row"><b>护甲值</b>——2.0 后义体界面右侧蓝色条显示护甲值，义体与护甲系统紧密结合</div>
+      <div class="row"><b>战斗反馈</b>——受到伤害时生命条与状态图标共同提供即时反馈</div>
+    </div>
+  </div>
+
+  <!-- 10 特效 -->
+  <h3 class="sub">⑩ 视觉特效 <span class="en">VISUAL EFFECTS</span></h3>
+  <div class="grid g2">
+    <div class="card">
+      <h3>超梦 Braindance <span class="tag mag">BRAIN DANCE</span></h3>
+      <div class="mini">
+        <div class="row"><b>视觉层</b>——橙色，观察视觉线索</div>
+        <div class="row"><b>热成像层</b>——蓝色，发现热源/冷源</div>
+        <div class="row"><b>音频层</b>——绿色，分析声音线索</div>
+        <div class="row"><b>编辑模式</b>——层切换/时间轴/片段选择/剪辑工具</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>扫描模式 Scanning <span class="tag cyn">SCAN MODE</span></h3>
+      <div class="mini">
+        <div class="row"><b>金色</b>——任务相关物品</div>
+        <div class="row"><b>红色</b>——危险威胁</div>
+        <div class="row"><b>绿色</b>——可骇入装置</div>
+        <div class="row"><b>蓝色</b>——可互动物体</div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:18px">
+    <h3>故障效果 Glitch <span class="tag yel">FX LAYERS</span></h3>
+    <div class="mini">
+      <div class="row"><b>故障位移</b>——面板或图像元素短暂错位成水平切片后恢复</div>
+      <div class="row"><b>色散分离</b>——青色/洋红/黄色边缘分离，形成 RGB 故障感</div>
+      <div class="row"><b>扫描线</b>——低透明度水平条纹模拟 CRT 老化屏幕</div>
+      <div class="row"><b>CRT 噪点</b>——背景与面板表面叠加轻微纹理，增强终端感</div>
+      <div class="row"><b>使用原则</b>——故障效果作为信号不稳定提示，不宜过度使用</div>
+    </div>
+  </div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Cyberpunk%202077%20braindance%20interface%2C%20layered%20vision%20modes%2C%20orange%20visual%20layer%2C%20blue%20thermal%20layer%2C%20green%20audio%20layer%2C%20timeline%20editor%2C%20holographic%20brain%20scan%2C%20dark%20background&image_size=landscape_4_3" alt="赛博朋克2077超梦界面：橙/蓝/绿三色分层视觉，时间轴编辑">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Cyberpunk%202077%20scanning%20mode%2C%20gold%20highlighted%20mission%20items%2C%20red%20danger%20markers%2C%20green%20hackable%20devices%2C%20blue%20interactive%20objects%2C%20AR%20overlay%20on%20dark%20game%20scene&image_size=landscape_4_3" alt="赛博朋克2077扫描模式：金/红/绿/蓝四色编码高亮">
+  </div>
+  <div class="shot-cap">⑩ 超梦 + 扫描模式 · 三色分层 + 四色编码（风格示意图）</div>
+</section>
+
+<div class="glitch-line"></div>
+
+<!-- ============ S4 视觉系统 ============ -->
+<section id="s4">
+  <div class="sec-head">
+    <span class="sec-num">SEC.04</span>
+    <h2>视觉系统 <span class="en">VISUAL SYSTEM</span></h2>
+  </div>
+  <p class="sec-lead">赛博朋克 2077 的色彩体系具有高度功能性——每种颜色对应特定的信息类型，玩家无需阅读文字即可判断当前状态。</p>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>色彩体系 <span class="tag yel">COLOR PALETTE</span></h3>
+      <div class="palette">
+        <div class="sw" style="background:#0a0a0f"><span class="hex" style="color:#666">#0A0A0F</span><span style="color:#444">底色</span></div>
+        <div class="sw" style="background:#fcee0a"><span class="hex">#FCEE0A</span><span>主色</span></div>
+        <div class="sw" style="background:#ff003c"><span class="hex">#FF003C</span><span>警示</span></div>
+        <div class="sw" style="background:#00f5ff"><span class="hex">#00F5FF</span><span>系统</span></div>
+        <div class="sw" style="background:#0099ff"><span class="hex">#0099FF</span><span>经验</span></div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>纯黑 #0A0A0F</b>——背景基调，模拟屏幕关闭状态</div>
+        <div class="row"><b>荧光黄 #FCEE0A</b>——主导 HUD 文字、主要操作、警告、数据读数</div>
+        <div class="row"><b>洋红 #FF003C</b>——危险、企业入侵、警报状态</div>
+        <div class="row"><b>冷青 #00F5FF</b>——网络状态、系统健康、骇入信息</div>
+        <div class="row"><b>蓝 #0099FF</b>——经验值、RAM 容量</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>字体系统 <span class="tag">TYPOGRAPHY</span></h3>
+      <div class="mini">
+        <div class="row"><b>Rajdhani</b>——主字体，用于 HUD/任务信息/统计界面/暂停菜单，强调技术感与未来感</div>
+        <div class="row"><b>Orbitron</b>——次要字体，用于次要文本/装饰性数据/标签/小尺寸信息</div>
+        <div class="row"><b>排版特征</b>——全大写、宽字距、压缩比例、等宽数据排版</div>
+        <div class="row"><b>视觉感</b>——界面更像企业终端、军事显示面板或夜之城数据屏</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h3>核心视觉签名 <span class="tag mag">SIGNATURE ELEMENTS</span></h3>
+    <div class="mini">
+      <div class="row"><b>L 形方括号</b>——HUD 元素容器，模拟瞄准镜与卫星数据层</div>
+      <div class="row"><b>高密度布局</b>——尽量减少空白，信息贴近视线</div>
+      <div class="row"><b>纯黑底 + 荧光色</b>——以发光、亮度和颜色层级代替传统阴影</div>
+      <div class="row"><b>半透明面板</b>——保留背景可见性，世界即 UI</div>
+      <div class="row"><b>故障修辞</b>——扫描线/CRT 噪点/色散分离作为信号不稳定提示</div>
+    </div>
+  </div>
+</section>
+
+<div class="glitch-line"></div>
+
+<!-- ============ S5 设计令牌 ============ -->
+<section id="s5">
+  <div class="sec-head">
+    <span class="sec-num">SEC.05</span>
+    <h2>设计令牌 <span class="en">DESIGN TOKENS</span></h2>
+  </div>
+  <p class="sec-lead">可直接用于程序实现的设计令牌对照表。</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>令牌</th><th>值</th><th>用途</th></tr></thead>
+      <tbody>
+        <tr><td>底色</td><td>#0A0A0F</td><td>所有界面背景</td></tr>
+        <tr><td>面板底</td><td>#12121E</td><td>卡片/面板背景</td></tr>
+        <tr><td>面板底 2</td><td>#181826</td><td>卡片渐变端</td></tr>
+        <tr><td>主强调色</td><td>#FCEE0A (荧光黄)</td><td>HUD 文字、主操作、弹药、伤害数字</td></tr>
+        <tr><td>警示色</td><td>#FF003C (洋红)</td><td>危险、入侵、警报</td></tr>
+        <tr><td>系统色</td><td>#00F5FF (冷青)</td><td>网络、骇入、系统状态</td></tr>
+        <tr><td>经验色</td><td>#0099FF (蓝)</td><td>经验条、RAM 容量</td></tr>
+        <tr><td>描边线</td><td>#1A1A2E</td><td>面板边框、分隔线</td></tr>
+        <tr><td>主字体</td><td>Rajdhani</td><td>HUD、任务、统计</td></tr>
+        <tr><td>次字体</td><td>Orbitron</td><td>标签、装饰数据</td></tr>
+        <tr><td>排版</td><td>全大写 / 宽字距</td><td>终端式排版</td></tr>
+        <tr><td>HUD 框架</td><td>L 形方括号</td><td>信息容器</td></tr>
+        <tr><td>特效</td><td>扫描线 + CRT 噪点 + 色散 + 故障位移</td><td>全屏叠加</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout" style="margin-top:30px">
+    <b>总结：</b>赛博朋克 2077 的 UI 是「军事终端 + 企业数据屏 + 霓虹夜之城广告」的混合体。它不是现代 UI 的「简洁版」，而是刻意保留高密度、强对比、终端化和故障感的夜之城界面系统。每一种颜色都有功能、每一个方括号都在锚定信息——<b>风格即世界观</b>。
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div style="max-width:1280px;margin:0 auto;padding:0 5vw">
+    <div class="f-brand">CYBERPUNK 2077 · UI ANALYSIS</div>
+    <div class="f-note">CD Projekt RED · 夜之城企业操作系统视觉语言 · 荧光黄主导 · 高密度 HUD · Rajdhani/Orbitron · L 形方括号</div>
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lb"><span class="lb-close">&times;</span><img id="lbImg" src="" alt=""><div class="lb-caption" id="lbCap"></div></div>
+<script>
+(function(){
+  var lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg'),lbCap=document.getElementById('lbCap');
+  document.querySelectorAll('.zoomable').forEach(function(img){
+    img.style.cursor='zoom-in';
+    img.addEventListener('click',function(){
+      lbImg.src=this.src;lbCap.textContent=this.alt||'';lb.classList.add('show');
+    });
+  });
+  lb.addEventListener('click',function(e){if(e.target===lb||e.target.classList.contains('lb-close'))lb.classList.remove('show');});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('show');});
+})();
+</script>
+</body>
+</html>

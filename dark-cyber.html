@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>暗黑赛博 · UI 风格分析合集</title>
+<style>
+:root{
+  --bg:#080a0f;--bg2:#0c0f16;--panel:#11141d;--line:#1e2333;
+  --ink:#d8dce6;--ink-dim:#6b7285;
+  --neon-red:#ff2a6d;--neon-blue:#05d9e8;--neon-violet:#bd00ff;--neon-amber:#ffb300;
+  --serif:'Noto Serif SC',serif;--sans:'Noto Sans SC',sans-serif;--mono:'JetBrains Mono','Consolas',monospace;
+  --bar-h:56px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidden}
+
+/* ===== 顶部子页签栏 ===== */
+.tabbar{
+  height:var(--bar-h);display:flex;align-items:center;gap:4px;padding:0 24px;
+  background:rgba(8,10,15,.96);border-bottom:1px solid var(--line);
+  position:relative;z-index:10;overflow-x:auto;overflow-y:hidden;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent;
+}
+.tabbar::-webkit-scrollbar{height:0}
+.brand{
+  display:flex;align-items:center;gap:9px;margin-right:20px;white-space:nowrap;
+  font-weight:700;font-family:var(--serif);font-size:15px;color:var(--neon-blue);
+  text-shadow:0 0 14px rgba(5,217,232,.25);
+}
+.brand::before{
+  content:"";width:10px;height:10px;background:var(--neon-blue);
+  clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);flex:none;
+  box-shadow:0 0 12px var(--neon-blue);
+}
+.brand small{font-family:var(--mono);font-size:10px;color:var(--ink-dim);letter-spacing:.18em;font-weight:400}
+.tabs{display:flex;gap:4px;height:100%;align-items:stretch}
+.tab{
+  appearance:none;border:none;background:none;cursor:pointer;
+  display:flex;align-items:center;gap:8px;padding:0 16px;position:relative;
+  color:var(--ink-dim);font-family:var(--sans);font-size:13px;font-weight:400;
+  letter-spacing:.03em;white-space:nowrap;transition:all .25s;
+}
+.tab .dot{width:6px;height:6px;border-radius:50%;background:var(--ink-dim);transition:all .25s}
+.tab:hover{color:var(--neon-blue)}
+.tab:hover .dot{background:var(--neon-blue);box-shadow:0 0 8px var(--neon-blue)}
+.tab::after{
+  content:"";position:absolute;left:12px;right:12px;bottom:-1px;height:2px;
+  background:var(--neon-blue);transform:scaleX(0);transition:transform .3s ease;
+  box-shadow:0 0 6px var(--neon-blue);
+}
+.tab.active{color:var(--ink);font-weight:500}
+.tab.active .dot{background:var(--neon-blue);box-shadow:0 0 8px var(--neon-blue)}
+.tab.active::after{transform:scaleX(1)}
+.hint{
+  margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--ink-dim);
+  letter-spacing:.1em;white-space:nowrap;
+}
+.hint b{color:var(--neon-amber);font-weight:600}
+
+/* ===== 内容面板 ===== */
+.stage{position:relative;height:calc(100vh - var(--bar-h));height:calc(100dvh - var(--bar-h))}
+.panel{
+  position:absolute;inset:0;opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .35s ease,visibility 0s linear .35s;
+}
+.panel.show{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .35s ease}
+.panel iframe{width:100%;height:100%;border:0;display:block;background:var(--bg)}
+
+/* 加载提示 */
+.loading{
+  position:absolute;inset:0;display:flex;flex-direction:column;gap:16px;
+  align-items:center;justify-content:center;background:var(--bg);z-index:2;
+  font-family:var(--mono);font-size:11px;letter-spacing:.25em;color:var(--ink-dim);
+}
+.loading .ring{
+  width:34px;height:34px;border-radius:50%;
+  border:2px solid var(--line);border-top-color:var(--neon-blue);
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading.done{display:none}
+
+@media(max-width:768px){
+  .tabbar{padding:0 12px}
+  .hint{display:none}
+  .brand{margin-right:12px;font-size:14px}
+  .tab{padding:0 11px;font-size:12px}
+}
+@media(max-width:480px){
+  .tab{padding:0 8px;font-size:11.5px;gap:5px}
+  .brand small{display:none}
+  .brand{font-size:13px;margin-right:8px}
+}
+</style>
+</head>
+<body>
+
+<div class="tabbar">
+  <div class="brand">暗黑赛博 <small>DARK CYBER UI</small></div>
+  <div class="tabs" role="tablist">
+    <button class="tab active" id="tab-observer" role="tab" aria-selected="true" data-target="observer">
+      <span class="dot"></span>Observer
+    </button>
+    <button class="tab" id="tab-watchdogs" role="tab" aria-selected="false" data-target="watchdogs">
+      <span class="dot"></span>看门狗系列
+    </button>
+    <button class="tab" id="tab-cp2077" role="tab" aria-selected="false" data-target="cp2077">
+      <span class="dot"></span>赛博朋克 2077
+    </button>
+    <button class="tab" id="tab-deusex" role="tab" aria-selected="false" data-target="deusex">
+      <span class="dot"></span>Deus Ex 系列
+    </button>
+    <button class="tab" id="tab-alien" role="tab" aria-selected="false" data-target="alien">
+      <span class="dot"></span>Alien: Isolation
+    </button>
+  </div>
+  <div class="hint">共 <b>5</b> 款游戏 · 点击切换</div>
+</div>
+
+<div class="stage">
+  <div class="panel show" id="panel-observer" role="tabpanel">
+    <iframe src="dark-cyber-observer.html" title="Observer UI 风格分析"></iframe>
+  </div>
+  <div class="panel" id="panel-watchdogs" role="tabpanel">
+    <div class="loading" id="wdLoading">
+      <div class="ring"></div>
+      <div>LOADING · 看门狗系列</div>
+    </div>
+    <iframe id="wdFrame" data-src="dark-cyber-watchdogs.html" title="看门狗系列 UI 风格分析"></iframe>
+  </div>
+  <div class="panel" id="panel-cp2077" role="tabpanel">
+    <div class="loading" id="cpLoading">
+      <div class="ring"></div>
+      <div>LOADING · 赛博朋克 2077</div>
+    </div>
+    <iframe id="cpFrame" data-src="dark-cyber-cp2077.html" title="赛博朋克 2077 UI 风格分析"></iframe>
+  </div>
+  <div class="panel" id="panel-deusex" role="tabpanel">
+    <div class="loading" id="dxLoading">
+      <div class="ring"></div>
+      <div>LOADING · Deus Ex 系列</div>
+    </div>
+    <iframe id="dxFrame" data-src="dark-cyber-deusex.html" title="Deus Ex 系列 UI 风格分析"></iframe>
+  </div>
+  <div class="panel" id="panel-alien" role="tabpanel">
+    <div class="loading" id="alLoading">
+      <div class="ring"></div>
+      <div>LOADING · Alien: Isolation</div>
+    </div>
+    <iframe id="alFrame" data-src="dark-cyber-alien.html" title="Alien Isolation UI 风格分析"></iframe>
+  </div>
+</div>
+
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  var panels={
+    observer:document.getElementById('panel-observer'),
+    watchdogs:document.getElementById('panel-watchdogs'),
+    cp2077:document.getElementById('panel-cp2077'),
+    deusex:document.getElementById('panel-deusex'),
+    alien:document.getElementById('panel-alien')
+  };
+  var titles={
+    observer:'Observer UI 风格分析 · 暗黑赛博',
+    watchdogs:'看门狗系列 UI 风格分析 · 暗黑赛博',
+    cp2077:'赛博朋克 2077 UI 风格分析 · 暗黑赛博',
+    deusex:'Deus Ex 系列 UI 风格分析 · 暗黑赛博',
+    alien:'Alien Isolation UI 风格分析 · 暗黑赛博'
+  };
+  var lazyFrames={
+    watchdogs:{frame:document.getElementById('wdFrame'),loading:document.getElementById('wdLoading'),loaded:false},
+    cp2077:{frame:document.getElementById('cpFrame'),loading:document.getElementById('cpLoading'),loaded:false},
+    deusex:{frame:document.getElementById('dxFrame'),loading:document.getElementById('dxLoading'),loaded:false},
+    alien:{frame:document.getElementById('alFrame'),loading:document.getElementById('alLoading'),loaded:false}
+  };
+
+  function ensureLoaded(name){
+    var cfg=lazyFrames[name];
+    if(!cfg||cfg.loaded)return;
+    cfg.loaded=true;
+    cfg.frame.addEventListener('load',function(){cfg.loading.classList.add('done');});
+    cfg.frame.src=cfg.frame.getAttribute('data-src');
+  }
+
+  function activate(name,push){
+    tabs.forEach(function(t){
+      var on=t.getAttribute('data-target')===name;
+      t.classList.toggle('active',on);
+      t.setAttribute('aria-selected',on?'true':'false');
+    });
+    Object.keys(panels).forEach(function(k){
+      panels[k].classList.toggle('show',k===name);
+    });
+    if(lazyFrames[name])ensureLoaded(name);
+    document.title=titles[name]||titles.observer;
+    if(push!==false)history.replaceState(null,'','#'+name);
+  }
+
+  tabs.forEach(function(t){
+    t.addEventListener('click',function(){activate(t.getAttribute('data-target'));});
+  });
+
+  var hash=(location.hash||'').replace('#','');
+  activate(panels.hasOwnProperty(hash)?hash:'observer',false);
+})();
+</script>
+</body>
+</html>

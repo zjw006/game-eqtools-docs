@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alien: Isolation · UI 风格分析</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a08;--bg2:#0e0e0c;--panel:#121210;--panel2:#161614;--line:#1a1a16;
+  --ink:#d8d4c8;--ink-dim:#5a584e;
+  --al-amber:#ffb000;--al-green:#00ff41;--al-red:#ff2a3c;--al-dim-amber:#5c4000;
+  --serif:'Noto Serif SC',serif;--sans:'Noto Sans SC',sans-serif;--mono:'JetBrains Mono',monospace;--crt:'VT323',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.85;background-image:linear-gradient(rgba(255,176,0,.01) 1px,transparent 1px),linear-gradient(90deg,rgba(255,176,0,.01) 1px,transparent 1px);background-size:48px 48px;overflow-x:hidden}
+::selection{background:var(--al-amber);color:#000}
+::-webkit-scrollbar{width:10px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--line);border-radius:5px}::-webkit-scrollbar-thumb:hover{background:var(--al-amber)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,8,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:4px;padding:0 28px;height:56px;overflow-x:auto}
+nav::-webkit-scrollbar{height:0}
+nav .brand{font-family:var(--serif);font-weight:900;font-size:15px;color:var(--al-amber);white-space:nowrap;margin-right:18px;display:flex;align-items:center;gap:8px}
+nav .brand::before{content:"";width:10px;height:10px;background:var(--al-amber);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);box-shadow:0 0 12px var(--al-amber)}
+nav a{color:var(--ink-dim);text-decoration:none;font-size:12.5px;font-weight:400;padding:6px 11px;white-space:nowrap;border-radius:3px;transition:all .25s;letter-spacing:.04em}
+nav a:hover{color:var(--al-amber);background:rgba(255,176,0,.08);text-shadow:0 0 8px rgba(255,176,0,.4)}
+header{min-height:82vh;display:flex;flex-direction:column;justify-content:center;padding:130px 6vw 80px;position:relative;overflow:hidden}
+header::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 20% 50%,rgba(255,176,0,.04),transparent 60%),radial-gradient(ellipse 50% 50% at 80% 30%,rgba(0,255,65,.02),transparent 50%);z-index:0}
+header .inner{position:relative;z-index:2;max-width:1200px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.4em;color:var(--al-red);text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:14px}
+.kicker::before{content:"";width:42px;height:1px;background:var(--al-red);box-shadow:0 0 6px var(--al-red)}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(34px,5.4vw,68px);line-height:1.15;letter-spacing:.02em}
+h1 em{font-style:normal;color:var(--al-amber);text-shadow:0 0 50px rgba(255,176,0,.35)}
+h1 .sub-line{display:block;font-size:clamp(16px,2.2vw,28px);color:var(--ink-dim);margin-top:8px;font-weight:400;font-family:var(--sans)}
+header .sub{margin-top:28px;max-width:820px;color:var(--ink-dim);font-size:clamp(14px,1.3vw,16px)}
+header .sub b{color:var(--ink);font-weight:500}
+header .meta-row{margin-top:42px;display:flex;flex-wrap:wrap;gap:14px}
+header .meta-chip{font-family:var(--mono);font-size:11px;letter-spacing:.08em;border:1px solid var(--line);padding:8px 16px;border-radius:2px;color:var(--ink-dim);background:rgba(18,18,16,.7)}
+header .meta-chip b{color:var(--al-amber);font-weight:600}
+main{max-width:1280px;margin:0 auto;padding:0 5vw 120px}
+section{margin-top:100px;scroll-margin-top:80px}
+.sec-head{display:flex;align-items:baseline;gap:20px;margin-bottom:14px;border-bottom:1px solid var(--line);padding-bottom:18px;flex-wrap:wrap}
+.sec-num{font-family:var(--mono);font-size:13px;color:var(--al-red);letter-spacing:.2em}
+.sec-head h2{font-family:var(--serif);font-weight:900;font-size:clamp(26px,3.4vw,44px);line-height:1.25}
+.sec-head .en{font-family:var(--mono);font-size:11px;color:var(--ink-dim);letter-spacing:.3em;text-transform:uppercase;margin-left:auto}
+.sec-lead{color:var(--ink-dim);max-width:860px;margin-bottom:38px;font-size:15px}
+.sec-lead b{color:var(--ink);font-weight:500}
+h3.sub{font-family:var(--serif);font-weight:700;font-size:22px;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:14px}
+h3.sub .en{font-family:var(--mono);font-size:10px;color:var(--ink-dim);letter-spacing:.25em;text-transform:uppercase;font-weight:400}
+.card{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:6px;padding:24px;margin-bottom:18px}
+.card h3{font-family:var(--serif);font-size:17px;margin-bottom:10px;color:var(--ink)}
+.tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;color:var(--al-amber);border:1px solid rgba(255,176,0,.3);padding:2px 8px;border-radius:2px;margin-left:10px;vertical-align:middle}
+.tag.grn{color:var(--al-green);border-color:rgba(0,255,65,.3)}
+.tag.red{color:var(--al-red);border-color:rgba(255,42,60,.3)}
+.mini{display:flex;flex-direction:column;gap:6px}
+.mini .row{font-size:13px;color:var(--ink-dim);line-height:1.8;padding-left:14px;border-left:2px solid var(--line)}
+.mini .row b{color:var(--ink);font-weight:500}
+.mini .row .keep{color:var(--al-green);font-family:var(--mono);font-size:10px;border:1px solid rgba(0,255,65,.3);padding:1px 6px;border-radius:2px;margin-right:4px}
+.grid{display:grid;gap:18px}.grid.g2{grid-template-columns:repeat(2,1fr)}.grid.g3{grid-template-columns:repeat(3,1fr)}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:18px}
+.feature-item{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:6px;padding:22px}
+.feature-item .feat-icon{width:36px;height:36px;border-radius:6px;background:rgba(255,176,0,.1);border:1px solid rgba(255,176,0,.3);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;color:var(--al-amber);margin-bottom:12px}
+.feature-item .feat-icon.grn{background:rgba(0,255,65,.1);border-color:rgba(0,255,65,.3);color:var(--al-green)}
+.feature-item .feat-icon.red{background:rgba(255,42,60,.1);border-color:rgba(255,42,60,.3);color:var(--al-red)}
+.feature-item h4{font-family:var(--serif);font-size:15px;margin-bottom:6px;color:var(--ink)}
+.feature-item p{font-size:12.5px;color:var(--ink-dim);line-height:1.7}
+.glitch-line{height:1px;background:linear-gradient(90deg,transparent,var(--al-red),var(--al-amber),transparent);margin:30px 0;opacity:.3}
+.palette{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.sw{width:72px;height:72px;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid rgba(255,255,255,.08)}
+.sw .hex{font-family:var(--mono);font-size:9px;color:rgba(0,0,0,.7);font-weight:600}
+.sw span:last-child{font-size:9px;color:rgba(0,0,0,.5)}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:linear-gradient(160deg,var(--panel),var(--panel2))}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:680px}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--al-amber);text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);background:rgba(255,176,0,.05);white-space:nowrap}
+td{padding:13px 16px;border-bottom:1px solid rgba(26,26,22,.6);color:var(--ink-dim);vertical-align:top}
+td:first-child{color:var(--ink);font-weight:500;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+.callout{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-left:3px solid var(--al-amber);border-radius:6px;padding:22px 26px;font-size:14px;color:var(--ink-dim);line-height:1.8}
+.callout b{color:var(--ink);font-weight:500}
+footer{padding:50px 5vw 70px;border-top:1px solid var(--line);background:var(--bg2)}
+footer .f-brand{font-family:var(--serif);font-weight:900;font-size:18px;color:var(--al-amber);margin-bottom:6px;text-shadow:0 0 20px rgba(255,176,0,.2)}
+footer .f-note{font-size:13px;color:var(--ink-dim);margin-bottom:30px;max-width:680px}
+@media(max-width:1024px){nav{padding:0 16px;gap:2px}nav .brand{font-size:14px;margin-right:12px}nav a{font-size:12px;padding:6px 9px}main{padding:0 4vw 100px}section{margin-top:80px}header{padding:120px 5vw 70px}}
+@media(max-width:768px){.feature-grid{grid-template-columns:1fr}.grid.g2,.grid.g3{grid-template-columns:1fr}.table-wrap{font-size:12px}}
+
+/* Screenshots */
+.ss-group{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.ss-group img{width:100%;border-radius:4px;border:1px solid var(--line);display:block;filter:saturate(.9) brightness(.88);transition:filter .3s;height:clamp(100px,12vw,150px);object-fit:cover}
+.ss-group img:hover{filter:saturate(1) brightness(1)}
+.shot-wrap{margin:18px 0 4px}
+.shot-full{width:100%;border-radius:4px;border:1px solid var(--line);display:block;filter:saturate(.9) brightness(.88);transition:filter .3s;max-height:480px;object-fit:cover}
+.shot-full:hover{filter:saturate(1) brightness(1)}
+.shot-cap{font-family:var(--mono);font-size:10.5px;color:var(--ink-dim);letter-spacing:.12em;margin-top:8px;text-align:center}
+.shot-cap::before{content:"// ";color:var(--al-amber)}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;z-index:9999;background:rgba(4,6,10,.95);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility 0s linear .3s;cursor:zoom-out}
+.lightbox.show{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .3s ease}
+.lightbox img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 0 1px var(--line);animation:lbIn .35s ease}
+.lightbox .lb-close{position:absolute;top:20px;right:24px;font-size:28px;color:var(--ink-dim);cursor:pointer;z-index:2}
+.lightbox .lb-caption{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:12px;color:var(--ink-dim);max-width:80vw;text-align:center}
+@keyframes lbIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+@media(max-width:768px){.ss-group img{height:100px}.shot-full{max-height:300px}}
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">ALIEN</span>
+  <a href="#s1">游戏概述</a>
+  <a href="#s2">设计哲学</a>
+  <a href="#s3">界面分析</a>
+  <a href="#s4">视觉系统</a>
+  <a href="#s5">设计令牌</a>
+</nav>
+<header>
+  <div class="inner">
+    <div class="kicker">UI STYLE ANALYSIS · ALIEN: ISOLATION</div>
+    <h1>Alien: <em>Isolation</em><span class="sub-line">Creative Assembly · 1970 年代复古未来主义的 CRT 终端美学</span></h1>
+    <p class="sub">Creative Assembly 打造的生存恐怖杰作。玩家扮演 Amanda Ripley，在被遗弃的塞瓦斯托波尔空间站中躲避异形。其 UI 设计是一套完整的<b>「复古未来」设计系统</b>——核心主题是<b>「黑匣子」</b>：运行在过时显示技术上的过时电脑系统。通过<b>琥珀色/绿色 CRT 荧光</b>、<b>VHS 失真</b>、<b>扫描线</b>与<b>闪烁模糊</b>，将 1979 年原版《异形》电影的视觉遗产转化为一种持续有效的游戏 UI 风格。UI 设计师 John McKellan 率团队获取了 20th Century Fox 提供的 <b>3TB 电影幕后资料</b>，包括蓝图、连续性照片和概念艺术。这不是「复古风」——这是<b>低保真即美学</b>。</p>
+    <div class="meta-row">
+      <div class="meta-chip">开发商 <b>Creative Assembly</b></div>
+      <div class="meta-chip">首发 <b>2014</b></div>
+      <div class="meta-chip">视觉参考 <b>Alien 1979</b></div>
+      <div class="meta-chip">核心主题 <b>黑匣子</b></div>
+      <div class="meta-chip">UI 类型 <b>Diegetic 为主</b></div>
+    </div>
+  </div>
+</header>
+<main>
+<section id="s1">
+  <div class="sec-head"><span class="sec-num">SEC.01</span><h2>游戏概述 <span class="en">GAME OVERVIEW</span></h2></div>
+  <p class="sec-lead">Alien: Isolation 的 UI 将过时技术转化为美学风格——<b>低保真即美学，过时技术是设计语言而非缺陷</b>。</p>
+  <div class="feature-grid">
+    <div class="feature-item">
+      <div class="feat-icon">01</div>
+      <h4>复古未来 CRT</h4>
+      <p>琥珀色/绿色荧光模拟老式终端显示。扫描线产生雾化、模糊和旧显示器质感——文字像「在脏玻璃上发光」，而非光洁的扁平界面。</p>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon grn">02</div>
+      <h4>Diegetic UI 为主</h4>
+      <p>运动追踪器、终端、录音机等界面元素存在于游戏世界中。玩家通过实体设备获取信息，而非悬浮叠加的数字面板。沉浸感被推至极致。</p>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon red">03</div>
+      <h4>极简 HUD</h4>
+      <p>刻意减少屏幕信息干扰。生命指示器左下角尺寸很小，无红色闪烁或夸张血条。玩家依靠环境、声音和运动追踪器判断危险。</p>
+    </div>
+  </div>
+</section>
+<div class="glitch-line"></div>
+<section id="s2">
+  <div class="sec-head"><span class="sec-num">SEC.02</span><h2>设计哲学 <span class="en">DESIGN PHILOSOPHY</span></h2></div>
+  <p class="sec-lead">Alien: Isolation 的 UI 哲学可归纳为<b>「低保真即美学」</b>——过时技术不是尴尬，而是美学归宿。文字、扫描线、闪烁与 CRT 辉光共同营造「文字是物理终端屏幕发出的信息」的感觉。</p>
+  <div class="grid g2">
+    <div class="card">
+      <h3>黑匣子概念 <span class="tag">BLACK BOX</span></h3>
+      <div class="mini">
+        <div class="row"><b>核心主题</b>——运行在过时显示技术上的过时电脑系统</div>
+        <div class="row"><b>叙事服务</b>——让玩家理解原版《异形》与本作之间的 15 年时空关系</div>
+        <div class="row"><b>3TB 资料</b>——获得 20th Century Fox 提供的电影幕后资料（蓝图/连续性照片/概念艺术）</div>
+        <div class="row"><b>used universe</b>——Ron Cobb/Roger Christian/Ridley Scott 奠基的「使用过的宇宙」美学</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Diegetic UI <span class="tag grn">DIEGETIC</span></h3>
+      <div class="mini">
+        <div class="row"><b>运动追踪器</b>——存在于游戏世界中的实体设备，玩家手持，占据较大空间</div>
+        <div class="row"><b>终端</b>——空间站中的 CRT 终端可阅读日志/档案/音频记录</div>
+        <div class="row"><b>Rewire 系统</b>——部分安装在墙上，允许从远处控制环境设备</div>
+        <div class="row"><b>音频日志</b>——通过老式录音设备播放（磁带/开盘式录音机）</div>
+        <div class="row"><b>非 Diegetic 辅助</b>——成就/任务选择等采用更平台化的功能设计</div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="glitch-line"></div>
+<section id="s3">
+  <div class="sec-head"><span class="sec-num">SEC.03</span><h2>界面分析 <span class="en">INTERFACE ANALYSIS</span></h2></div>
+  <p class="sec-lead">逐项分析 10 个核心界面元素的视觉风格与设计逻辑。</p>
+
+  <h3 class="sub">① 加载界面 / 标题段落 <span class="en">LOADING / TITLE SEQUENCE</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>参照原版电影</b>——参照 1979 年《异形》标志性标题序列，匹配时间轴/模糊边缘/电影画面特性/渐隐后蓝色色调</div>
+    <div class="row"><b>视觉</b>——苍白、模糊且像素化的光柱从黑暗中升起，其他光束快速交替切入勾勒更大轮廓</div>
+    <div class="row"><b>节奏</b>——慢速、逐帧推进，与原版《异形》慢节奏恐怖氛围一致</div>
+    <div class="row"><b>35mm 胶片效果</b>——扫描线/模糊边缘/低分辨率像素化</div>
+    <div class="row"><b>独白</b>——Sigourney Weaver 重新录制原版《异形》结尾独白作为引子</div>
+  </div></div>
+  <div class="shot-wrap">
+  <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Alien%20Isolation%20style%20title%20sequence%2C%201979%20Alien%20film%20aesthetic%2C%20pale%20blurred%20light%20beams%20rising%20from%20darkness%2C%20slow%20reveal%2C%2035mm%20film%20grain%2C%20scan%20lines%2C%20dark%20sci-fi%20horror&image_size=landscape_16_9" alt="Alien Isolation标题序列：苍白光束从黑暗中升起，35mm胶片质感，扫描线">
+  <div class="shot-cap">① 加载 / 标题序列 · 1979 电影美学 + 35mm 胶片（风格示意图）</div>
+  </div>
+
+  <h3 class="sub">② 主菜单 <span class="en">MAIN MENU</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>布局</b>——由游戏中使用的物品组成，红药丸为最醒目元素，显示可控制角色图片（Amanda Ripley/Fran/Mr. Midnight）</div>
+    <div class="row"><b>底色</b>——黑暗、近乎纯黑，与 CRT 终端暗光氛围一致</div>
+    <div class="row"><b>高光色</b>——红色药丸利用红色在暗背景上的强对比度</div>
+    <div class="row"><b>字体</b>——等宽体（monospaced），粗壮、方块化，唤起电传打字机输出与早期终端字体感</div>
+    <div class="row"><b>控制键标注</b>——绿色、非比例字体，带有强烈衬线，与早期终端显示器风格一致</div>
+    <div class="row"><b>复古未来</b>——通过做旧/模糊/闪烁效果融入复古未来感，菜单查看时会闪烁，营造 VHS 录像带观感</div>
+  </div></div>
+  <div class="shot-wrap">
+  <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Alien%20Isolation%20style%20main%20menu%2C%20game%20objects%20arranged%20on%20dark%20surface%2C%20red%20pill%20prominent%2C%20character%20portrait%2C%20CRT%20terminal%20font%2C%20VHS%20flicker%2C%20nearly%20pure%20black%20background&image_size=landscape_16_9" alt="Alien Isolation主菜单：游戏物件排列于暗面，红药丸醒目，CRT终端字体，VHS闪烁">
+  <div class="shot-cap">② 主菜单 · 游戏物件 + 红药丸 + VHS 闪烁（风格示意图）</div>
+  </div>
+
+  <h3 class="sub">③ 战斗界面 / HUD <span class="en">COMBAT HUD</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>极简设计</b>——刻意减少屏幕信息干扰，让玩家感觉 HUD 存在于游戏世界中的实体设备</div>
+    <div class="row"><b>运动追踪器</b>——屏幕底部手持，介于 Ash 粗制设备与海军陆战队军事化硬件之间，仅显示接近距离不显示精确位置</div>
+    <div class="row"><b>追踪器信噪比</b>——只告诉你「有什么东西在那里」，不告诉你具体在哪里</div>
+    <div class="row"><b>尺寸影响</b>——追踪器足够大，装备时无法同时持枪</div>
+    <div class="row"><b>健康指示器</b>——左下角尺寸很小，最不显眼的 HUD 元素之一</div>
+    <div class="row"><b>弹药</b>——右下角显示弹药数量</div>
+    <div class="row"><b>手电筒</b>——独立电量指示器</div>
+    <div class="row"><b>目标更新</b>——屏幕显示目标更新信息与方向性指示器</div>
+  </div></div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Alien%20Isolation%20style%20minimal%20combat%20HUD%2C%20very%20small%20health%20indicator%20bottom%20left%2C%20ammo%20count%20bottom%20right%2C%20motion%20tracker%20at%20bottom%20center%2C%20extremely%20minimal%2C%20dark%20environment&image_size=landscape_4_3" alt="Alien Isolation战斗HUD：极简HUD，左下小生命指示器，右下弹药，底部运动追踪器">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Alien%20Isolation%20style%20motion%20tracker%20device%2C%20handheld%20radar%20screen%2C%20green%20amber%20phosphor%20glow%2C%20distance%20readout%20numbers%2C%20circular%20sweep%20display%2C%20retro%20military%20hardware&image_size=landscape_4_3" alt="Alien Isolation运动追踪器：手持雷达屏，琥珀绿色荧光，距离读数，圆形扫描">
+  </div>
+  <div class="shot-cap">③ 战斗 HUD + 运动追踪器 · 极简 HUD + Diegetic 设备（风格示意图）</div>
+
+  <h3 class="sub">④ 关卡 / 任务选择 <span class="en">MISSION SELECTION</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>地图界面</b>——采用 CRT 终端风格，带有闪烁和模糊效果</div>
+    <div class="row"><b>收集品</b>——任务选择界面与地图关联，可获取错过的收集品</div>
+    <div class="row"><b>目标日志</b>——低干扰、信息量少、仅显示必要内容</div>
+  </div></div>
+  <div class="shot-wrap">
+  <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Alien%20Isolation%20style%20mission%20selection%20map%2C%20CRT%20terminal%20green%20phosphor%20display%2C%20space%20station%20schematic%20blueprint%2C%20flickering%20scan%20lines%2C%20amber%20text%20readout%2C%20blurry%20CRT%20screen%2C%20dark%20background&image_size=landscape_16_9" alt="Alien Isolation关卡选择：CRT终端绿色荧光空间站地图，扫描线，闪烁模糊">
+  <div class="shot-cap">④ 关卡 / 任务选择 · CRT 终端地图 + 闪烁模糊（风格示意图）</div>
+  </div>
+
+  <h3 class="sub">⑤ 商店 / 物品制作 <span class="en">CRAFTING</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>径向菜单</b>——Q 键打开，武器和物品以图标围绕中心排列成圆形</div>
+    <div class="row"><b>显示内容</b>——当前持有物品/弹药补给/调谐器等级/切割火炬等级/手电筒电池</div>
+    <div class="row"><b>制作过程</b>——手动选择每个组件，故意设计得繁琐和笨拙</div>
+    <div class="row"><b>制作配方</b>——医疗包：SCJ 注射器 + Compound B + Bonding Agent + 10 Scrap</div>
+    <div class="row"><b>可制作物品</b>——医疗包/EMP 地雷/烟雾弹/闪光弹/管道炸弹/噪音发生器/莫洛托夫</div>
+    <div class="row"><b>设计哲学</b>——强调「手续繁琐」的体验，与生存恐怖氛围相契合</div>
+  </div></div>
+  <div class="shot-wrap">
+  <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Alien%20Isolation%20style%20crafting%20radial%20menu%2C%20circular%20item%20icons%20around%20center%2C%20ammunition%20and%20scrap%20components%2C%20dark%20interface%20with%20amber%20phosphor%20glow%2C%20CRT%20scan%20lines%2C%20survival%20horror%20game%20UI&image_size=landscape_16_9" alt="Alien Isolation物品制作：径向菜单，物品图标围绕中心圆形排列，琥珀荧光">
+  <div class="shot-cap">⑤ 物品制作 · 径向菜单 + 手续繁琐（风格示意图）</div>
+  </div>
+
+  <h3 class="sub">⑥ 武器升级 / 工作台 <span class="en">UPGRADE BENCH</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>工作台升级</b>——存在工作台升级系统，如等离子切割器的升级台</div>
+    <div class="row"><b>升级方式</b>——需在特定工作台上完成，而非独立技能树界面</div>
+    <div class="row"><b>视觉变化</b>——升级后武器可能有不同视觉效果（如普通→离子切割器）</div>
+    <div class="row"><b>图纸/蓝图</b>——升级系统与终端和任务流程紧密相关</div>
+    <div class="row"><b>安全访问</b>——终端输入特定代码可解锁内容（如 6832 打开安全百叶窗）</div>
+  </div></div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Alien%20Isolation%20style%20weapon%20upgrade%20bench%2C%20plasma%20cutting%20tool%20on%20workbench%2C%20CRT%20terminal%20display%20showing%20upgrade%20stats%2C%20amber%20green%20phosphor%20glow%2C%20industrial%20sci-fi%20environment&image_size=landscape_4_3" alt="Alien Isolation武器升级台：等离子切割器放在工作台上，CRT终端显示升级数据">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Alien%20Isolation%20style%20CRT%20terminal%20interface%2C%20green%20phosphor%20text%20on%20black%20screen%2C%20archive%20logs%2C%20audio%20recordings%20list%2C%20scan%20lines%2C%20flickering%20display%2C%20retro%20computer%20terminal&image_size=landscape_4_3" alt="Alien Isolation数据库终端：CRT绿色荧光文字，档案日志，扫描线闪烁">
+  </div>
+  <div class="shot-cap">⑥ 升级工作台 + ⑧ 数据终端 · 工作台 + CRT 终端（风格示意图）</div>
+
+  <h3 class="sub">⑦ 成就系统 <span class="en">ACHIEVEMENTS</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>平台通用</b>——采用统一图标样式，与 Xbox/PS 平台成就系统一致</div>
+    <div class="row"><b>设计缺口</b>——成就界面未采用 CRT 终端/琥珀色/绿色终端美学，更偏功能化</div>
+    <div class="row"><b>内容</b>——Not the First（关闭信标）/Hide. Run. Survive.（不被杀死）/One Shot（通关未死亡）</div>
+    <div class="row"><b>ID 标签</b>——All Taken/搜寻者成就与收集 ID Tag 相关</div>
+  </div></div>
+
+  <h3 class="sub">⑧ 数据库 / 终端 / 收集品 <span class="en">CODEX / TERMINALS</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>Nostromo 终端</b>——空间站中大量终端可互动，阅读日志/档案/音频记录</div>
+    <div class="row"><b>CRT 风格</b>——终端屏幕呈现 CRT 终端风格，扫描线/模糊/闪烁</div>
+    <div class="row"><b>档案日志</b>——提供塞瓦斯托波尔空间站事件背景信息</div>
+    <div class="row"><b>音频日志</b>——通过老式录音设备播放（磁带/开盘式录音机）</div>
+    <div class="row"><b>Rewire 系统</b>——部分安装在墙上，从远处控制环境设备（灯光/通风）</div>
+    <div class="row"><b>ID 标签</b>——收集品，可在地图菜单查看，每个有独立名称</div>
+  </div></div>
+
+  <h3 class="sub">⑨ 战斗生命条 <span class="en">HEALTH BAR</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>位置</b>——左下角，尺寸很小</div>
+    <div class="row"><b>设计</b>——极小、低干扰的 HUD 元素，非大面积高饱和度设计</div>
+    <div class="row"><b>色彩</b>——遵循 CRT 终端美学：绿色/琥珀色荧光色调，背景黑暗</div>
+    <div class="row"><b>无红色闪烁</b>——无常见「屏幕变红」死亡预警效果</div>
+    <div class="row"><b>设计意图</b>——玩家依靠环境、声音和运动追踪器判断危险，而非明确视觉伤害反馈</div>
+  </div></div>
+
+  <h3 class="sub">⑩ 视觉特效 <span class="en">VISUAL EFFECTS</span></h3>
+  <div class="grid g2">
+    <div class="card">
+      <h3>CRT 与 VHS <span class="tag">CRT / VHS</span></h3>
+      <div class="mini">
+        <div class="row"><b>扫描线</b>——核心视觉特征，产生雾化、轻微模糊和旧显示器质感</div>
+        <div class="row"><b>VHS 失真</b>——使用旧录像机和 Betamax 机器录制游戏视频，获得真正复古感</div>
+        <div class="row"><b>闪烁模糊</b>——菜单和地图查看时会闪烁，强化老式录像带观感</div>
+        <div class="row"><b>CRT 辉光</b>——文字和界面呈机械打印感，屏幕表面有可见污渍和磨损</div>
+        <div class="row"><b>脏玻璃效果</b>——文字像「在脏玻璃上发光」，而非光洁现代扁平界面</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>运动追踪器 <span class="tag grn">MOTION TRACKER</span></h3>
+      <div class="mini">
+        <div class="row"><b>雷达显示</b>——显示外星生物接近距离，不显示精确位置</div>
+        <div class="row"><b>数字读数</b>——左下角数字越小表示威胁越近</div>
+        <div class="row"><b>ping 声效</b>——独特 ping 声效，黑暗中效果尤为明显</div>
+        <div class="row"><b>同步闪烁</b>——外星生物靠近时追踪器同步闪烁并频繁亮起</div>
+        <div class="row"><b>环境模糊</b>——查看追踪器时占据较大屏幕空间，环境会模糊</div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:18px">
+    <h3>色彩调色板 <span class="tag red">COLOR PALETTE</span></h3>
+    <div class="mini">
+      <div class="row"><b>琥珀色/橙色</b>——CRT 荧光色，模拟老式终端显示效果</div>
+      <div class="row"><b>绿色</b>——Seegson 终端绿色荧光读数，用于信息读取</div>
+      <div class="row"><b>黑色/暗绿</b>——CRT 底屏颜色，深色、脏污、近乎纯黑</div>
+      <div class="row"><b>红色</b>——高优先级警告和关键物品（如红药丸）</div>
+      <div class="row"><b>整体呈现</b>——高对比度、低分辨率的 CRT 荧光效果</div>
+    </div>
+  </div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Alien%20Isolation%20style%20CRT%20VHS%20visual%20effects%2C%20heavy%20scan%20lines%2C%20phosphor%20glow%2C%20green%20amber%20fluorescent%20text%20on%20dark%20screen%2C%20distorted%20blurry%20image%2C%20dirty%20glass%20effect%2C%20retro%20terminal%20aesthetic&image_size=landscape_4_3" alt="Alien Isolation CRT/VHS特效：扫描线，荧光辉光，脏玻璃效果，失真模糊">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Alien%20Isolation%20style%20diegetic%20UI%20devices%2C%20motion%20tracker%20and%20CRT%20terminal%20in%20game%20world%2C%20first%20person%20view%20holding%20retro%20device%2C%20amber%20green%20phosphor%20glow%2C%20dark%20industrial%20space%20station%20environment&image_size=landscape_4_3" alt="Alien Isolation Diegetic设备：手持运动追踪器与CRT终端存在于游戏世界">
+  </div>
+  <div class="shot-cap">⑩ CRT/VHS 视觉特效 + Diegetic 设备 · 扫描线 + 脏玻璃 + 实体设备（风格示意图）</div>
+</section>
+<div class="glitch-line"></div>
+<section id="s4">
+  <div class="sec-head"><span class="sec-num">SEC.04</span><h2>视觉系统 <span class="en">VISUAL SYSTEM</span></h2></div>
+  <p class="sec-lead">Alien: Isolation 的色彩体系是 CRT 终端的直接映射——琥珀色和绿色荧光是整套视觉系统的核心标识。</p>
+  <div class="grid g2">
+    <div class="card">
+      <h3>色彩体系 <span class="tag">COLOR PALETTE</span></h3>
+      <div class="palette">
+        <div class="sw" style="background:#0a0a08"><span class="hex" style="color:#666">#0A0A08</span><span style="color:#444">底色</span></div>
+        <div class="sw" style="background:#ffb000"><span class="hex">#FFB000</span><span>琥珀</span></div>
+        <div class="sw" style="background:#00ff41"><span class="hex">#00FF41</span><span>CRT 绿</span></div>
+        <div class="sw" style="background:#ff2a3c"><span class="hex">#FF2A3C</span><span>警示红</span></div>
+        <div class="sw" style="background:#5c4000"><span class="hex" style="color:#999">#5C4000</span><span style="color:#666">暗琥珀</span></div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>琥珀色 #FFB000</b>——CRT 荧光色，模拟老式终端显示效果</div>
+        <div class="row"><b>绿色 #00FF41</b>——Seegson 终端绿色荧光读数</div>
+        <div class="row"><b>红色 #FF2A3C</b>——高优先级警告和关键物品</div>
+        <div class="row"><b>底色 #0A0A08</b>——CRT 底屏，深色、脏污、近乎纯黑</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>字体与材质 <span class="tag grn">TYPOGRAPHY</span></h3>
+      <div class="mini">
+        <div class="row"><b>主字体 Isolation</b>——基于 Helvetica Bold 定制，更紧凑字间距/柔和圆角/不一致间距调整，重现 1979 年电影 Helvetica 柔和外观</div>
+        <div class="row"><b>终端字体</b>——VT323/IBM Plex Mono 等终端/等宽字体</div>
+        <div class="row"><b>机械打印感</b>——文字呈机械打印感而非手绘感</div>
+        <div class="row"><b>统一字符宽度</b>——强化老旧计算系统印象</div>
+        <div class="row"><b>材质</b>——脏污玻璃/CRT 屏幕/粗糙金属/低分辨率终端</div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:18px">
+    <h3>核心视觉签名 <span class="tag red">SIGNATURE</span></h3>
+    <div class="mini">
+      <div class="row"><b>扫描线</b>——全界面覆盖，产生旧显示器质感</div>
+      <div class="row"><b>VHS 失真</b>——使用旧录像机录制游戏视频获得真正复古感</div>
+      <div class="row"><b>Diegetic 设备优先</b>——运动追踪器/终端/录音机存在于游戏世界</div>
+      <div class="row"><b>低信息密度</b>——极简 HUD，非必要不显示</div>
+      <div class="row"><b>脏玻璃效果</b>——文字像在脏玻璃上发光</div>
+      <div class="row"><b>CRT 辉光</b>——界面元素表现为物理 CRT 管而非扁平数字面板</div>
+    </div>
+  </div>
+</section>
+<div class="glitch-line"></div>
+<section id="s5">
+  <div class="sec-head"><span class="sec-num">SEC.05</span><h2>设计令牌 <span class="en">DESIGN TOKENS</span></h2></div>
+  <p class="sec-lead">可直接用于程序实现的设计令牌对照表。</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>令牌</th><th>值</th><th>用途</th></tr></thead>
+      <tbody>
+        <tr><td>底色</td><td>#0A0A08</td><td>所有界面背景（暖黑）</td></tr>
+        <tr><td>面板底</td><td>#121210</td><td>卡片/面板背景</td></tr>
+        <tr><td>主强调色</td><td>#FFB000 (琥珀)</td><td>CRT 荧光、终端文字、标题</td></tr>
+        <tr><td>次强调色</td><td>#00FF41 (CRT 绿)</td><td>Seegson 终端读数、信息</td></tr>
+        <tr><td>警示色</td><td>#FF2A3C (红)</td><td>警告、关键物品、危险</td></tr>
+        <tr><td>暗琥珀</td><td>#5C4000</td><td>非活跃/暗态元素</td></tr>
+        <tr><td>主字体</td><td>Isolation (定制 Helvetica Bold)</td><td>标题与正文</td></tr>
+        <tr><td>终端字体</td><td>VT323 / IBM Plex Mono</td><td>终端界面文字</td></tr>
+        <tr><td>排版</td><td>等宽 / 统一字符宽度</td><td>终端式排版</td></tr>
+        <tr><td>UI 类型</td><td>Diegetic 为主</td><td>设备存在于游戏世界</td></tr>
+        <tr><td>核心设备</td><td>运动追踪器 / CRT 终端</td><td>Diegetic 信息载体</td></tr>
+        <tr><td>特效</td><td>扫描线 + VHS 失真 + 闪烁 + CRT 辉光 + 脏玻璃</td><td>全屏叠加</td></tr>
+        <tr><td>设计哲学</td><td>低保真即美学</td><td>过时技术是设计语言</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout" style="margin-top:30px">
+    <b>总结：</b>Alien: Isolation 的 UI 是一套完整的「复古未来」设计系统。它将 1970 年代科幻电影的视觉遗产——琥珀色 CRT 荧光、VHS 失真、扫描线、脏玻璃效果——转化为一种持续有效的游戏 UI 风格。运动追踪器、终端和录音机等 Diegetic 设备让玩家在游戏世界中获取信息，而非依赖悬浮叠加的数字面板。<b>低保真即美学</b>——过时技术不是缺陷，而是设计语言。这套系统成为复古未来主义在游戏设计中的经典范例。
+  </div>
+</section>
+</main>
+<footer>
+  <div style="max-width:1280px;margin:0 auto;padding:0 5vw">
+    <div class="f-brand">ALIEN: ISOLATION · UI ANALYSIS</div>
+    <div class="f-note">Creative Assembly · 1970s retrofuture · CRT 终端美学 · Diegetic UI · 低保真即美学 · 黑匣子概念</div>
+  </div>
+</footer>
+<div class="lightbox" id="lightbox"><span class="lb-close">&times;</span><img src="" alt=""><div class="lb-caption"></div></div>
+<script>
+(function(){
+  var lb=document.getElementById('lightbox'),lbImg=lb.querySelector('img'),lbCap=lb.querySelector('.lb-caption'),lbClose=lb.querySelector('.lb-close');
+  var caps=document.querySelectorAll('.zoomable');
+  function open(src,cap){lbImg.src=src;lbCap.textContent=cap||'';lb.classList.add('show');document.body.style.overflow='hidden'}
+  function close(){lb.classList.remove('show');document.body.style.overflow='';setTimeout(function(){lbImg.src=''},300)}
+  caps.forEach(function(img){img.style.cursor='zoom-in';img.addEventListener('click',function(){open(img.src,img.alt)})});
+  lb.addEventListener('click',function(e){if(e.target===lb||e.target===lbClose)close()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+})();
+</script>
+</body>
+</html>
