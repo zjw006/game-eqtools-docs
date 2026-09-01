@@ -113,8 +113,14 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidd
     <button class="tab" id="tab-ui" role="tab" aria-selected="false" aria-controls="panel-ui" data-target="ui">
       <span class="num">04</span>UI 美术设计
     </button>
+    <button class="tab" id="tab-frk" role="tab" aria-selected="false" aria-controls="panel-frk" data-target="frk">
+      <span class="num">05</span>Fire Roach Killer
+    </button>
+    <button class="tab" id="tab-cyber" role="tab" aria-selected="false" aria-controls="panel-cyber" data-target="cyber">
+      <span class="num">06</span>暗黑赛博
+    </button>
   </div>
-  <div class="hint">共 <b>4</b> 份档案 · 点击页签切换</div>
+  <div class="hint">共 <b>6</b> 份档案 · 点击页签切换</div>
 </div>
 
 <div class="stage">
@@ -134,17 +140,25 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidd
   <div class="panel" id="panel-ui" role="tabpanel" aria-labelledby="tab-ui">
     <iframe src="game-ui-design.html" title="UI 美术设计研究档案"></iframe>
   </div>
+  <div class="panel" id="panel-frk" role="tabpanel" aria-labelledby="tab-frk">
+    <iframe src="fire-roach-killer.html" title="Fire Roach Killer UI 设计方案"></iframe>
+  </div>
+  <div class="panel" id="panel-cyber" role="tabpanel" aria-labelledby="tab-cyber">
+    <iframe src="dark-cyber-observer.html" title="暗黑赛博 Observer UI 风格分析"></iframe>
+  </div>
 </div>
 
 <script>
 (function(){
   var tabs=[].slice.call(document.querySelectorAll('.tab'));
-  var panels={td:document.getElementById('panel-td'),art:document.getElementById('panel-art'),meta:document.getElementById('panel-meta'),ui:document.getElementById('panel-ui')};
+  var panels={td:document.getElementById('panel-td'),art:document.getElementById('panel-art'),meta:document.getElementById('panel-meta'),ui:document.getElementById('panel-ui'),frk:document.getElementById('panel-frk'),cyber:document.getElementById('panel-cyber')};
   var titles={
     td:'塔防游戏全景研究档案 · 游戏研究资料库',
     art:'游戏美术风格图鉴 · 游戏研究资料库',
     meta:'天赋·成就·经济系统档案 · 游戏研究资料库',
-    ui:'UI 美术设计档案 · 游戏研究资料库'
+    ui:'UI 美术设计档案 · 游戏研究资料库',
+    frk:'Fire Roach Killer UI 设计方案 · 游戏研究资料库',
+    cyber:'暗黑赛博 Observer UI 风格分析 · 游戏研究资料库'
   };
   var artFrame=document.getElementById('artFrame');
   var artLoading=document.getElementById('artLoading');
@@ -178,7 +192,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidd
     t.addEventListener('click',function(){activate(t.getAttribute('data-target'));});
   });
 
-  /* 支持 #art / #td / #meta / #ui 直达链接 */
+  /* 支持 #art / #td / #meta / #ui / #frk / #cyber 直达链接 */
   var hash=(location.hash||'').replace('#','');
   activate(panels.hasOwnProperty(hash)?hash:'td',false);
 })();

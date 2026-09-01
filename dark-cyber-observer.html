@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>暗黑赛博 · Observer UI 风格分析</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080a0f;--bg2:#0c0f16;--panel:#11141d;--panel2:#161a26;--line:#1e2333;
+  --ink:#d8dce6;--ink-dim:#6b7285;
+  --neon-red:#ff2a6d;--neon-blue:#05d9e8;--neon-violet:#bd00ff;--neon-amber:#ffb300;
+  --dim-red:#5c1a2e;--dim-blue:#0a3a40;--dim-violet:#2d0040;
+  --serif:'Noto Serif SC',serif;--sans:'Noto Sans SC',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.85;
+  background-image:
+    linear-gradient(rgba(5,217,232,.015) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(5,217,232,.015) 1px,transparent 1px);
+  background-size:48px 48px;overflow-x:hidden;
+}
+::selection{background:var(--neon-blue);color:#000}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--line);border-radius:5px}
+::-webkit-scrollbar-thumb:hover{background:var(--neon-blue)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,10,15,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:4px;padding:0 28px;height:56px;overflow-x:auto}
+nav::-webkit-scrollbar{height:0}
+nav .brand{font-family:var(--serif);font-weight:900;font-size:15px;color:var(--neon-blue);white-space:nowrap;margin-right:18px;display:flex;align-items:center;gap:8px}
+nav .brand::before{content:"";width:10px;height:10px;background:var(--neon-blue);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);box-shadow:0 0 12px var(--neon-blue)}
+nav a{color:var(--ink-dim);text-decoration:none;font-size:12.5px;font-weight:400;padding:6px 11px;white-space:nowrap;border-radius:3px;transition:all .25s;letter-spacing:.04em}
+nav a:hover{color:var(--neon-blue);background:rgba(5,217,232,.08);text-shadow:0 0 8px rgba(5,217,232,.4)}
+
+header{min-height:88vh;display:flex;flex-direction:column;justify-content:center;padding:130px 6vw 80px;position:relative;overflow:hidden}
+header::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 20% 50%,rgba(5,217,232,.04),transparent 60%),radial-gradient(ellipse 50% 50% at 80% 30%,rgba(255,42,109,.03),transparent 50%);z-index:0}
+header .inner{position:relative;z-index:2;max-width:1200px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.4em;color:var(--neon-red);text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:14px}
+.kicker::before{content:"";width:42px;height:1px;background:var(--neon-red);box-shadow:0 0 6px var(--neon-red)}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(38px,6vw,78px);line-height:1.15;letter-spacing:.02em}
+h1 em{font-style:normal;color:var(--neon-blue);text-shadow:0 0 50px rgba(5,217,232,.35)}
+h1 .sub-line{display:block;font-size:clamp(18px,2.4vw,32px);color:var(--ink-dim);margin-top:8px;font-weight:400;font-family:var(--sans)}
+header .sub{margin-top:28px;max-width:780px;color:var(--ink-dim);font-size:clamp(14px,1.3vw,16px)}
+header .sub b{color:var(--ink);font-weight:500}
+header .meta-row{margin-top:42px;display:flex;flex-wrap:wrap;gap:14px}
+header .meta-chip{font-family:var(--mono);font-size:11px;letter-spacing:.08em;border:1px solid var(--line);padding:8px 16px;border-radius:2px;color:var(--ink-dim);background:rgba(17,20,29,.7)}
+header .meta-chip b{color:var(--neon-blue);font-weight:600}
+
+main{max-width:1280px;margin:0 auto;padding:0 5vw 120px}
+section{margin-top:100px;scroll-margin-top:80px}
+.sec-head{display:flex;align-items:baseline;gap:20px;margin-bottom:14px;border-bottom:1px solid var(--line);padding-bottom:18px;flex-wrap:wrap}
+.sec-num{font-family:var(--mono);font-size:13px;color:var(--neon-red);letter-spacing:.2em}
+.sec-head h2{font-family:var(--serif);font-weight:900;font-size:clamp(26px,3.4vw,44px);line-height:1.25}
+.sec-head .en{font-family:var(--mono);font-size:11px;color:var(--ink-dim);letter-spacing:.3em;text-transform:uppercase;margin-left:auto}
+.sec-lead{color:var(--ink-dim);max-width:860px;margin-bottom:38px;font-size:15px}
+.sec-lead b{color:var(--ink);font-weight:500}
+
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+
+.card{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:6px;padding:26px 24px;position:relative;overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s}
+.card:hover{transform:translateY(-4px);border-color:rgba(5,217,232,.35);box-shadow:0 14px 50px rgba(0,0,0,.5),0 0 30px rgba(5,217,232,.06)}
+.card::before{content:"";position:absolute;top:0;left:0;width:34px;height:2px;background:var(--neon-blue);box-shadow:0 0 8px var(--neon-blue)}
+.card h3{font-family:var(--serif);font-weight:700;font-size:18px;margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card .tag{font-family:var(--mono);font-size:10px;letter-spacing:.15em;color:var(--neon-red);border:1px solid rgba(255,42,109,.4);padding:2px 8px;border-radius:2px;white-space:nowrap}
+.card .tag.blue{color:var(--neon-blue);border-color:rgba(5,217,232,.4)}
+.card .tag.violet{color:var(--neon-violet);border-color:rgba(189,0,255,.4)}
+.card .tag.amber{color:var(--neon-amber);border-color:rgba(255,179,0,.4)}
+.card p{color:var(--ink-dim);font-size:13.5px;margin-top:8px}
+.card p b{color:var(--ink);font-weight:500}
+
+.mini{margin-top:14px;display:grid;gap:8px}
+.mini .row{display:flex;gap:10px;font-size:12.5px;color:var(--ink-dim);align-items:baseline}
+.mini .row::before{content:"";width:6px;height:6px;flex:none;background:var(--neon-blue);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);transform:translateY(-1px);box-shadow:0 0 6px var(--neon-blue)}
+.mini .row b{color:var(--ink);font-weight:500}
+
+.callout{border-left:3px solid var(--neon-blue);background:rgba(5,217,232,.05);padding:18px 22px;margin:20px 0;border-radius:0 6px 6px 0;font-size:14px;color:var(--ink)}
+.callout b{color:var(--neon-blue);font-weight:600}
+.callout.red{border-color:var(--neon-red);background:rgba(255,42,109,.05)}
+.callout.red b{color:var(--neon-red)}
+.callout.violet{border-color:var(--neon-violet);background:rgba(189,0,255,.05)}
+.callout.violet b{color:var(--neon-violet)}
+
+.wireframe{display:flex;gap:10px;margin:14px 0;flex-wrap:wrap}
+.wf-block{border:1px dashed var(--line);border-radius:4px;padding:12px;flex:1;min-width:100px;text-align:center;font-family:var(--mono);font-size:10px;color:var(--ink-dim);background:rgba(17,20,29,.5)}
+.wf-block.solid{border-style:solid;border-color:var(--neon-blue);color:var(--neon-blue);background:rgba(5,217,232,.06)}
+.wf-block.red{border-color:var(--neon-red);color:var(--neon-red);background:rgba(255,42,109,.06)}
+.wf-block.violet{border-color:var(--neon-violet);color:var(--neon-violet);background:rgba(189,0,255,.06)}
+.wf-block .wf-label{display:block;margin-bottom:4px;letter-spacing:.1em;text-transform:uppercase;font-size:9px}
+.wf-block .wf-dim{font-size:9px;opacity:.6}
+
+h3.sub{font-family:var(--serif);font-weight:700;font-size:clamp(19px,2vw,24px);margin:54px 0 18px;display:flex;align-items:center;gap:12px}
+h3.sub::before{content:"";width:22px;height:2px;background:var(--neon-blue);box-shadow:0 0 6px var(--neon-blue)}
+h3.sub .en{font-family:var(--mono);font-size:10.5px;color:var(--ink-dim);letter-spacing:.25em;font-weight:400}
+
+/* Palette */
+.palette{display:flex;gap:0;margin:14px 0;border-radius:4px;overflow:hidden;height:40px}
+.palette .sw{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--mono);font-size:8px;color:rgba(255,255,255,.8);text-shadow:0 1px 2px rgba(0,0,0,.6);gap:2px}
+.palette .sw .hex{font-size:9px;font-weight:600}
+
+/* Feature grid for paradigm */
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px}
+.feature-item{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:6px;padding:20px;position:relative;transition:all .3s}
+.feature-item:hover{border-color:rgba(5,217,232,.3)}
+.feature-item .feat-icon{width:36px;height:36px;border-radius:6px;background:rgba(5,217,232,.1);border:1px solid rgba(5,217,232,.3);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;color:var(--neon-blue);margin-bottom:12px}
+.feature-item .feat-icon.red{background:rgba(255,42,109,.1);border-color:rgba(255,42,109,.3);color:var(--neon-red)}
+.feature-item .feat-icon.violet{background:rgba(189,0,255,.1);border-color:rgba(189,0,255,.3);color:var(--neon-violet)}
+.feature-item h4{font-family:var(--serif);font-size:15px;margin-bottom:6px;color:var(--ink)}
+.feature-item p{font-size:12.5px;color:var(--ink-dim);line-height:1.7}
+
+/* Comparison note */
+.comp-note{background:rgba(17,20,29,.6);border:1px dashed var(--line);border-radius:6px;padding:16px 20px;margin:16px 0;font-size:13px;color:var(--ink-dim)}
+.comp-note b{color:var(--neon-amber)}
+
+/* Neon glow text */
+.neon-text{color:var(--neon-blue);text-shadow:0 0 10px rgba(5,217,232,.4)}
+.neon-red-text{color:var(--neon-red);text-shadow:0 0 10px rgba(255,42,109,.4)}
+
+/* Screenshots */
+.ss-group{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.ss-group img,.card-img{width:100%;border-radius:4px;border:1px solid var(--line);display:block;filter:saturate(.9) brightness(.88);transition:filter .3s}
+.card-img{height:clamp(120px,16vw,200px);object-fit:cover;margin-top:12px}
+.ss-group img{height:clamp(100px,12vw,150px);object-fit:cover}
+.ss-group img:hover,.card-img:hover{filter:saturate(1) brightness(1)}
+.ss-group.tall img{height:clamp(160px,20vw,280px)}
+.ss-group.trio{grid-template-columns:repeat(3,1fr)}
+.shot-wrap{margin:18px 0 4px}
+.shot-full{width:100%;border-radius:4px;border:1px solid var(--line);display:block;filter:saturate(.9) brightness(.88);transition:filter .3s;max-height:480px;object-fit:cover}
+.shot-full:hover{filter:saturate(1) brightness(1)}
+.shot-cap{font-family:var(--mono);font-size:10.5px;color:var(--ink-dim);letter-spacing:.12em;margin-top:8px;text-align:center}
+.shot-cap::before{content:"// ";color:var(--neon-blue)}
+
+/* Table */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:linear-gradient(160deg,var(--panel),var(--panel2))}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:680px}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--neon-blue);text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);background:rgba(5,217,232,.05);white-space:nowrap}
+td{padding:13px 16px;border-bottom:1px solid rgba(30,35,51,.6);color:var(--ink-dim);vertical-align:top}
+td:first-child{color:var(--ink);font-weight:500;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+
+/* Visual mode badges */
+.mode-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;padding:4px 10px;border-radius:3px;margin-right:6px;margin-bottom:6px}
+.mode-badge.emp{background:rgba(5,217,232,.1);color:var(--neon-blue);border:1px solid rgba(5,217,232,.3)}
+.mode-badge.bio{background:rgba(255,42,109,.1);color:var(--neon-red);border:1px solid rgba(255,42,109,.3)}
+.mode-badge.night{background:rgba(189,0,255,.1);color:var(--neon-violet);border:1px solid rgba(189,0,255,.3)}
+
+/* Glitch effect decoration */
+.glitch-line{height:1px;background:linear-gradient(90deg,transparent,var(--neon-red),var(--neon-blue),transparent);margin:30px 0;opacity:.3}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;z-index:9999;background:rgba(4,6,10,.95);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility 0s linear .3s;cursor:zoom-out}
+.lightbox.show{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .3s ease}
+.lightbox img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 0 1px var(--line);animation:lbIn .35s ease}
+.lightbox .lb-close{position:absolute;top:20px;right:24px;font-size:28px;color:var(--ink-dim);cursor:pointer;z-index:2}
+.lightbox .lb-caption{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:12px;color:var(--ink-dim);max-width:80vw;text-align:center}
+@keyframes lbIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+
+footer{padding:50px 5vw 70px;border-top:1px solid var(--line);background:var(--bg2)}
+footer .f-brand{font-family:var(--serif);font-weight:900;font-size:18px;color:var(--neon-blue);margin-bottom:6px;text-shadow:0 0 20px rgba(5,217,232,.2)}
+footer .f-note{font-size:13px;color:var(--ink-dim);margin-bottom:30px;max-width:680px}
+
+@media(max-width:1024px){
+  nav{padding:0 16px;gap:2px}
+  nav .brand{font-size:14px;margin-right:12px}
+  nav a{font-size:12px;padding:6px 9px}
+  main{padding:0 4vw 100px}
+  section{margin-top:80px}
+  header{padding:120px 5vw 70px}
+}
+@media(max-width:768px){
+  .card-img{height:120px}
+  .ss-group img{height:100px}
+  .ss-group.trio{grid-template-columns:1fr}
+  .ss-group.trio img{height:140px}
+  .shot-full{max-height:300px}
+  .wireframe{flex-direction:column}
+  .feature-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand">DARK CYBER</span>
+  <a href="#s1">游戏概述</a>
+  <a href="#s2">设计哲学</a>
+  <a href="#s3">界面分析</a>
+  <a href="#s4">视觉系统</a>
+  <a href="#s5">设计令牌</a>
+</nav>
+
+<header>
+  <div class="inner">
+    <div class="kicker">UI STYLE ANALYSIS · OBSERVER</div>
+    <h1>暗黑赛博 <em>Observer</em><span class="sub-line">Bloober Team · 2084 年的神经入侵侦探 UI</span></h1>
+    <p class="sub">波兰工作室 <b>Bloober Team</b> 打造的赛博朋克恐怖杰作。玩家扮演神经网络侦探 Daniel Lazarski（Rutger Hauer 配音），在瘟疫与战争撕裂的 2084 年克拉科夫，通过<b>「食梦者」</b>设备侵入他人内心获取线索。其 UI 设计以<b>极简主义 HUD + AR 全息叠加 + 三重视觉模式</b>为核心，将 diegetic 沉浸感推至极致——画面四周<b>无常驻 UI 元素</b>，所有信息通过世界内的 AR  overlay 呈现。</p>
+    <div class="meta-row">
+      <div class="meta-chip">开发商 <b>Bloober Team</b></div>
+      <div class="meta-chip">首发 <b>2017</b></div>
+      <div class="meta-chip">重制 <b>System Redux 2020</b></div>
+      <div class="meta-chip">视觉模式 <b>3</b> 种</div>
+      <div class="meta-chip">HUD 常驻元素 <b>0</b></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ S1 游戏概述 ============ -->
+<section id="s1">
+  <div class="sec-head">
+    <span class="sec-num">SEC.01</span>
+    <h2>游戏概述 <span class="en">GAME OVERVIEW</span></h2>
+  </div>
+  <p class="sec-lead">Observer 是一款<b>第一人称赛博朋克恐怖侦探</b>游戏，核心玩法围绕<b>环境探索、线索搜集、神经入侵审讯</b>展开。与传统 RPG 不同，它没有商店、天赋树、成就或图鉴系统——UI 设计完全服务于<b>叙事沉浸</b>与<b>恐怖氛围</b>。</p>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>核心玩法 <span class="tag">GAMEPLAY</span></h3>
+      <div class="mini">
+        <div class="row"><b>环境探索</b>——第一人称步行模拟，在衰败的克拉科夫贫民窟大楼中调查</div>
+        <div class="row"><b>线索搜集</b>——通过电磁/生物/夜视三种增强视觉扫描环境中的可互动物品</div>
+        <div class="row"><b>神经入侵</b>——侵入死者或嫌犯的大脑，在其混乱的记忆碎片中寻找真相</div>
+        <div class="row"><b>审讯对话</b>——与 NPC 进行分支对话，选择影响剧情走向</div>
+      </div>
+      <div class="callout" style="margin-top:14px;font-size:12px">
+        <b>关键机制：</b>游戏没有传统战斗系统，"战斗"体现为<b>神经入侵中的精神对抗</b>——在他人意识世界中躲避恐怖幻象、解开谜题。
+      </div>
+    </div>
+    <div class="card">
+      <h3>世界观设定 <span class="tag blue">SETTING</span></h3>
+      <div class="mini">
+        <div class="row"><b>2084 年</b>——反乌托邦未来，波兰克拉科夫贫民窟</div>
+        <div class="row"><b>纳米瘟疫</b>——Nanophage 数字瘟疫杀死了大量身体/意识改造者</div>
+        <div class="row"><b>大崩溃</b>——战争与瘟疫后的文明崩塌，人命微贱</div>
+        <div class="row"><b>企业统治</b>——Chiron 公司垄断一切，AR 广告无处不在</div>
+        <div class="row"><b>观察者</b>——财团资助的精英调查员，可合法侵入他人思维</div>
+      </div>
+      <div class="callout red" style="margin-top:14px;font-size:12px">
+        <b>氛围基调：</b>压抑、衰败、霓虹与腐肉交织的<b>暗黑赛博朋克</b>——Blade Runner  meets 精神恐怖。
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glitch-line"></div>
+
+<!-- ============ S2 设计哲学 ============ -->
+<section id="s2">
+  <div class="sec-head">
+    <span class="sec-num">SEC.02</span>
+    <h2>设计哲学 <span class="en">DESIGN PHILOSOPHY</span></h2>
+  </div>
+  <p class="sec-lead">Observer 的 UI 设计遵循<b>"消失即存在"</b>的悖论——通过最大限度减少界面元素的存在感，反而强化了玩家对游戏世界的沉浸。这是 diegetic UI 设计的极致实践。</p>
+
+  <div class="feature-grid">
+    <div class="feature-item">
+      <div class="feat-icon">01</div>
+      <h4>零常驻 HUD</h4>
+      <p>画面四周<b>没有任何常驻 UI 元素</b>——没有血条、没有小地图、没有任务追踪。所有信息仅在需要时通过 AR overlay 短暂浮现，最大限度保持视野纯净。</p>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon red">02</div>
+      <h4>AR 全息叠加</h4>
+      <p>所有界面信息都以<b>世界内 AR 投影</b>呈现——案件日志、互动物品高亮、NPC 信息标签直接投射在环境中，仿佛角色通过神经植入体"看到"的数据层。</p>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon violet">03</div>
+      <h4>三重视觉模式</h4>
+      <p>电磁视觉（蓝）扫描电子设备，生物视觉（红）检测有机生命，夜视（紫）在黑暗中视物。三种模式不仅改变画面滤镜，更<b>重构了玩家与世界的交互方式</b>。</p>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon">04</div>
+      <h4>拖拽式互动</h4>
+      <p>与物品互动需<b>鼠标拖拽</b>开门、移动物体，而非简单的按键交互。这种"费力感"强化了第一人称的物理存在感，参考 Alien: Isolation 的机械互动。</p>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon red">05</div>
+      <h4>神经入侵界面</h4>
+      <p>侵入他人大脑时，UI 彻底崩解——画面扭曲、色彩偏移、现实与幻觉边界消融。此时的"界面"就是<b>疯狂本身</b>，形式与内容达成完美统一。</p>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon violet">06</div>
+      <h4>霓虹即信息</h4>
+      <p>环境中的霓虹灯、全息广告、AR 标识不仅是装饰，更是<b>世界观叙事</b>的载体。Chiron 公司的产品广告、反乌托邦标语无处不在，UI 与环境设计无缝融合。</p>
+    </div>
+  </div>
+</section>
+
+<div class="glitch-line"></div>
+
+<!-- ============ S3 界面分析 ============ -->
+<section id="s3">
+  <div class="sec-head">
+    <span class="sec-num">SEC.03</span>
+    <h2>界面模块分析 <span class="en">INTERFACE ANALYSIS</span></h2>
+  </div>
+  <p class="sec-lead">由于 Observer 是<b>线性叙事恐怖冒险</b>而非 RPG，它没有传统意义上的商店、天赋、成就或图鉴系统。以下分析聚焦于游戏实际拥有的核心界面模块，并与 Fire Roach Killer 的设计需求进行对照。</p>
+
+  <!-- ① 主界面 -->
+  <h3 class="sub">① 主界面 <span class="en">MAIN MENU</span></h3>
+  <div class="grid g2">
+    <div class="card">
+      <h3>布局方案 <span class="tag">LAYOUT</span></h3>
+      <p>极简的<b>终端式标题画面</b>——纯黑背景上仅有四个选项：新游戏 / 设定 / 可收集物品 / 退出。没有华丽的背景动画，没有角色展示，只有冰冷的等宽字体与细微的 CRT 扫描线效果。</p>
+      <div class="wireframe">
+        <div class="wf-block solid" style="flex:100%"><span class="wf-label">[新游戏]</span><span class="wf-dim">NEW GAME</span></div>
+      </div>
+      <div class="wireframe">
+        <div class="wf-block" style="flex:100%"><span class="wf-label">[设定]</span><span class="wf-dim">SETTINGS</span></div>
+      </div>
+      <div class="wireframe">
+        <div class="wf-block" style="flex:100%"><span class="wf-label">[可收集物品]</span><span class="wf-dim">COLLECTIBLES</span></div>
+      </div>
+      <div class="wireframe">
+        <div class="wf-block" style="flex:100%"><span class="wf-label">[退出]</span><span class="wf-dim">EXIT</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>设计要点 <span class="tag">KEY FEATURES</span></h3>
+      <div class="mini">
+        <div class="row"><b>1.</b> 纯黑背景——没有任何场景或角色，只有<b>绝对的黑暗</b>，暗示 2084 年的绝望</div>
+        <div class="row"><b>2.</b> 等宽终端字体——仿 DOS 终端的 monospace 字体，强化<b>冰冷机械感</b></div>
+        <div class="row"><b>3.</b> 选项极简——仅 4 项，没有难度选择、没有存档管理，一切从简</div>
+        <div class="row"><b>4.</b> 选中态——文字轻微发光（霓虹蓝），无多余装饰</div>
+        <div class="row"><b>5.</b> 可收集物品入口——单独列出，暗示<b>探索价值</b>与世界观深度</div>
+      </div>
+      <div class="callout" style="margin-top:14px;font-size:12px">
+        <b>对 Fire Roach Killer 的启示：</b>主界面可以考虑加入<b>PDA 终端式极简列表</b>，用等宽字体 + 霓虹发光选中态替代华丽按钮。
+      </div>
+    </div>
+  </div>
+  <div class="shot-wrap">
+    <img class="shot-full zoomable" src="images/observer-mainmenu.jpg" alt="Observer 主界面：纯黑背景上的终端式菜单，等宽字体四个选项，选中项霓虹蓝发光，叠加 CRT 扫描线">
+    <div class="shot-cap">① 主界面 · 终端式极简菜单（风格示意图）</div>
+  </div>
+
+  <!-- ② 战斗 HUD -->
+  <h3 class="sub">② 战斗 HUD / 探索界面 <span class="en">EXPLORATION HUD</span></h3>
+  <div class="grid g2">
+    <div class="card">
+      <h3>布局方案 <span class="tag">LAYOUT</span></h3>
+      <p>Observer 的 HUD 是<b>游戏史上最极简的设计之一</b>——画面四周<b>完全没有任何常驻元素</b>。玩家通过第一人称视角直接观察世界，只有在交互或扫描时，AR overlay 才会短暂浮现。</p>
+      <div class="wireframe">
+        <div class="wf-block" style="flex:100%"><span class="wf-label">画面中央</span><span class="wf-dim">纯游戏视野 · 零遮挡</span></div>
+      </div>
+      <div class="wireframe">
+        <div class="wf-block solid" style="flex:100%"><span class="wf-label">交互时</span><span class="wf-dim">AR 标签短暂浮现于目标物上</span></div>
+      </div>
+      <div class="wireframe">
+        <div class="wf-block red" style="flex:100%"><span class="wf-label">扫描时</span><span class="wf-dim">视觉模式滤镜 + 可互动物品高亮</span></div>
+      </div>
+      <div class="wireframe">
+        <div class="wf-block violet" style="flex:100%"><span class="wf-label">受伤时</span><span class="wf-dim">屏幕边缘红色脉冲呼吸</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>设计要点 <span class="tag">KEY FEATURES</span></h3>
+      <div class="mini">
+        <div class="row"><b>1.</b> <b>零常驻 HUD</b>——没有血条、没有弹药、没有小地图，彻底解放视野</div>
+        <div class="row"><b>2.</b> AR 交互标签——看向可互动对象时，<b>文字标签直接浮现在物体表面</b>（如"开门""拾取"）</div>
+        <div class="row"><b>3.</b> 拖拽交互——鼠标拖拽开门/移动物体，而非按键，增加<b>物理存在感</b></div>
+        <div class="row"><b>4.</b> 视觉模式提示——当前激活的视觉模式通过<b>画面整体色调</b>暗示（蓝/红/紫）</div>
+        <div class="row"><b>5.</b> 受伤反馈——无血条，仅通过<b>屏幕边缘红色呼吸渐变</b> + 心跳音效传达伤害</div>
+        <div class="row"><b>6.</b> 案件日志——按滚轮呼出 AR 控制面板，查看案件档案与目标</div>
+      </div>
+      <div class="callout red" style="margin-top:14px;font-size:12px">
+        <b>对 Fire Roach Killer 的启示：</b>战斗 HUD 可考虑<b>进一步减少常驻元素</b>，将 HP/燃料信息改为屏幕边缘的微妙渐变或仅在受击时显示。
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 案件日志 / 数据面板 -->
+  <h3 class="sub">③ 案件日志 / 数据面板 <span class="en">CASE LOG / DATA PANEL</span></h3>
+  <div class="grid g2">
+    <div class="card">
+      <h3>布局方案 <span class="tag">LAYOUT</span></h3>
+      <p>按<b>鼠标滚轮</b>呼出 AR 控制面板——这是游戏中唯一的"菜单"界面。面板以<b>全息投影</b>形式浮现在画面中央，不暂停游戏，背景仍可见。包含案件档案、目标列表、健康状态。</p>
+      <div class="wireframe">
+        <div class="wf-block solid" style="flex:100%"><span class="wf-label">案件档案 CASE FILES</span><span class="wf-dim">已收集线索与证据</span></div>
+      </div>
+      <div class="wireframe">
+        <div class="wf-block solid" style="flex:100%"><span class="wf-label">目标列表 OBJECTIVES</span><span class="wf-dim">当前任务目标</span></div>
+      </div>
+      <div class="wireframe">
+        <div class="wf-block" style="flex:100%"><span class="wf-label">健康状态 HEALTH</span><span class="wf-dim">植入体负荷 / 精神状态</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>设计要点 <span class="tag">KEY FEATURES</span></h3>
+      <div class="mini">
+        <div class="row"><b>1.</b> <b>不暂停的 AR 面板</b>——呼出时游戏不暂停，背景仍可见，保持紧张感</div>
+        <div class="row"><b>2.</b> 全息投影质感——面板边缘有<b>扫描线闪烁</b>与轻微色差，模拟廉价 AR 设备</div>
+        <div class="row"><b>3.</b> 等宽字体档案——所有文本使用 monospace 字体，像<b>警局数据库</b>的终端输出</div>
+        <div class="row"><b>4.</b> 线索关联——档案中的线索可<b>互相链接</b>，帮助玩家推理案情</div>
+        <div class="row"><b>5.</b> 精神负荷指示——健康状态不仅显示肉体伤害，更显示<b>神经入侵对精神的侵蚀</b></div>
+      </div>
+      <div class="callout violet" style="margin-top:14px;font-size:12px">
+        <b>对 Fire Roach Killer 的启示：</b>图鉴/成就系统可采用类似的<b>AR 全息面板</b>设计，不暂停游戏，叠加在画面上。
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 神经入侵 / 审讯界面 -->
+  <h3 class="sub">④ 神经入侵 / 审讯界面 <span class="en">NEURAL INTERROGATION</span></h3>
+  <div class="grid g2">
+    <div class="card">
+      <h3>布局方案 <span class="tag">LAYOUT</span></h3>
+      <p>Observer 最核心的 UI 创新——当 Daniel 使用"食梦者"设备侵入他人大脑时，<b>传统 UI 彻底消失</b>。玩家进入被入侵者的精神世界，这里的一切都是<b>扭曲的、非欧几里得的、充满象征意义的</b>。</p>
+      <div class="wireframe">
+        <div class="wf-block solid" style="flex:100%"><span class="wf-label">现实崩解</span><span class="wf-dim">走廊扭曲 · 墙壁融化 · 重力失效</span></div>
+      </div>
+      <div class="wireframe">
+        <div class="wf-block red" style="flex:100%"><span class="wf-label">色彩暴力</span><span class="wf-dim">高饱和色块冲击 · 色差偏移 · 噪点</span></div>
+      </div>
+      <div class="wireframe">
+        <div class="wf-block violet" style="flex:100%"><span class="wf-label">象征物</span><span class="wf-dim">记忆碎片化为可互动实体</span></div>
+      </div>
+      <div class="wireframe">
+        <div class="wf-block" style="flex:100%"><span class="wf-label">声音设计</span><span class="wf-dim">低语 · 尖叫 · 心跳 · 电子噪音</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>设计要点 <span class="tag">KEY FEATURES</span></h3>
+      <div class="mini">
+        <div class="row"><b>1.</b> <b>UI 即疯狂</b>——没有传统界面，整个精神世界就是 UI，玩家在混乱中自行寻找线索</div>
+        <div class="row"><b>2.</b> 环境叙事——记忆以<b>象征性场景</b>呈现（童年房间扭曲成迷宫、创伤化为怪物）</div>
+        <div class="row"><b>3.</b> 色彩心理学——不同情绪用不同主色调：愤怒=血红、悲伤=靛蓝、恐惧=惨白</div>
+        <div class="row"><b>4.</b> 时序错乱——过去、现在、幻想在空间中<b>同时存在</b>，打破线性时间感</div>
+        <div class="row"><b>5.</b> 交互隐喻——解开记忆谜题需理解被入侵者的<b>心理创伤</b>，而非逻辑推理</div>
+        <div class="row"><b>6.</b> 退出机制——精神负荷过高时被迫退出，屏幕剧烈闪烁后回归现实</div>
+      </div>
+      <div class="callout red" style="margin-top:14px;font-size:12px">
+        <b>对 Fire Roach Killer 的启示：</b>加载界面或特殊关卡可借鉴这种<b>"UI 崩解"</b>美学——故障艺术 + 色彩暴力 + 非欧几何空间。
+      </div>
+    </div>
+  </div>
+  <div class="ss-group tall">
+    <img class="zoomable" src="images/observer-neural.jpg" alt="神经入侵：被入侵者的意识世界——扭曲的非欧几里得空间，高饱和色块与故障碎片交织">
+    <img class="zoomable" src="images/observer-ui-1.jpg" alt="记忆重构界面：全息大脑扫描、EEG 波形读数与记忆同步率数据面板">
+  </div>
+  <div class="shot-cap">④ 神经入侵 · UI 崩解 = 疯狂可视化（风格示意图）</div>
+
+  <!-- ⑤ 视觉模式系统 -->
+  <h3 class="sub">⑤ 增强视觉模式系统 <span class="en">VISION MODES</span></h3>
+  <div class="grid g2">
+    <div class="card">
+      <h3>三种视觉模式 <span class="tag">VISION MODES</span></h3>
+      <p>Observer 最具辨识度的 UI/UX 设计——玩家可随时切换三种增强视觉模式，每种模式<b>彻底改变画面外观</b>并高亮不同类型的可互动物品。这是游戏最核心的"能力系统"。</p>
+
+      <div style="margin-top:14px;display:flex;flex-wrap:wrap">
+        <span class="mode-badge emp">电磁视觉 ELECTROMAGNETIC (E)</span>
+        <span class="mode-badge bio">生物视觉 BIOLOGICAL (Q)</span>
+        <span class="mode-badge night">夜视 NIGHT VISION (F)</span>
+      </div>
+
+      <div class="wireframe" style="margin-top:16px">
+        <div class="wf-block solid" style="flex:1"><span class="wf-label">电磁视觉</span><span class="wf-dim">高亮电子设备 · 蓝绿色调</span></div>
+        <div class="wf-block red" style="flex:1"><span class="wf-label">生物视觉</span><span class="wf-dim">高亮有机生命 · 红粉色调</span></div>
+        <div class="wf-block violet" style="flex:1"><span class="wf-label">夜视</span><span class="wf-dim">黑暗中视物 · 紫色调</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>设计要点 <span class="tag">KEY FEATURES</span></h3>
+      <div class="mini">
+        <div class="row"><b>1.</b> <b>一键切换</b>——E/Q/F 三个按键即时切换，无需进入菜单</div>
+        <div class="row"><b>2.</b> 画面滤镜——每种模式施加<b>全屏色彩分级</b>，改变整个世界的外观</div>
+        <div class="row"><b>3.</b> 物品高亮——对应类型的可互动物品以<b>发光轮廓</b>标识，非目标物品暗淡</div>
+        <div class="row"><b>4.</b> 音效反馈——切换时伴随<b>电子嗡鸣声</b>，强化植入体激活感</div>
+        <div class="row"><b>5.</b> 策略选择——不同谜题需要不同视觉模式，玩家需<b>主动切换</b>而非被动扫描</div>
+        <div class="row"><b>6.</b> 视觉疲劳——长时间使用某种模式会产生<b>轻微画面扭曲</b>，暗示植入体副作用</div>
+      </div>
+      <div class="callout" style="margin-top:14px;font-size:12px">
+        <b>对 Fire Roach Killer 的启示：</b>可考虑加入类似的<b>视觉模式切换</b>（如热成像模式高亮蟑螂、电磁模式显示陷阱），用画面滤镜替代传统 UI 标识。
+      </div>
+    </div>
+  </div>
+  <div class="ss-group trio tall">
+    <img class="zoomable" src="images/observer-emp-vision.jpg" alt="电磁视觉模式：蓝绿色调全屏滤镜，电子设备以发光轮廓高亮">
+    <img class="zoomable" src="images/observer-bio-vision.jpg" alt="生物视觉模式：红粉色调全屏滤镜，有机生命与生物痕迹高亮">
+    <img class="zoomable" src="images/observer-night-vision.jpg" alt="夜视模式：紫色调全屏滤镜，在黑暗环境中视物">
+  </div>
+  <div class="shot-cap">⑤ 三重视觉模式 · 电磁 / 生物 / 夜视（风格示意图）</div>
+
+  <!-- ⑥ 暂停 / 设置菜单 -->
+  <h3 class="sub">⑥ 暂停 / 设置菜单 <span class="en">PAUSE / SETTINGS</span></h3>
+  <div class="grid g2">
+    <div class="card">
+      <h3>布局方案 <span class="tag">LAYOUT</span></h3>
+      <p>ESC 呼出的暂停菜单同样遵循<b>极简终端</b>风格——游戏画面不冻结（保持背景可见），菜单以半透明黑色遮罩 + 等宽字体列表呈现。选项包括：继续 / 设定 / 返回主菜单 / 退出游戏。</p>
+      <div class="wireframe">
+        <div class="wf-block" style="flex:100%"><span class="wf-label">背景</span><span class="wf-dim">游戏画面 + 暗化 60%</span></div>
+      </div>
+      <div class="wireframe">
+        <div class="wf-block solid" style="flex:100%"><span class="wf-label">[继续]</span></div>
+      </div>
+      <div class="wireframe">
+        <div class="wf-block" style="flex:100%"><span class="wf-label">[设定]</span></div>
+      </div>
+      <div class="wireframe">
+        <div class="wf-block" style="flex:100%"><span class="wf-label">[返回主菜单]</span></div>
+      </div>
+      <div class="wireframe">
+        <div class="wf-block" style="flex:100%"><span class="wf-label">[退出游戏]</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>设计要点 <span class="tag">KEY FEATURES</span></h3>
+      <div class="mini">
+        <div class="row"><b>1.</b> <b>不冻结背景</b>——暂停时游戏画面仍可见，不打破沉浸感</div>
+        <div class="row"><b>2.</b> 暗化遮罩——半透明黑色 overlay，让菜单文字清晰但不完全隔绝世界</div>
+        <div class="row"><b>3.</b> 等宽终端字体——与主界面保持一致，<b>冰冷、机械、无情感</b></div>
+        <div class="row"><b>4.</b> 无装饰——没有按钮背景、没有图标、没有渐变，只有文字</div>
+        <div class="row"><b>5.</b> 选中态——文字变为霓虹蓝 + 轻微发光，极简到极致</div>
+      </div>
+      <div class="callout" style="margin-top:14px;font-size:12px">
+        <b>对 Fire Roach Killer 的启示：</b>暂停菜单可学习这种<b>"不冻结 + 暗化遮罩"</b>设计，保持紧张感，同时用极简终端风格统一整体美学。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑦ 环境 AR 叠加层 -->
+  <h3 class="sub">⑦ 环境 AR 叠加层 <span class="en">ENVIRONMENTAL AR OVERLAYS</span></h3>
+  <div class="grid g2">
+    <div class="card">
+      <h3>布局方案 <span class="tag">LAYOUT</span></h3>
+      <p>Observer 最独特的 UI 元素——<b>环境中的 AR 全息广告与信息标识</b>。克拉科夫贫民窟的每个角落都充斥着 Chiron 公司的全息投影、反乌托邦标语、霓虹招牌。这些不仅是装饰，更是<b>叙事工具</b>。</p>
+      <div class="wireframe">
+        <div class="wf-block solid" style="flex:1"><span class="wf-label">全息广告</span><span class="wf-dim">Chiron 产品 · 旋转 3D</span></div>
+        <div class="wf-block solid" style="flex:1"><span class="wf-label">AR 标识</span><span class="wf-dim">门牌 · 警告 · 方向</span></div>
+        <div class="wf-block solid" style="flex:1"><span class="wf-label">霓虹招牌</span><span class="wf-dim">中文/英文混合</span></div>
+      </div>
+      <div class="wireframe">
+        <div class="wf-block red" style="flex:1"><span class="wf-label">反乌托邦标语</span><span class="wf-dim"> propaganda</span></div>
+        <div class="wf-block violet" style="flex:1"><span class="wf-label">数据流</span><span class="wf-dim">飘浮代码片段</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>设计要点 <span class="tag">KEY FEATURES</span></h3>
+      <div class="mini">
+        <div class="row"><b>1.</b> <b>叙事性装饰</b>——每个广告、每条标语都在讲述世界观（如"Chiron: 你的意识，我们的未来"）</div>
+        <div class="row"><b>2.</b> 全息投影质感——半透明的、闪烁的、带有<b>扫描线瑕疵</b>的投影</div>
+        <div class="row"><b>3.</b> 语言混合——招牌同时使用<b>中文、英文、波兰文</b>，暗示全球化崩塌后的语言混杂</div>
+        <div class="row"><b>4.</b> 色彩暴力——高饱和霓虹色（粉、蓝、绿）与<b>衰败环境的灰暗</b>形成强烈对比</div>
+        <div class="row"><b>5.</b> 动态元素——全息广告持续旋转/闪烁，让静态环境<b>充满生命力</b></div>
+        <div class="row"><b>6.</b> 可互动性——部分 AR 标识可扫描获取额外线索，将装饰转化为<b>玩法</b></div>
+      </div>
+      <div class="callout violet" style="margin-top:14px;font-size:12px">
+        <b>对 Fire Roach Killer 的启示：</b>战斗场景中可加入<b>环境 HUD 元素</b>——如墙上的战术投影、飘浮的击杀计数、敌人弱点 AR 标注。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑧ 可收集物品界面 -->
+  <h3 class="sub">⑧ 可收集物品界面 <span class="en">COLLECTIBLES</span></h3>
+  <div class="grid g2">
+    <div class="card">
+      <h3>布局方案 <span class="tag">LAYOUT</span></h3>
+      <p>Observer 中唯一接近"图鉴"的系统——从主菜单进入的<b>可收集物品面板</b>。收集品包括案件文档、录音、视频片段、世界观资料。以<b>终端式列表</b>呈现，每个条目包含标题、类型图标、解锁状态。</p>
+      <div class="wireframe">
+        <div class="wf-block solid" style="flex:100%"><span class="wf-label">收集进度 23/47</span><span class="wf-dim">百分比 + 分类筛选</span></div>
+      </div>
+      <div class="wireframe">
+        <div class="wf-block solid" style="flex:2"><span class="wf-label">文档列表</span><span class="wf-dim">标题 · 类型 · 状态</span></div>
+        <div class="wf-block" style="flex:3"><span class="wf-label">详情预览</span><span class="wf-dim">文本 / 音频波形 / 视频缩略</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>设计要点 <span class="tag">KEY FEATURES</span></h3>
+      <div class="mini">
+        <div class="row"><b>1.</b> 终端式列表——等宽字体 + 简单边框，<b>无卡片、无阴影、无圆角</b></div>
+        <div class="row"><b>2.</b> 类型标识——文档/音频/视频用<b>简单字符图标</b>区分（[TXT] [AUD] [VID]）</div>
+        <div class="row"><b>3.</b> 音频可视化——录音条目显示<b>波形图</b>，模拟音频播放器</div>
+        <div class="row"><b>4.</b> 世界观深度——收集品不是奖杯，而是<b>拼凑 2084 年世界真相</b>的碎片</div>
+        <div class="row"><b>5.</b> 未解锁遮罩——未收集条目以<b>乱码或黑条</b>遮盖，激发探索欲</div>
+      </div>
+      <div class="callout" style="margin-top:14px;font-size:12px">
+        <b>对 Fire Roach Killer 的启示：</b>图鉴系统可采用类似的<b>终端式列表 + 波形图/数据可视化</b>，将敌人信息呈现为"实验记录"风格。
+      </div>
+    </div>
+  </div>
+  <div class="shot-wrap">
+    <img class="shot-full zoomable" src="images/observer-collectibles.jpg" alt="可收集物品界面：终端式列表，左侧条目含类型图标与解锁状态，右侧预览面板显示音频波形与转录文本">
+    <div class="shot-cap">⑧ 可收集物品界面 · 终端式档案列表（风格示意图）</div>
+  </div>
+
+  <!-- ⑨ 不存在系统说明 -->
+  <h3 class="sub">⑨ 不存在的系统 <span class="en">ABSENT SYSTEMS</span></h3>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Observer 没有这些 <span class="tag red">N/A</span></h3>
+      <p>作为线性叙事恐怖游戏，Observer <b>主动摒弃</b>了传统 RPG 的诸多系统。这种"减法设计"本身就是其 UI 哲学的核心——<b>越少越好，直到只剩下恐惧</b>。</p>
+      <div class="mini">
+        <div class="row"><b>商店系统</b>——无货币、无交易、无装备购买。Daniel 是警探，不是冒险者</div>
+        <div class="row"><b>天赋/升级</b>——无技能树、无属性加点。能力固定（三种视觉模式），叙事驱动</div>
+        <div class="row"><b>成就系统</b>——无弹出式成就。PlayStation 奖杯存在但游戏内<b>完全不可见</b></div>
+        <div class="row"><b>传统图鉴</b>——无敌人图鉴或物品百科。收集品是<b>世界观文档</b>，非游戏机制</div>
+        <div class="row"><b>等级/经验</b>——无角色成长。整个游戏就是一场<b>无法升级的噩梦</b></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>减法设计的启示 <span class="tag blue">LESSONS</span></h3>
+      <div class="mini">
+        <div class="row"><b>1.</b> 系统存在的目的——每个 UI 系统必须回答：<b>"它服务于什么情感？"</b></div>
+        <div class="row"><b>2.</b> 恐怖 = 未知——血条给了玩家<b>虚假的安全感</b>，没有它，每次受伤都是恐惧</div>
+        <div class="row"><b>3.</b> 沉浸 > 便利——暂停游戏查看地图是便利的，但<b>不暂停的 AR 面板</b>是沉浸的</div>
+        <div class="row"><b>4.</b> 统一美学——所有 UI 共享<b>同一套视觉语言</b>（终端字体、霓虹色、扫描线）</div>
+        <div class="row"><b>5.</b> 世界即界面——最好的 UI 是<b>玩家感觉不到它的存在</b></div>
+      </div>
+      <div class="callout red" style="margin-top:14px;font-size:12px">
+        <b>核心启示：</b>Fire Roach Killer 可以考虑在<b>特定模式/难度</b>下隐藏部分 HUD，用环境视觉反馈替代数字显示，增强生存恐怖感。
+      </div>
+    </div>
+  </div>
+
+  <!-- 汇总矩阵 -->
+  <h3 class="sub">界面模块对照矩阵 <span class="en">COMPARISON MATRIX</span></h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>界面模块</th><th>Observer 实现</th><th>Fire Roach Killer 可借鉴</th><th>核心启示</th></tr></thead>
+      <tbody>
+        <tr><td>① 主界面</td><td>极简终端列表（4 项）</td><td>PDA 终端式极简主菜单</td><td>少即是多，等宽字体 + 霓虹选中态</td></tr>
+        <tr><td>② 战斗 HUD</td><td>零常驻 HUD，纯 AR overlay</td><td>隐藏常驻元素，受伤时边缘呼吸</td><td>视野纯净度 > 信息密度</td></tr>
+        <tr><td>③ 案件日志</td><td>不暂停的 AR 全息面板</td><td>图鉴/成就用 AR 面板叠加</td><td>菜单不暂停 = 紧张感不中断</td></tr>
+        <tr><td>④ 神经入侵</td><td>UI 崩解 = 疯狂可视化</td><td>加载界面/特殊关卡的故障美学</td><td>形式与内容统一</td></tr>
+        <tr><td>⑤ 视觉模式</td><td>3 种画面滤镜切换</td><td>热成像/电磁模式高亮目标</td><td>画面滤镜替代 UI 标识</td></tr>
+        <tr><td>⑥ 暂停菜单</td><td>不冻结 + 暗化遮罩</td><td>暂停不冻结，保持背景可见</td><td>沉浸感优先于功能性</td></tr>
+        <tr><td>⑦ 环境 AR</td><td>全息广告 = 叙事工具</td><td>场景中的战术投影/击杀计数</td><td>装饰即玩法，环境即 UI</td></tr>
+        <tr><td>⑧ 收集品</td><td>终端式列表 + 波形图</td><td>实验记录风格的敌人档案</td><td>信息呈现 = 世界观延伸</td></tr>
+        <tr><td>⑨ 商店</td><td>不存在</td><td>可保留但改为终端式补给站</td><td>系统存在需有叙事理由</td></tr>
+        <tr><td>⑩ 天赋/升级</td><td>不存在</td><td>可保留但简化为固定模块</td><td>减法设计增强专注度</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="glitch-line"></div>
+
+<!-- ============ S4 视觉系统 ============ -->
+<section id="s4">
+  <div class="sec-head">
+    <span class="sec-num">SEC.04</span>
+    <h2>视觉系统 <span class="en">VISUAL SYSTEM</span></h2>
+  </div>
+  <p class="sec-lead">Observer 的视觉系统以<b>高对比霓虹 + 绝对黑暗</b>为基底，通过三种视觉模式的色彩分级，实现<b>一世界三面貌</b>的沉浸体验。</p>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>色彩系统 <span class="tag">COLOR SYSTEM</span></h3>
+      <div class="palette">
+        <div class="sw" style="background:#ff2a6d"><span class="hex">#FF2A6D</span><span>霓虹红</span></div>
+        <div class="sw" style="background:#05d9e8"><span class="hex">#05D9E8</span><span>霓虹蓝</span></div>
+        <div class="sw" style="background:#bd00ff"><span class="hex">#BD00FF</span><span>霓虹紫</span></div>
+        <div class="sw" style="background:#ffb300"><span class="hex">#FFB300</span><span>机构黄</span></div>
+        <div class="sw" style="background:#d8dce6"><span class="hex">#D8DCE6</span><span>主文字</span></div>
+        <div class="sw" style="background:#080a0f"><span class="hex">#080A0F</span><span>背景黑</span></div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>霓虹红 #FF2A6D</b>——生物视觉主色、警告、危险、血液</div>
+        <div class="row"><b>霓虹蓝 #05D9E8</b>——电磁视觉主色、科技、信息、选中态</div>
+        <div class="row"><b>霓虹紫 #BD00FF</b>——夜视主色、神秘、幻觉、未知</div>
+        <div class="row"><b>机构黄 #FFB300</b>——重要信息高亮、可收集品、关键线索</div>
+        <div class="row"><b>背景黑 #080A0F</b>——比纯黑稍暖的深蓝黑，容纳霓虹而不刺眼</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>质感与特效 <span class="tag blue">TEXTURE</span></h3>
+      <div class="mini">
+        <div class="row"><b>CRT 扫描线</b>——所有 UI 元素叠加细微水平扫描线，模拟老旧显示器</div>
+        <div class="row"><b>色差偏移</b>——文字与图像边缘有轻微的 RGB 分离，模拟廉价 AR 设备</div>
+        <div class="row"><b>噪点颗粒</b>——暗部区域有细微噪点，增强胶卷/监视器质感</div>
+        <div class="row"><b>发光 bloom</b>——霓虹色元素带有柔和光晕，模拟真实光源</div>
+        <div class="row"><b>故障 glitch</b>——切换视觉模式或精神负荷过高时，画面出现撕裂与偏移</div>
+        <div class="row"><b>暗角 vignette</b>——屏幕四角轻微压暗，聚焦中央视野</div>
+      </div>
+      <div class="callout" style="margin-top:14px;font-size:12px">
+        <b>关键原则：</b>所有特效都服务于<b>"廉价植入体的瑕疵感"</b>——不是未来科技的光滑完美，而是贫民窟里勉强能用的破烂货。
+      </div>
+    </div>
+  </div>
+
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card">
+      <h3>字体系统 <span class="tag violet">TYPOGRAPHY</span></h3>
+      <div class="mini">
+        <div class="row"><b>等宽终端字体</b>——所有 UI 文本使用 monospace，模拟 DOS/终端界面</div>
+        <div class="row"><b>无衬线英文</b>——环境中的英文标识使用简洁无衬线体</div>
+        <div class="row"><b>混合语言</b>——招牌与广告同时使用中文、英文、波兰文</div>
+        <div class="row"><b>字号层级</b>——标题 18-24px / 正文 12-14px / 辅助 9-10px</div>
+        <div class="row"><b>字符间距</b>——标题 letter-spacing: 0.15em，营造疏离感</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>声音设计 <span class="tag amber">AUDIO</span></h3>
+      <div class="mini">
+        <div class="row"><b>视觉模式切换</b>——每种模式有独特的<b>电子嗡鸣声</b>（电磁=高频，生物=低频，夜视=中频）</div>
+        <div class="row"><b>交互反馈</b>——拖拽物体时的<b>机械摩擦声</b>，强化物理存在感</div>
+        <div class="row"><b>受伤状态</b>——无血条，通过<b>心跳声 + 耳鸣</b>传达伤害程度</div>
+        <div class="row"><b>神经入侵</b>——声音彻底崩解，低语、尖叫、电子噪音交织</div>
+        <div class="row"><b>环境音</b>——霓虹灯的电流声、远处的哭喊、雨声，构成<b>声景叙事</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glitch-line"></div>
+
+<!-- ============ S5 设计令牌 ============ -->
+<section id="s5">
+  <div class="sec-head">
+    <span class="sec-num">SEC.05</span>
+    <h2>设计令牌 <span class="en">DESIGN TOKENS</span></h2>
+  </div>
+  <p class="sec-lead">提取 Observer 的核心设计语言，形成可直接应用于 Fire Roach Killer 的设计令牌。</p>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>CSS 变量 <span class="tag">TOKENS</span></h3>
+      <pre style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);background:var(--bg);padding:16px;border-radius:4px;overflow-x:auto;line-height:1.8;margin-top:10px">
+:root{
+  /* 背景 */
+  --bg:#080a0f;        /* 深蓝黑背景 */
+  --panel:#11141d;     /* 面板底色 */
+  --line:#1e2333;      /* 边框线 */
+
+  /* 文字 */
+  --ink:#d8dce6;       /* 主文字 */
+  --ink-dim:#6b7285;   /* 次要文字 */
+
+  /* 霓虹色 */
+  --neon-red:#ff2a6d;  /* 警告/生物 */
+  --neon-blue:#05d9e8; /* 科技/选中 */
+  --neon-violet:#bd00ff;/* 神秘/夜视 */
+  --neon-amber:#ffb300;/* 高亮/重点 */
+
+  /* 暗色底 */
+  --dim-red:#5c1a2e;
+  --dim-blue:#0a3a40;
+  --dim-violet:#2d0040;
+}</pre>
+    </div>
+    <div class="card">
+      <h3>间距与圆角 <span class="tag blue">SPACING</span></h3>
+      <pre style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);background:var(--bg);padding:16px;border-radius:4px;overflow-x:auto;line-height:1.8;margin-top:10px">
+:root{
+  /* 圆角：极简直角或小圆角 */
+  --r-sm:2px;   /* 按钮/标签 */
+  --r-md:4px;   /* 卡片/面板 */
+  --r-lg:6px;   /* 大模块 */
+
+  /* 间距 */
+  --s-xs:6px;   /* 行内间距 */
+  --s-sm:10px;  /* 组件内部 */
+  --s-md:18px;  /* 组件之间 */
+  --s-lg:28px;  /* 区块之间 */
+
+  /* 边框 */
+  --b:1px solid var(--line);
+  --b-accent:1px solid rgba(5,217,232,.3);
+}</pre>
+    </div>
+  </div>
+
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card">
+      <h3>组件规范 <span class="tag violet">COMPONENTS</span></h3>
+      <div class="mini">
+        <div class="row"><b>按钮</b>——无背景，纯文字 + 霓虹蓝 hover 发光。选中态文字变色 + 轻微阴影</div>
+        <div class="row"><b>卡片</b>——深色背景 + 1px 边框 + 顶部 2px 霓虹色边线，无阴影</div>
+        <div class="row"><b>列表</b>——等宽字体 + 简单边框分隔，无斑马纹、无 hover 背景</div>
+        <div class="row"><b>输入框</b>——透明背景 + 底部 1px 线 + 霓虹蓝 focus 发光</div>
+        <div class="row"><b>进度条</b>——纯色填充，无渐变、无圆角、无动画（或极慢脉冲）</div>
+        <div class="row"><b>标签/徽章</b>——1px 边框 + 小圆角(2px) + 霓虹色文字，无背景填充</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>动效规范 <span class="tag amber">MOTION</span></h3>
+      <div class="mini">
+        <div class="row"><b>切换视觉模式</b>——0.3s ease 色彩渐变 + 电子嗡鸣音效</div>
+        <div class="row"><b>呼出 AR 面板</b>——0.2s 透明度淡入，无缩放/位移</div>
+        <div class="row"><b>交互标签浮现</b>——0.15s 淡入，看向目标时即时出现</div>
+        <div class="row"><b>受伤反馈</b>——屏幕边缘红色渐变 0.5s 脉冲，无弹窗</div>
+        <div class="row"><b>精神负荷警告</b>——画面随机 glitch 抖动，无规律</div>
+        <div class="row"><b>全息广告</b>——持续缓慢旋转/闪烁，不吸引注意力</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:30px">
+    <b>设计箴言：</b>Observer 的 UI 设计证明了<b>"减法的力量"</b>——通过移除而非添加来创造沉浸。Fire Roach Killer 可以借鉴这种哲学：在特定模式（如"硬核模式"）下隐藏更多 HUD 元素，用环境视觉反馈替代数字显示，让玩家通过<b>感觉而非阅读</b>来理解游戏状态。霓虹色不是装饰，而是<b>信息的载体</b>；黑暗不是空白，而是<b>恐惧的容器</b>。
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div style="max-width:1280px;margin:0 auto;padding:0 5vw">
+    <div class="f-brand">DARK CYBER · OBSERVER</div>
+    <div class="f-note">Bloober Team 暗黑赛博朋克 UI 风格分析报告 · 为 Fire Roach Killer 设计参考</div>
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lb"><span class="lb-close">&times;</span><img id="lbImg" src="" alt=""><div class="lb-caption" id="lbCap"></div></div>
+<script>
+(function(){
+  var lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg'),lbCap=document.getElementById('lbCap');
+  document.querySelectorAll('.zoomable').forEach(function(img){
+    img.style.cursor='zoom-in';
+    img.addEventListener('click',function(){
+      lbImg.src=this.src;lbCap.textContent=this.alt||'';lb.classList.add('show');
+    });
+  });
+  lb.addEventListener('click',function(e){if(e.target===lb||e.target.classList.contains('lb-close'))lb.classList.remove('show');});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('show');});
+})();
+</script>
+</body>
+</html>
