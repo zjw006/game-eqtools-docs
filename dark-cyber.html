@@ -115,8 +115,11 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidd
     <button class="tab" id="tab-alien" role="tab" aria-selected="false" data-target="alien">
       <span class="dot"></span>Alien: Isolation
     </button>
+    <button class="tab" id="tab-overwatch" role="tab" aria-selected="false" data-target="overwatch">
+      <span class="dot"></span>守望先锋
+    </button>
   </div>
-  <div class="hint">共 <b>5</b> 款游戏 · 点击切换</div>
+  <div class="hint">共 <b>6</b> 款游戏 · 点击切换</div>
 </div>
 
 <div class="stage">
@@ -151,6 +154,13 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidd
     </div>
     <iframe id="alFrame" data-src="dark-cyber-alien.html" title="Alien Isolation UI 风格分析"></iframe>
   </div>
+  <div class="panel" id="panel-overwatch" role="tabpanel">
+    <div class="loading" id="owLoading">
+      <div class="ring"></div>
+      <div>LOADING · 守望先锋</div>
+    </div>
+    <iframe id="owFrame" data-src="dark-cyber-overwatch.html" title="守望先锋 UI 风格分析"></iframe>
+  </div>
 </div>
 
 <script>
@@ -161,20 +171,23 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidd
     watchdogs:document.getElementById('panel-watchdogs'),
     cp2077:document.getElementById('panel-cp2077'),
     deusex:document.getElementById('panel-deusex'),
-    alien:document.getElementById('panel-alien')
+    alien:document.getElementById('panel-alien'),
+    overwatch:document.getElementById('panel-overwatch')
   };
   var titles={
     observer:'Observer UI 风格分析 · 暗黑赛博',
     watchdogs:'看门狗系列 UI 风格分析 · 暗黑赛博',
     cp2077:'赛博朋克 2077 UI 风格分析 · 暗黑赛博',
     deusex:'Deus Ex 系列 UI 风格分析 · 暗黑赛博',
-    alien:'Alien Isolation UI 风格分析 · 暗黑赛博'
+    alien:'Alien Isolation UI 风格分析 · 暗黑赛博',
+    overwatch:'守望先锋 UI 风格分析 · 暗黑赛博'
   };
   var lazyFrames={
     watchdogs:{frame:document.getElementById('wdFrame'),loading:document.getElementById('wdLoading'),loaded:false},
     cp2077:{frame:document.getElementById('cpFrame'),loading:document.getElementById('cpLoading'),loaded:false},
     deusex:{frame:document.getElementById('dxFrame'),loading:document.getElementById('dxLoading'),loaded:false},
-    alien:{frame:document.getElementById('alFrame'),loading:document.getElementById('alLoading'),loaded:false}
+    alien:{frame:document.getElementById('alFrame'),loading:document.getElementById('alLoading'),loaded:false},
+    overwatch:{frame:document.getElementById('owFrame'),loading:document.getElementById('owLoading'),loaded:false}
   };
 
   function ensureLoaded(name){

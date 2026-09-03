@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>守望先锋 · UI 风格分析</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d1117;--bg2:#111824;--panel:#151c28;--panel2:#1a2230;--line:#222d3f;
+  --ink:#e8edf3;--ink-dim:#6b7a8e;
+  --ow-orange:#f99e1a;--ow-blue:#00b4ff;--ow-white:#f0f4f8;--ow-red:#ff4444;--ow-green:#96e84c;--ow-dark:#0a1628;
+  --serif:'Noto Serif SC',serif;--sans:'Noto Sans SC',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.85;background-image:linear-gradient(rgba(249,158,26,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(0,180,255,.012) 1px,transparent 1px);background-size:48px 48px;overflow-x:hidden}
+::selection{background:var(--ow-orange);color:#000}
+::-webkit-scrollbar{width:10px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--line);border-radius:5px}::-webkit-scrollbar-thumb:hover{background:var(--ow-orange)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,17,23,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:4px;padding:0 28px;height:56px;overflow-x:auto}
+nav::-webkit-scrollbar{height:0}
+nav .brand{font-family:var(--serif);font-weight:900;font-size:15px;color:var(--ow-orange);white-space:nowrap;margin-right:18px;display:flex;align-items:center;gap:8px}
+nav .brand::before{content:"";width:10px;height:10px;background:var(--ow-orange);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);box-shadow:0 0 12px var(--ow-orange)}
+nav a{color:var(--ink-dim);text-decoration:none;font-size:12.5px;font-weight:400;padding:6px 11px;white-space:nowrap;border-radius:3px;transition:all .25s;letter-spacing:.04em}
+nav a:hover{color:var(--ow-orange);background:rgba(249,158,26,.08);text-shadow:0 0 8px rgba(249,158,26,.4)}
+header{min-height:82vh;display:flex;flex-direction:column;justify-content:center;padding:130px 6vw 80px;position:relative;overflow:hidden}
+header::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 20% 50%,rgba(249,158,26,.05),transparent 60%),radial-gradient(ellipse 50% 50% at 80% 30%,rgba(0,180,255,.04),transparent 50%);z-index:0}
+header .inner{position:relative;z-index:2;max-width:1200px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.4em;color:var(--ow-blue);text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:14px}
+.kicker::before{content:"";width:42px;height:1px;background:var(--ow-blue);box-shadow:0 0 6px var(--ow-blue)}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(34px,5.4vw,68px);line-height:1.15;letter-spacing:.02em}
+h1 em{font-style:normal;color:var(--ow-orange);text-shadow:0 0 50px rgba(249,158,26,.35)}
+h1 .sub-line{display:block;font-size:clamp(16px,2.2vw,28px);color:var(--ink-dim);margin-top:8px;font-weight:400;font-family:var(--sans)}
+header .sub{margin-top:28px;max-width:820px;color:var(--ink-dim);font-size:clamp(14px,1.3vw,16px)}
+header .sub b{color:var(--ink);font-weight:500}
+header .meta-row{margin-top:42px;display:flex;flex-wrap:wrap;gap:14px}
+header .meta-chip{font-family:var(--mono);font-size:11px;letter-spacing:.08em;border:1px solid var(--line);padding:8px 16px;border-radius:2px;color:var(--ink-dim);background:rgba(21,28,40,.7)}
+header .meta-chip b{color:var(--ow-orange);font-weight:600}
+main{max-width:1280px;margin:0 auto;padding:0 5vw 120px}
+section{margin-top:100px;scroll-margin-top:80px}
+.sec-head{display:flex;align-items:baseline;gap:20px;margin-bottom:14px;border-bottom:1px solid var(--line);padding-bottom:18px;flex-wrap:wrap}
+.sec-num{font-family:var(--mono);font-size:13px;color:var(--ow-blue);letter-spacing:.2em}
+.sec-head h2{font-family:var(--serif);font-weight:900;font-size:clamp(26px,3.4vw,44px);line-height:1.25}
+.sec-head .en{font-family:var(--mono);font-size:11px;color:var(--ink-dim);letter-spacing:.3em;text-transform:uppercase;margin-left:auto}
+.sec-lead{color:var(--ink-dim);max-width:860px;margin-bottom:38px;font-size:15px}
+.sec-lead b{color:var(--ink);font-weight:500}
+h3.sub{font-family:var(--serif);font-weight:700;font-size:22px;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:14px}
+h3.sub .en{font-family:var(--mono);font-size:10px;color:var(--ink-dim);letter-spacing:.25em;text-transform:uppercase;font-weight:400}
+.card{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:6px;padding:24px;margin-bottom:18px}
+.card h3{font-family:var(--serif);font-size:17px;margin-bottom:10px;color:var(--ink)}
+.tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;color:var(--ow-orange);border:1px solid rgba(249,158,26,.3);padding:2px 8px;border-radius:2px;margin-left:10px;vertical-align:middle}
+.tag.grn{color:var(--ow-green);border-color:rgba(150,232,76,.3)}
+.tag.red{color:var(--ow-red);border-color:rgba(255,68,68,.3)}
+.tag.blu{color:var(--ow-blue);border-color:rgba(0,180,255,.3)}
+.mini{display:flex;flex-direction:column;gap:6px}
+.mini .row{font-size:13px;color:var(--ink-dim);line-height:1.8;padding-left:14px;border-left:2px solid var(--line)}
+.mini .row b{color:var(--ink);font-weight:500}
+.mini .row .keep{color:var(--ow-green);font-family:var(--mono);font-size:10px;border:1px solid rgba(150,232,76,.3);padding:1px 6px;border-radius:2px;margin-right:4px}
+.grid{display:grid;gap:18px}.grid.g2{grid-template-columns:repeat(2,1fr)}.grid.g3{grid-template-columns:repeat(3,1fr)}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:18px}
+.feature-item{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:6px;padding:22px}
+.feature-item .feat-icon{width:36px;height:36px;border-radius:6px;background:rgba(249,158,26,.1);border:1px solid rgba(249,158,26,.3);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;color:var(--ow-orange);margin-bottom:12px}
+.feature-item .feat-icon.blu{background:rgba(0,180,255,.1);border-color:rgba(0,180,255,.3);color:var(--ow-blue)}
+.feature-item .feat-icon.red{background:rgba(255,68,68,.1);border-color:rgba(255,68,68,.3);color:var(--ow-red)}
+.feature-item h4{font-family:var(--serif);font-size:15px;margin-bottom:6px;color:var(--ink)}
+.feature-item p{font-size:12.5px;color:var(--ink-dim);line-height:1.7}
+.glitch-line{height:1px;background:linear-gradient(90deg,transparent,var(--ow-blue),var(--ow-orange),transparent);margin:30px 0;opacity:.3}
+.palette{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.sw{width:72px;height:72px;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid rgba(255,255,255,.08)}
+.sw .hex{font-family:var(--mono);font-size:9px;color:rgba(0,0,0,.7);font-weight:600}
+.sw span:last-child{font-size:9px;color:rgba(0,0,0,.5)}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:linear-gradient(160deg,var(--panel),var(--panel2))}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:680px}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--ow-orange);text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);background:rgba(249,158,26,.05);white-space:nowrap}
+td{padding:13px 16px;border-bottom:1px solid rgba(34,45,63,.6);color:var(--ink-dim);vertical-align:top}
+td:first-child{color:var(--ink);font-weight:500;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+.callout{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-left:3px solid var(--ow-orange);border-radius:6px;padding:22px 26px;font-size:14px;color:var(--ink-dim);line-height:1.8}
+.callout b{color:var(--ink);font-weight:500}
+footer{padding:50px 5vw 70px;border-top:1px solid var(--line);background:var(--bg2)}
+footer .f-brand{font-family:var(--serif);font-weight:900;font-size:18px;color:var(--ow-orange);margin-bottom:6px;text-shadow:0 0 20px rgba(249,158,26,.2)}
+footer .f-note{font-size:13px;color:var(--ink-dim);margin-bottom:30px;max-width:680px}
+@media(max-width:1024px){nav{padding:0 16px;gap:2px}nav .brand{font-size:14px;margin-right:12px}nav a{font-size:12px;padding:6px 9px}main{padding:0 4vw 100px}section{margin-top:80px}header{padding:120px 5vw 70px}}
+@media(max-width:768px){.feature-grid{grid-template-columns:1fr}.grid.g2,.grid.g3{grid-template-columns:1fr}.table-wrap{font-size:12px}}
+
+/* Screenshots */
+.ss-group{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.ss-group img{width:100%;border-radius:4px;border:1px solid var(--line);display:block;filter:saturate(.9) brightness(.88);transition:filter .3s;height:clamp(100px,12vw,150px);object-fit:cover}
+.ss-group img:hover{filter:saturate(1) brightness(1)}
+.shot-wrap{margin:18px 0 4px}
+.shot-full{width:100%;border-radius:4px;border:1px solid var(--line);display:block;filter:saturate(.9) brightness(.88);transition:filter .3s;max-height:480px;object-fit:cover}
+.shot-full:hover{filter:saturate(1) brightness(1)}
+.shot-cap{font-family:var(--mono);font-size:10.5px;color:var(--ink-dim);letter-spacing:.12em;margin-top:8px;text-align:center}
+.shot-cap::before{content:"// ";color:var(--ow-orange)}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;z-index:9999;background:rgba(4,6,10,.95);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility 0s linear .3s;cursor:zoom-out}
+.lightbox.show{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .3s ease}
+.lightbox img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 0 1px var(--line);animation:lbIn .35s ease}
+.lightbox .lb-close{position:absolute;top:20px;right:24px;font-size:28px;color:var(--ink-dim);cursor:pointer;z-index:2}
+.lightbox .lb-caption{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:12px;color:var(--ink-dim);max-width:80vw;text-align:center}
+@keyframes lbIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+@media(max-width:768px){.ss-group img{height:100px}.shot-full{max-height:300px}}
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">OVERWATCH</span>
+  <a href="#s1">游戏概述</a>
+  <a href="#s2">设计哲学</a>
+  <a href="#s3">界面分析</a>
+  <a href="#s4">视觉系统</a>
+  <a href="#s5">设计令牌</a>
+</nav>
+<header>
+  <div class="inner">
+    <div class="kicker">UI STYLE ANALYSIS · OVERWATCH</div>
+    <h1>守望<em>先锋</em><span class="sub-line">Blizzard · 皮克斯式 3D 卡通风格与未来主义金属 UI</span></h1>
+    <p class="sub">Blizzard Entertainment 打造的团队英雄射击游戏。守望先锋的 UI 设计是一套<b>「未来乐观主义」</b>视觉系统——核心主题是<b>「英雄至上」</b>。通过<b>橙白主色调</b>、<b>倾斜字体 BigNoodleToo Oblique</b>、<b>未来金属面板</b>与<b>高饱和度光照</b>，构建了一个温暖、色彩鲜明、充满活力的未来世界。OW1 的 UI 以倾斜 HUD、大胆橙白配色、动态背景动画和标志性菜单音效著称；OW2 转向更扁平、简洁、圆角化的设计，但也因此失去了部分辨识度。暴雪在 2026 赛季 1 推出<b>大规模 UI/UX 重塑</b>，引入 3D 大厅、英雄展示和导航重构，试图找回 OW1 的灵魂。</p>
+    <div class="meta-row">
+      <div class="meta-chip">开发商 <b>Blizzard</b></div>
+      <div class="meta-chip">首发 <b>2016</b></div>
+      <div class="meta-chip">视觉参考 <b>Pixar / 迪士尼</b></div>
+      <div class="meta-chip">核心主题 <b>英雄至上</b></div>
+      <div class="meta-chip">UI 类型 <b>非 Diegetic 叠加</b></div>
+    </div>
+  </div>
+</header>
+<main>
+<section id="s1">
+  <div class="sec-head"><span class="sec-num">SEC.01</span><h2>游戏概述 <span class="en">GAME OVERVIEW</span></h2></div>
+  <p class="sec-lead">守望先锋的 UI 是<b>乐观未来主义</b>的视觉表达——高饱和度、暖色调、简洁图形概括功能，与黑暗赛博朋克的冷峻形成鲜明对比。</p>
+  <div class="feature-grid">
+    <div class="feature-item">
+      <div class="feat-icon">01</div>
+      <h4>皮克斯式卡通</h4>
+      <p>暴雪首次采用 PBR 流程，材质和光照尽量真实，但弱化表面纹理和细节，对造型做适度夸张。重造型、轻细节的扁平化卡通风格，接近皮克斯 3D 动画。</p>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon blu">02</div>
+      <h4>橙白未来主义</h4>
+      <p>OW1 以大胆的橙色与白色为主色调，搭配未来金属面板、倾斜 HUD 和动态背景。UI 颜色被规范在白底 + 黄色提醒 + 红色警告 + 少量蓝色补充的框架内。</p>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon red">03</div>
+      <h4>英雄至上</h4>
+      <p>所有 UI 设计围绕英雄展示展开。英雄选择界面、英雄画廊、皮肤预览等界面是核心。2026 赛季 1 重塑引入 3D 大厅展示所选英雄，进一步强化英雄为中心的视觉体验。</p>
+    </div>
+  </div>
+</section>
+<div class="glitch-line"></div>
+<section id="s2">
+  <div class="sec-head"><span class="sec-num">SEC.02</span><h2>设计哲学 <span class="en">DESIGN PHILOSOPHY</span></h2></div>
+  <p class="sec-lead">守望先锋的 UI 哲学可归纳为<b>「简洁图形概括功能」</b>——用一目了然的简单图形概括功能，颜色使用被严格规范在框架内。这与同期射击游戏的写实 HUD 形成鲜明对比。</p>
+  <div class="grid g2">
+    <div class="card">
+      <h3>OW1 vs OW2 <span class="tag">EVOLUTION</span></h3>
+      <div class="mini">
+        <div class="row"><b>OW1 标志性</b>——倾斜 HUD（BigNoodleToo Oblique 字体）、大胆橙白配色、未来金属面板、动态背景、菜单动画、满足感音效</div>
+        <div class="row"><b>OW2 扁平化</b>——更扁平、圆角化、简洁化，隐藏玩家等级，对齐程度更高，英雄头像从卡通化转向更立体化</div>
+        <div class="row"><b>身份流失</b>——社区反馈 OW2 UI 更像标准免费游戏，失去了 OW1 独有的视觉身份</div>
+        <div class="row"><b>2026 重塑</b>——10 周年大规模 UI/UX Refresh，3D 大厅展示英雄，恢复个性和英雄为中心的氛围</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>颜色规范 <span class="tag blu">COLOR SYSTEM</span></h3>
+      <div class="mini">
+        <div class="row"><b>主色 白色</b>——所有 UI 的基础色，用于 HUD 面板背景、文字、图标</div>
+        <div class="row"><b>提醒色 黄/橙色</b>——终极技能充能、高亮选中、交互提示</div>
+        <div class="row"><b>警告色 红色</b>——生命值低于阈值、危险区域、敌方标识</div>
+        <div class="row"><b>补充色 青色/蓝色</b>——能量槽、护盾、蓝队标识、OW2 电光蓝 #00B4FF</div>
+        <div class="row"><b>护甲色 橙色</b>——护甲生命值为橙色，与基础白色生命区分</div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="glitch-line"></div>
+<section id="s3">
+  <div class="sec-head"><span class="sec-num">SEC.03</span><h2>界面分析 <span class="en">INTERFACE ANALYSIS</span></h2></div>
+  <p class="sec-lead">逐项分析 10 个核心界面元素的视觉风格与设计逻辑。</p>
+
+  <h3 class="sub">① 加载界面 <span class="en">LOADING SCREEN</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>英雄阵容展示</b>——匹配成功后显示双方 5v5 英雄阵容，英雄全身立绘排列于深色背景上</div>
+    <div class="row"><b>VS 构图</b>——左右对称布局，中央 VS 标志，营造对决紧张感</div>
+    <div class="row"><b>地图预览</b>——加载过程中显示即将进入的地图名称和全景预览</div>
+    <div class="row"><b>进度指示</b>——底部加载进度条，通常为橙色填充</div>
+    <div class="row"><b>OW1 动态背景</b>——旧版加载界面带有动态背景动画和英雄登场特效</div>
+  </div></div>
+  <div class="shot-wrap">
+  <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20loading%20screen%2C%205v5%20hero%20lineup%20portrait%20showcase%2C%20left%20and%20right%20team%20facing%20each%20other%2C%20VS%20logo%20center%2C%20dark%20blue%20background%2C%20orange%20white%20accent%20colors%2C%20futuristic%20game%20UI&image_size=landscape_16_9" alt="守望先锋加载界面：5v5英雄阵容展示，VS构图，深蓝背景，橙白配色">
+  <div class="shot-cap">① 加载界面 · 英雄阵容 VS + 深蓝背景 + 橙白配色（风格示意图）</div>
+  </div>
+
+  <h3 class="sub">② 主界面 / 大厅 <span class="en">MAIN MENU / LOBBY</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>顶部导航栏</b>——PLAY 按钮居顶中央，横向导航包括英雄、商店、战令、社交等</div>
+    <div class="row"><b>3D 英雄大厅</b>——2026 重塑后，所选英雄以 3D 模型展示在大厅中央，赛季 4 扩展至全组队员</div>
+    <div class="row"><b>动态背景</b>——OW1 菜单背景为动态英雄场景，营造沉浸感</div>
+    <div class="row"><b>通知中心</b>——2026 重塑引入 Notification Hub，整合重要更新</div>
+    <div class="row"><b>OW1 风格</b>——大胆橙白按钮、未来金属面板、悬停动画、标志性菜单音效</div>
+    <div class="row"><b>OW2 风格</b>——扁平化、圆角、更简洁但失去部分个性</div>
+  </div></div>
+  <div class="shot-wrap">
+  <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%202%20style%20main%20menu%20lobby%2C%203D%20hero%20model%20displayed%20center%2C%20top%20navigation%20bar%20with%20PLAY%20button%2C%20orange%20white%20color%20scheme%2C%20futuristic%20metallic%20panels%2C%20clean%20rounded%20UI%20design&image_size=landscape_16_9" alt="守望先锋主菜单大厅：3D英雄模型居中，顶部导航PLAY按钮，橙白金属面板">
+  <div class="shot-cap">② 主界面 / 大厅 · 3D 英雄展示 + 顶部导航 + 橙白金属（风格示意图）</div>
+  </div>
+
+  <h3 class="sub">③ 战斗界面 / HUD <span class="en">COMBAT HUD</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>倾斜 HUD</b>——OW1 标志性倾斜设计，生命值和弹药数以斜角排列，BigNoodleToo Oblique 字体</div>
+    <div class="row"><b>生命值条</b>——左下角，白色基础生命 + 橙色护甲 + 蓝色护盾，分段显示</div>
+    <div class="row"><b>终极技能充能</b>——英雄头像下方显示终极技能充能百分比，充能满时高亮</div>
+    <div class="row"><b>技能冷却</b>——底部显示技能图标和冷却计时器</div>
+    <div class="row"><b>击杀信息</b>——右上角击杀提示，显示击杀者和与被击杀者英雄头像</div>
+    <div class="row"><b>弹药数</b>——右下角弹药剩余量</div>
+    <div class="row"><b>队伍信息</b>——Tab 键展开记分板，显示队友终极技能充能状态</div>
+    <div class="row"><b>OW2 简化</b>——移除倾斜 HUD，改为更标准的水平排列，失去部分辨识度</div>
+  </div></div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20combat%20HUD%2C%20slanted%20health%20bar%20bottom%20left%20with%20white%20orange%20blue%20segments%2C%20ultimate%20charge%20percentage%2C%20ability%20icons%20bottom%20center%2C%20kill%20feed%20top%20right%2C%20ammo%20count%2C%20futuristic%20FPS%20interface&image_size=landscape_4_3" alt="守望先锋战斗HUD：倾斜生命条（白橙蓝分段），终极技能充能，技能图标，击杀信息">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20ultimate%20ability%20HUD%2C%20glowing%20orange%20ultimate%20ready%20indicator%2C%20hero%20portrait%20with%20charge%20bar%2C%20ON%20FIRE%20effect%20flame%20icon%2C%20dynamic%20ability%20cooldown%20timers%2C%20first%20person%20shooter%20game%20UI&image_size=landscape_4_3" alt="守望先锋终极技能HUD：橙色发光终极技能就绪指示，英雄头像充能条，On Fire效果">
+  </div>
+  <div class="shot-cap">③ 战斗 HUD + 终极技能 · 倾斜 HUD + 分段生命条 + On Fire（风格示意图）</div>
+
+  <h3 class="sub">④ 关卡 / 模式选择 <span class="en">MODE SELECTION</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>PLAY 菜单</b>——顶部 PLAY 按钮展开 5 个标签页：快速、竞技、角斗领域、街机、更多</div>
+    <div class="row"><b>无需返回</b>——可在子菜单间直接切换，无需退出到上一层</div>
+    <div class="row"><b>地图选择</b>——街机模式下可查看当前轮换的地图和模式</div>
+    <div class="row"><b>活动限定</b>——限时活动和特殊模式在专属标签下展示</div>
+    <div class="row"><b>战令进度</b>——OW1 主菜单显示每周战利箱进度，OW2 移至战令页面</div>
+  </div></div>
+  <div class="shot-wrap">
+  <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%202%20style%20mode%20selection%20menu%2C%20five%20tabs%20showing%20Quickplay%20Competitive%20Stadium%20Arcade%20More%2C%20clean%20tab%20interface%2C%20orange%20white%20color%20scheme%2C%20rounded%20buttons%2C%20dark%20blue%20background%2C%20futuristic%20game%20UI&image_size=landscape_16_9" alt="守望先锋模式选择：五个标签页（快速/竞技/角斗领域/街机/更多），橙白圆角按钮">
+  <div class="shot-cap">④ 关卡 / 模式选择 · 标签式导航 + 圆角按钮（风格示意图）</div>
+  </div>
+
+  <h3 class="sub">⑤ 商店 / 战令 <span class="en">SHOP / BATTLE PASS</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>商店</b>——每周轮换精选皮肤，使用守望金币（Overwatch Coins）购买，所见即所得</div>
+    <div class="row"><b>战令</b>——赛季制战令系统，免费与高级双轨，含 80+ 奖励层级</div>
+    <div class="row"><b>战令重塑</b>——2026 战令视觉升级，新视觉效果、更新图形和赛季主题动态背景</div>
+    <div class="row"><b>主题赛季</b>——第一赛季以赛博朋克为主题，后续赛季有不同主题</div>
+    <div class="row"><b>OW1 战利箱</b>——OW1 使用战利箱随机奖励，OW2 移除改为商店直购</div>
+    <div class="row"><b>角斗领域</b>——Stadium 模式有自己的购买系统，用 Stadium Cash 购买 Powers 和 Items</div>
+  </div></div>
+  <div class="shot-wrap">
+  <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%202%20style%20shop%20and%20battle%20pass%20interface%2C%20cosmetic%20skin%20showcase%2C%20premium%20track%20rewards%2C%20Overwatch%20Coins%20currency%20display%2C%20orange%20blue%20accent%20colors%2C%20dark%20background%2C%20futuristic%20store%20UI%20design&image_size=landscape_16_9" alt="守望先锋商店与战令：皮肤展示，高级轨道奖励，守望金币，橙蓝配色">
+  <div class="shot-cap">⑤ 商店 / 战令 · 皮肤展示 + 双轨奖励 + 动态背景（风格示意图）</div>
+  </div>
+
+  <h3 class="sub">⑥ 天赋 / Perks 系统 <span class="en">PERKS / UPGRADES</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>Perks 系统</b>——比赛中装备英雄专属 Perks，分为 Minor Perks 和 Major Perks 两轮选择</div>
+    <div class="row"><b>Minor Perks</b>——微妙调整英雄技能方向，先选两个之一</div>
+    <div class="row"><b>Major Perks</b>——更大幅度的升级，可能增加改变战局的能力或增益</div>
+    <div class="row"><b>角斗领域</b>——Stadium 模式有独立升级系统：Powers 改变英雄核心机制，Items 提供增益</div>
+    <div class="row"><b>视觉</b>——选择界面以英雄为中心，Perks 卡片展示效果说明和图标</div>
+    <div class="row"><b>策略性</b>——根据当前对局情况和敌方阵容选择 Perks，增加比赛策略深度</div>
+  </div></div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20Perks%20selection%20menu%2C%20two%20perk%20cards%20side%20by%20side%2C%20hero%20ability%20upgrade%20icons%2C%20minor%20and%20major%20perk%20choice%2C%20orange%20glow%20highlight%2C%20dark%20blue%20panel%2C%20futuristic%20game%20UI&image_size=landscape_4_3" alt="守望先锋Perks选择：两张Perk卡片并排，英雄技能升级图标，Minor/Major选择">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20Stadium%20mode%20item%20shop%2C%20upgrade%20powers%20and%20items%20purchase%20interface%2C%20Stadium%20Cash%20currency%2C%20ability%20buff%20icons%2C%20build%20customization%2C%20dark%20blue%20background%20with%20orange%20accents%2C%20futuristic%20UI&image_size=landscape_4_3" alt="守望先锋角斗领域商店：Powers和Items购买界面，Stadium Cash货币，增益图标">
+  </div>
+  <div class="shot-cap">⑥ Perks + Stadium 升级 · 天赋选择 + 角斗领域商店（风格示意图）</div>
+
+  <h3 class="sub">⑦ 成就 / 挑战系统 <span class="en">ACHIEVEMENTS / CHALLENGES</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>OW1 成就</b>——平台通用成就系统（Xbox/PS/Steam），包含英雄专属挑战和地图挑战</div>
+    <div class="row"><b>OW2 挑战</b>——移至 Challenges → Hero 页面，按英雄分 Tank/Damage/Support 三类</div>
+    <div class="row"><b>挑战内容</b>——如 Not the First（关闭信标）、One Shot（通关未死亡）等</div>
+    <div class="row"><b>进度徽章</b>——玩家进度系统以徽章展示，随等级提升解锁更高层级</div>
+    <div class="row"><b>职业档案</b>——Career Profile 展示英雄数据、游戏模式和进度统计</div>
+    <div class="row"><b>设计缺口</b>——OW1 和 OW2 成就位于不同位置，查找路径不统一</div>
+  </div></div>
+
+  <h3 class="sub">⑧ 英雄画廊 / 图鉴 <span class="en">HERO GALLERY</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>英雄列表</b>——按职责分类（Tank/Damage/Support），网格排列英雄头像</div>
+    <div class="row"><b>英雄详情</b>——选中英雄后展示 3D 模型、技能介绍、故事背景、皮肤收藏</div>
+    <div class="row"><b>皮肤预览</b>——3D 模型可旋转查看，支持皮肤、表情、喷涂、姿势等装饰品预览</div>
+    <div class="row"><b>收藏进度</b>——OW1 显示每个英雄的收藏品获取进度，OW2 移除此显示</div>
+    <div class="row"><b>2026 重塑</b>——英雄画廊获得视觉升级，增加 Overview/Progression/Abilities/History/Lore 标签页</div>
+    <div class="row"><b>难度评级</b>——OW1 有英雄难度星级，OW2 移除，社区呼吁恢复</div>
+  </div></div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20hero%20gallery%2C%20character%20grid%20by%20role%20Tank%20Damage%20Support%2C%203D%20hero%20model%20viewer%20center%2C%20skin%20cosmetic%20collection%20display%2C%20orange%20white%20UI%20panels%2C%20dark%20blue%20background&image_size=landscape_4_3" alt="守望先锋英雄画廊：按职责分类的英雄网格，3D模型查看器，皮肤收藏">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20career%20profile%20achievement%20page%2C%20player%20progression%20badges%2C%20hero%20stats%20display%2C%20challenge%20list%2C%20ranked%20tier%20icons%2C%20clean%20dark%20interface%20with%20orange%20accents&image_size=landscape_4_3" alt="守望先锋成就与职业档案：进度徽章，英雄统计，挑战列表，排位图标">
+  </div>
+  <div class="shot-cap">⑦⑧ 成就 + 英雄画廊 · 挑战系统 + 3D 英雄展示（风格示意图）</div>
+
+  <h3 class="sub">⑨ 战斗生命条 <span class="en">HEALTH BAR</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>位置</b>——左下角，英雄角色周围（OW1 倾斜排列）</div>
+    <div class="row"><b>四层生命</b>——白色基础生命 + 橙色护甲 + 蓝色护盾 + 绿色额外生命</div>
+    <div class="row"><b>白色 基础生命</b>——所有英雄的基础生命值，白色条状显示</div>
+    <div class="row"><b>橙色 护甲</b>——减少受到的伤害（约 30% 减伤），橙色条段</div>
+    <div class="row"><b>蓝色 护盾</b>——脱离战斗后自动回复，蓝色条段</div>
+    <div class="row"><b>敌方生命条</b>——敌方头顶红色生命条，友方为绿色/蓝色</div>
+    <div class="row"><b>On Fire 指示</b>——表现优异时英雄头像周围出现火焰效果（OW1 特色，已回归）</div>
+  </div></div>
+  <div class="shot-wrap">
+  <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20health%20bar%20system%2C%20white%20base%20health%20orange%20armor%20blue%20shield%20segments%2C%20enemy%20red%20health%20bar%20above%20head%2C%20On%20Fire%20flame%20effect%20around%20hero%20portrait%2C%20clean%20minimal%20HUD%2C%20futuristic%20FPS%20game%20UI&image_size=landscape_16_9" alt="守望先锋生命条系统：白色基础+橙色护甲+蓝色护盾分段，敌方红色头顶条，On Fire火焰效果">
+  <div class="shot-cap">⑨ 战斗生命条 · 白橙蓝三段 + On Fire 火焰（风格示意图）</div>
+  </div>
+
+  <h3 class="sub">⑩ 视觉特效 <span class="en">VISUAL EFFECTS</span></h3>
+  <div class="grid g2">
+    <div class="card">
+      <h3>光照与色彩 <span class="tag">LIGHTING</span></h3>
+      <div class="mini">
+        <div class="row"><b>高饱和度</b>——刻意提高光照强度和饱和度，画面整体明快</div>
+        <div class="row"><b>暗部通透</b>——提高暗部光线反弹强度模拟全局光照，暗部不沉闷</div>
+        <div class="row"><b>阴影纯度</b>——对阴影颜色做高纯度调整，与主体色调一致</div>
+        <div class="row"><b>大块纯色</b>——场景确立主色调，大面积使用高纯度颜色，去掉纹理细节</div>
+        <div class="row"><b>无脏旧</b>——去除日常脏旧和污渍细节，保持洁净乐观的视觉氛围</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>UI 动效 <span class="tag blu">UI MOTION</span></h3>
+      <div class="mini">
+        <div class="row"><b>菜单动画</b>——OW1 标志性的菜单切换动画和悬停反馈</div>
+        <div class="row"><b>动态背景</b>——主菜单背景为英雄实时场景，非静态图片</div>
+        <div class="row"><b>终极技能特效</b>——释放终极技能时全屏特效，如龙刃、陨石、引力黑洞</div>
+        <div class="row"><b>On Fire 火焰</b>——表现优异时英雄头像周围动态火焰粒子</div>
+        <div class="row"><b>击杀反馈</b>——击杀时短暂高亮提示，击杀信息右上角弹出</div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:18px">
+    <h3>色彩调色板 <span class="tag red">COLOR PALETTE</span></h3>
+    <div class="mini">
+      <div class="row"><b>橙色 #F99E1A</b>——主强调色，HUD、按钮、终极技能、On Fire</div>
+      <div class="row"><b>电光蓝 #00B4FF</b>——OW2 主品牌色，UI 边框、技能标识</div>
+      <div class="row"><b>白色 #F0F4F8</b>——UI 基础色，面板背景、文字、生命基础值</div>
+      <div class="row"><b>深蓝 #0A1628</b>——背景色，营造对比度和深度</div>
+      <div class="row"><b>红色 #FF4444</b>——警告/敌方/低生命值</div>
+      <div class="row"><b>绿色 #96E84C</b>——友方标识/治疗/正面反馈</div>
+    </div>
+  </div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20ultimate%20ability%20visual%20effects%2C%20explosive%20colorful%20ability%20animation%2C%20high%20saturation%20lighting%2C%20bright%20dynamic%20particle%20effects%2C%20futuristic%20sci-fi%20game%20combat%20scene%2C%20orange%20blue%20color%20scheme&image_size=landscape_4_3" alt="守望先锋终极技能特效：高饱和度技能动画，明亮动态粒子效果">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20UI%20menu%20animations%20and%20transitions%2C%20dynamic%20hero%20background%2C%20orange%20white%20futuristic%20panels%2C%20smooth%20interface%20motion%2C%20metallic%20buttons%2C%20clean%20rounded%20design%20elements&image_size=landscape_4_3" alt="守望先锋UI动效：动态英雄背景，橙白金属面板，流畅界面过渡">
+  </div>
+  <div class="shot-cap">⑩ 视觉特效 · 终极技能特效 + UI 动效（风格示意图）</div>
+</section>
+<div class="glitch-line"></div>
+<section id="s4">
+  <div class="sec-head"><span class="sec-num">SEC.04</span><h2>视觉系统 <span class="en">VISUAL SYSTEM</span></h2></div>
+  <p class="sec-lead">守望先锋的色彩体系是<b>乐观未来主义</b>的直接映射——橙色和白色是整套视觉系统的核心标识，与皮克斯式 3D 卡通渲染共同构建温暖活力的未来世界。</p>
+  <div class="grid g2">
+    <div class="card">
+      <h3>色彩体系 <span class="tag">COLOR PALETTE</span></h3>
+      <div class="palette">
+        <div class="sw" style="background:#0d1117"><span class="hex" style="color:#666">#0D1117</span><span style="color:#444">底色</span></div>
+        <div class="sw" style="background:#f99e1a"><span class="hex">#F99E1A</span><span>守望橙</span></div>
+        <div class="sw" style="background:#00b4ff"><span class="hex">#00B4FF</span><span>电光蓝</span></div>
+        <div class="sw" style="background:#f0f4f8"><span class="hex">#F0F4F8</span><span>UI 白</span></div>
+        <div class="sw" style="background:#ff4444"><span class="hex">#FF4444</span><span>警示红</span></div>
+        <div class="sw" style="background:#96e84c"><span class="hex">#96E84C</span><span>友方绿</span></div>
+      </div>
+      <div class="mini">
+        <div class="row"><b>守望橙 #F99E1A</b>——主强调色，HUD、按钮、终极技能、On Fire</div>
+        <div class="row"><b>电光蓝 #00B4FF</b>——OW2 品牌色，UI 边框、技能标识</div>
+        <div class="row"><b>UI 白 #F0F4F8</b>——基础色，面板背景、文字、基础生命值</div>
+        <div class="row"><b>底色 #0D1117</b>——深蓝底色，营造对比度</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>字体与材质 <span class="tag blu">TYPOGRAPHY</span></h3>
+      <div class="mini">
+        <div class="row"><b>主字体 BigNoodleToo Oblique</b>——OW1 标志性倾斜字体，宽体几何感，强烈的未来主义视觉签名</div>
+        <div class="row"><b>OW2 字体</b>——更小、更粗的无衬线字体，失去倾斜辨识度</div>
+        <div class="row"><b>Logo 字体</b>——定制无衬线字体，字母宽体几何，独特的切口和间隙，A 倒置为 V 形</div>
+        <div class="row"><b>材质</b>——未来金属面板、PBR 渲染、高光反射、圆润倒角</div>
+        <div class="row"><b>风格定位</b>——卡通化程度 6-7/10，重造型轻细节的扁平化卡通</div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:18px">
+    <h3>核心视觉签名 <span class="tag red">SIGNATURE</span></h3>
+    <div class="mini">
+      <div class="row"><b>倾斜 HUD</b>——OW1 独有的斜角生命/弹药排列，BigNoodleToo Oblique 字体</div>
+      <div class="row"><b>橙白配色</b>——大胆的橙色 + 白色组合，即时识别度极高</div>
+      <div class="row"><b>未来金属面板</b>——UI 面板呈金属质感，圆润倒角，高光反射</div>
+      <div class="row"><b>动态英雄背景</b>——菜单背景为实时 3D 英雄场景，非静态</div>
+      <div class="row"><b>On Fire 火焰</b>——表现优异时英雄头像周围火焰粒子效果</div>
+      <div class="row"><b>高饱和光照</b>——刻意提高光照强度和饱和度，画面明快通透</div>
+    </div>
+  </div>
+</section>
+<div class="glitch-line"></div>
+<section id="s5">
+  <div class="sec-head"><span class="sec-num">SEC.05</span><h2>设计令牌 <span class="en">DESIGN TOKENS</span></h2></div>
+  <p class="sec-lead">可直接用于程序实现的设计令牌对照表。</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>令牌</th><th>值</th><th>用途</th></tr></thead>
+      <tbody>
+        <tr><td>底色</td><td>#0D1117</td><td>所有界面背景（深蓝）</td></tr>
+        <tr><td>面板底</td><td>#151C28</td><td>卡片/面板背景</td></tr>
+        <tr><td>主强调色</td><td>#F99E1A (守望橙)</td><td>HUD、按钮、终极技能、On Fire</td></tr>
+        <tr><td>次强调色</td><td>#00B4FF (电光蓝)</td><td>OW2 品牌色、UI 边框、护盾</td></tr>
+        <tr><td>基础色</td><td>#F0F4F8 (UI 白)</td><td>面板背景、文字、基础生命值</td></tr>
+        <tr><td>警示色</td><td>#FF4444 (红)</td><td>警告、敌方、低生命值</td></tr>
+        <tr><td>友方色</td><td>#96E84C (绿)</td><td>友方标识、治疗反馈</td></tr>
+        <tr><td>护甲色</td><td>#F99E1A (橙)</td><td>护甲生命段</td></tr>
+        <tr><td>护盾色</td><td>#00B4FF (蓝)</td><td>护盾生命段（自动回复）</td></tr>
+        <tr><td>主字体</td><td>BigNoodleToo Oblique (倾斜)</td><td>OW1 HUD 与标题</td></tr>
+        <tr><td>OW2 字体</td><td>无衬线粗体</td><td>OW2 界面文字</td></tr>
+        <tr><td>Logo 字体</td><td>定制几何无衬线</td><td>品牌标识</td></tr>
+        <tr><td>UI 类型</td><td>非 Diegetic 叠加</td><td>悬浮于游戏画面之上</td></tr>
+        <tr><td>渲染流程</td><td>PBR (基于物理渲染)</td><td>暴雪首次采用主流 3A 流程</td></tr>
+        <tr><td>美术风格</td><td>皮克斯式 3D 卡通 (6-7/10)</td><td>重造型轻细节</td></tr>
+        <tr><td>特效</td><td>高饱和光照 + 动态粒子 + 金属面板 + On Fire</td><td>乐观未来主义视觉</td></tr>
+        <tr><td>设计哲学</td><td>简洁图形概括功能</td><td>颜色规范在白+黄+红+蓝框架内</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout" style="margin-top:30px">
+    <b>总结：</b>守望先锋的 UI 是一套<b>「乐观未来主义」</b>设计系统。它以皮克斯式 3D 卡通渲染为基底，通过大胆的橙白配色、倾斜 BigNoodleToo Oblique 字体、未来金属面板和高饱和度光照，构建了一个温暖、色彩鲜明、充满活力的未来世界。与暗黑赛博朋克的冷峻黑暗形成鲜明对比——守望先锋是<b>「明亮即美学」</b>，而赛博朋克是<b>「黑暗即美学」</b>。OW1 的 UI 拥有极强的视觉辨识度：倾斜 HUD、On Fire 火焰、动态英雄背景；OW2 转向扁平简洁但失去部分个性。2026 赛季 1 的大规模 UI/UX 重塑试图找回 OW1 的灵魂——3D 英雄大厅、英雄为中心的导航、恢复个性和视觉活力。守望先锋证明了<b>简洁不等于无个性</b>——好的 UI 应该像英雄一样有自己的面孔。
+  </div>
+</section>
+</main>
+<footer>
+  <div style="max-width:1280px;margin:0 auto;padding:0 5vw">
+    <div class="f-brand">OVERWATCH · UI ANALYSIS</div>
+    <div class="f-note">Blizzard Entertainment · 皮克斯式 3D 卡通 · 乐观未来主义 · 橙白金属 UI · BigNoodleToo Oblique · 英雄至上</div>
+  </div>
+</footer>
+<div class="lightbox" id="lightbox"><span class="lb-close">&times;</span><img src="" alt=""><div class="lb-caption"></div></div>
+<script>
+(function(){
+  var lb=document.getElementById('lightbox'),lbImg=lb.querySelector('img'),lbCap=lb.querySelector('.lb-caption'),lbClose=lb.querySelector('.lb-close');
+  var caps=document.querySelectorAll('.zoomable');
+  function open(src,cap){lbImg.src=src;lbCap.textContent=cap||'';lb.classList.add('show');document.body.style.overflow='hidden'}
+  function close(){lb.classList.remove('show');document.body.style.overflow='';setTimeout(function(){lbImg.src=''},300)}
+  caps.forEach(function(img){img.style.cursor='zoom-in';img.addEventListener('click',function(){open(img.src,img.alt)})});
+  lb.addEventListener('click',function(e){if(e.target===lb||e.target===lbClose)close()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+})();
+</script>
+</body>
+</html>
