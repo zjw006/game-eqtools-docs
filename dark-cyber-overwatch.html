@@ -103,6 +103,14 @@ footer .f-note{font-size:13px;color:var(--ink-dim);margin-bottom:30px;max-width:
 .lightbox .lb-caption{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:12px;color:var(--ink-dim);max-width:80vw;text-align:center}
 @keyframes lbIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
 @media(max-width:768px){.ss-group img{height:100px}.shot-full{max-height:300px}}
+
+/* Video embeds */
+.vid-group{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.vid-wrap{border-radius:4px;border:1px solid var(--line);overflow:hidden;background:var(--panel)}
+.vid-wrap iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
+.vid-cap{font-family:var(--mono);font-size:10.5px;color:var(--ink-dim);letter-spacing:.12em;padding:10px 14px;text-align:center}
+.vid-cap::before{content:"▶ ";color:var(--ow-orange)}
+@media(max-width:768px){.vid-group{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -111,6 +119,7 @@ footer .f-note{font-size:13px;color:var(--ink-dim);margin-bottom:30px;max-width:
   <a href="#s1">游戏概述</a>
   <a href="#s2">设计哲学</a>
   <a href="#s3">界面分析</a>
+  <a href="#s3b">技能归纳</a>
   <a href="#s4">视觉系统</a>
   <a href="#s5">设计令牌</a>
 </nav>
@@ -193,6 +202,11 @@ footer .f-note{font-size:13px;color:var(--ink-dim);margin-bottom:30px;max-width:
   <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20loading%20screen%2C%205v5%20hero%20lineup%20portrait%20showcase%2C%20left%20and%20right%20team%20facing%20each%20other%2C%20VS%20logo%20center%2C%20dark%20blue%20background%2C%20orange%20white%20accent%20colors%2C%20futuristic%20game%20UI&image_size=landscape_16_9" alt="守望先锋加载界面：5v5英雄阵容展示，VS构图，深蓝背景，橙白配色">
   <div class="shot-cap">① 加载界面 · 英雄阵容 VS + 深蓝背景 + 橙白配色（风格示意图）</div>
   </div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20map%20loading%20screen%2C%20Hanamura%20cherry%20blossom%20map%20overview%2C%20loading%20progress%20bar%20bottom%2C%20orange%20fill%2C%20dark%20blue%20border%2C%20futuristic%20map%20preview%2C%20clean%20UI&image_size=landscape_4_3" alt="守望先锋地图加载：花村樱花地图预览，底部橙色进度条">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20hero%20select%20loading%20screen%2C%20hero%20portrait%20cards%20arranged%20in%20row%2C%20locked%20in%20indicator%2C%20orange%20highlight%20on%20selected%20hero%2C%20blue%20vs%20red%20team%20sides%2C%20dark%20background%2C%20futuristic%20game%20UI&image_size=landscape_4_3" alt="守望先锋英雄选择加载：英雄头像卡片排列，选中橙色高亮，蓝红分队">
+  </div>
+  <div class="shot-cap">① 加载界面 · 地图预览 + 英雄选择锁定（风格示意图）</div>
 
   <h3 class="sub">② 主界面 / 大厅 <span class="en">MAIN MENU / LOBBY</span></h3>
   <div class="card"><div class="mini">
@@ -207,6 +221,11 @@ footer .f-note{font-size:13px;color:var(--ink-dim);margin-bottom:30px;max-width:
   <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%202%20style%20main%20menu%20lobby%2C%203D%20hero%20model%20displayed%20center%2C%20top%20navigation%20bar%20with%20PLAY%20button%2C%20orange%20white%20color%20scheme%2C%20futuristic%20metallic%20panels%2C%20clean%20rounded%20UI%20design&image_size=landscape_16_9" alt="守望先锋主菜单大厅：3D英雄模型居中，顶部导航PLAY按钮，橙白金属面板">
   <div class="shot-cap">② 主界面 / 大厅 · 3D 英雄展示 + 顶部导航 + 橙白金属（风格示意图）</div>
   </div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20OW1%20classic%20main%20menu%2C%20dynamic%20hero%20background%20scene%2C%20bold%20orange%20white%20buttons%2C%20slanted%20BigNoodleToo%20font%2C%20futuristic%20metallic%20menu%20panels%2C%20warm%20lighting%2C%20iconic%20menu%20design&image_size=landscape_4_3" alt="守望先锋OW1经典主菜单：动态英雄背景，大胆橙白按钮，倾斜字体，金属面板">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%202%20style%20notification%20hub%20and%20social%20panel%2C%20clean%20flat%20UI%2C%20notification%20center%20with%20badge%20count%2C%20friend%20list%20sidebar%2C%20orange%20blue%20accent%20colors%2C%20dark%20blue%20background%2C%20rounded%20corners&image_size=landscape_4_3" alt="守望先锋通知中心与社交面板：扁平UI，通知徽章计数，好友列表侧栏">
+  </div>
+  <div class="shot-cap">② 主界面 · OW1 经典菜单 + 通知中心/社交面板（风格示意图）</div>
 
   <h3 class="sub">③ 战斗界面 / HUD <span class="en">COMBAT HUD</span></h3>
   <div class="card"><div class="mini">
@@ -224,6 +243,11 @@ footer .f-note{font-size:13px;color:var(--ink-dim);margin-bottom:30px;max-width:
   <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20ultimate%20ability%20HUD%2C%20glowing%20orange%20ultimate%20ready%20indicator%2C%20hero%20portrait%20with%20charge%20bar%2C%20ON%20FIRE%20effect%20flame%20icon%2C%20dynamic%20ability%20cooldown%20timers%2C%20first%20person%20shooter%20game%20UI&image_size=landscape_4_3" alt="守望先锋终极技能HUD：橙色发光终极技能就绪指示，英雄头像充能条，On Fire效果">
   </div>
   <div class="shot-cap">③ 战斗 HUD + 终极技能 · 倾斜 HUD + 分段生命条 + On Fire（风格示意图）</div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20OW1%20vs%20OW2%20HUD%20comparison%2C%20slanted%20health%20bar%20vs%20flat%20horizontal%20health%20bar%2C%20BigNoodleToo%20font%20vs%20modern%20sans%20font%2C%20on%20fire%20flame%20effect%20vs%20removed%2C%20side%20by%20side%20comparison%2C%20dark%20background&image_size=landscape_4_3" alt="守望先锋OW1 vs OW2 HUD对比：倾斜vs水平生命条，BigNoodleToo vs 现代字体，On Fire有无对比">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20kill%20feed%20and%20scoreboard%2C%20top%20right%20elimination%20notification%20with%20hero%20portrait%20icons%2C%20Tab%20key%20scoreboard%20overlay%2C%20ultimate%20charge%20percentages%20for%20teammates%2C%20clean%20minimal%20UI%2C%20orange%20blue%20accents%2C%20dark%20background&image_size=landscape_4_3" alt="守望先锋击杀信息与记分板：右上角击杀提示，Tab记分板，队友终极技能充能">
+  </div>
+  <div class="shot-cap">③ 战斗 HUD · OW1 vs OW2 对比 + 击杀信息/记分板（风格示意图）</div>
 
   <h3 class="sub">④ 关卡 / 模式选择 <span class="en">MODE SELECTION</span></h3>
   <div class="card"><div class="mini">
@@ -251,6 +275,11 @@ footer .f-note{font-size:13px;color:var(--ink-dim);margin-bottom:30px;max-width:
   <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%202%20style%20shop%20and%20battle%20pass%20interface%2C%20cosmetic%20skin%20showcase%2C%20premium%20track%20rewards%2C%20Overwatch%20Coins%20currency%20display%2C%20orange%20blue%20accent%20colors%2C%20dark%20background%2C%20futuristic%20store%20UI%20design&image_size=landscape_16_9" alt="守望先锋商店与战令：皮肤展示，高级轨道奖励，守望金币，橙蓝配色">
   <div class="shot-cap">⑤ 商店 / 战令 · 皮肤展示 + 双轨奖励 + 动态背景（风格示意图）</div>
   </div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%202%20style%20battle%20pass%20tier%20rewards%20grid%2C%20seasonal%20themed%20cosmetic%20items%2C%20legendary%20skin%20preview%2C%20progress%20bar%20with%20XP%2C%20free%20and%20premium%20track%20comparison%2C%20animated%20background%2C%20orange%20blue%20UI&image_size=landscape_4_3" alt="守望先锋战令奖励网格：赛季主题装饰品，传说皮肤预览，经验进度条，免费vs高级轨道">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%202%20style%20legendary%20skin%20detail%20view%2C%203D%20hero%20model%20with%20skin%20equipped%2C%20rotating%20preview%2C%20purchase%20button%20with%20Overwatch%20Coins%20price%2C%20clean%20shop%20UI%2C%20dark%20background%2C%20orange%20accent&image_size=landscape_4_3" alt="守望先锋传说皮肤详情：3D英雄穿戴皮肤，旋转预览，购买按钮与金币价格">
+  </div>
+  <div class="shot-cap">⑤ 商店 · 战令奖励网格 + 传说皮肤详情预览（风格示意图）</div>
 
   <h3 class="sub">⑥ 天赋 / Perks 系统 <span class="en">PERKS / UPGRADES</span></h3>
   <div class="card"><div class="mini">
@@ -291,6 +320,11 @@ footer .f-note{font-size:13px;color:var(--ink-dim);margin-bottom:30px;max-width:
   <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20career%20profile%20achievement%20page%2C%20player%20progression%20badges%2C%20hero%20stats%20display%2C%20challenge%20list%2C%20ranked%20tier%20icons%2C%20clean%20dark%20interface%20with%20orange%20accents&image_size=landscape_4_3" alt="守望先锋成就与职业档案：进度徽章，英雄统计，挑战列表，排位图标">
   </div>
   <div class="shot-cap">⑦⑧ 成就 + 英雄画廊 · 挑战系统 + 3D 英雄展示（风格示意图）</div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20hero%20detail%20page%2C%203D%20character%20model%20with%20skin%20equipped%2C%20abilities%20list%20and%20lore%20tabs%2C%20cosmetic%20customization%20options%2C%20progression%20and%20history%20tabs%2C%20orange%20blue%20UI%20panels%2C%20dark%20blue%20background%2C%20clean%20futuristic%20design&image_size=landscape_4_3" alt="守望先锋英雄详情页：3D模型+皮肤装备，技能列表/背景故事/收藏标签页">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20hero%20difficulty%20rating%20stars%2C%20role%20badge%20Tank%20Damage%20Support%2C%20hero%20stats%20overview%2C%20abilities%20preview%20cards%2C%20OW1%20star%20rating%20system%2C%20clean%20UI%20design%2C%20orange%20white%20color%20scheme%2C%20dark%20background&image_size=landscape_4_3" alt="守望先锋英雄难度评级：星级系统，职责徽章，技能预览卡片，OW1特色">
+  </div>
+  <div class="shot-cap">⑦⑧ 英雄画廊 · 英雄详情标签页 + 难度评级/职责徽章（风格示意图）</div>
 
   <h3 class="sub">⑨ 战斗生命条 <span class="en">HEALTH BAR</span></h3>
   <div class="card"><div class="mini">
@@ -306,6 +340,11 @@ footer .f-note{font-size:13px;color:var(--ink-dim);margin-bottom:30px;max-width:
   <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20health%20bar%20system%2C%20white%20base%20health%20orange%20armor%20blue%20shield%20segments%2C%20enemy%20red%20health%20bar%20above%20head%2C%20On%20Fire%20flame%20effect%20around%20hero%20portrait%2C%20clean%20minimal%20HUD%2C%20futuristic%20FPS%20game%20UI&image_size=landscape_16_9" alt="守望先锋生命条系统：白色基础+橙色护甲+蓝色护盾分段，敌方红色头顶条，On Fire火焰效果">
   <div class="shot-cap">⑨ 战斗生命条 · 白橙蓝三段 + On Fire 火焰（风格示意图）</div>
   </div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20health%20bar%20detailed%20breakdown%2C%20showing%20white%20health%20orange%20armor%20blue%20shield%20green%20overhealth%20segments%20with%20labels%2C%2025%20HP%20increment%20marks%2C%20hero%20portrait%20beside%20bar%2C%20clean%20infographic%20style%2C%20dark%20background&image_size=landscape_4_3" alt="守望先锋生命条分解图：白基础+橙护甲+蓝护盾+绿超额标注，25HP增量标记">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20enemy%20health%20bar%20above%20head%2C%20red%20enemy%20health%20bar%2C%20green%20ally%20health%20bar%2C%20blue%20shield%20segment%20on%20ally%2C%20hero%20name%20plate%2C%20On%20Fire%20indicator%20icon%2C%20clean%20FPS%20game%20UI%2C%20dark%20background%2C%20color%20coded%20system&image_size=landscape_4_3" alt="守望先锋头顶生命条：敌方红色，友方绿色/蓝色，On Fire指示器">
+  </div>
+  <div class="shot-cap">⑨ 生命条 · 四层分解图 + 敌我头顶条颜色区分（风格示意图）</div>
 
   <h3 class="sub">⑩ 视觉特效 <span class="en">VISUAL EFFECTS</span></h3>
   <div class="grid g2">
@@ -346,6 +385,283 @@ footer .f-note{font-size:13px;color:var(--ink-dim);margin-bottom:30px;max-width:
   <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20UI%20menu%20animations%20and%20transitions%2C%20dynamic%20hero%20background%2C%20orange%20white%20futuristic%20panels%2C%20smooth%20interface%20motion%2C%20metallic%20buttons%2C%20clean%20rounded%20design%20elements&image_size=landscape_4_3" alt="守望先锋UI动效：动态英雄背景，橙白金属面板，流畅界面过渡">
   </div>
   <div class="shot-cap">⑩ 视觉特效 · 终极技能特效 + UI 动效（风格示意图）</div>
+
+  <h3 class="sub">⑪ 武器设计 <span class="en">WEAPON DESIGN</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>造型原则</b>——武器设计遵循角色整体造型语言，与英雄世界观和个性高度一致，每个英雄的武器都是其身份标识的延伸</div>
+    <div class="row"><b>皮克斯式夸张</b>——武器造型适度夸张，强调块面感和剪影效果，弱化细节纹理，与角色卡通化风格统一</div>
+    <div class="row"><b>色彩关联</b>——武器配色与角色主体色一致，通常 5-8 种颜色，大面积纯色主体 + 小面积补色点缀</div>
+    <div class="row"><b>代表性武器</b>——源氏的龙刃（发光日式武士刀）、莱因哈特的火箭锤（巨型金属锤）、士兵76的脉冲步枪（科幻突击步枪）、黑百里的蛛丝陷阱（生物科技狙击枪）、温斯顿的特斯拉炮（电弧喷射器）</div>
+    <div class="row"><b>科幻材质</b>——金属 + 发光元件 + 全息投影组合，PBR 渲染下金属反射和亚光质感区分明显</div>
+    <div class="row"><b>无脏旧处理</b>——武器表面去除日常使用痕迹和污渍，保持洁净未来的视觉氛围</div>
+    <div class="row"><b>第一人称视角</b>——武器在第一人称视角下占据画面右下角，轮廓清晰不遮挡视野</div>
+  </div></div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20hero%20weapons%20showcase%2C%20Genji%20glowing%20katana%20blade%2C%20Reinhardt%20giant%20rocket%20hammer%2C%20Soldier%2076%20pulse%20rifle%2C%20Widowmaker%20sniper%20rifle%2C%20Winston%20tesla%20cannon%2C%20clean%20cartoon%20style%2C%20orange%20blue%20accents%2C%20dark%20background&image_size=landscape_4_3" alt="守望先锋武器设计：源氏龙刃、莱因哈特火箭锤、士兵76脉冲步枪等英雄武器展示">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20first%20person%20weapon%20view%2C%20futuristic%20sci-fi%20gun%20in%20hands%2C%20clean%20cartoon%20style%20weapon%20model%2C%20PBR%20metallic%20rendering%2C%20glowing%20elements%2C%20bright%20lighting%2C%20no%20grime%20or%20wear%20details&image_size=landscape_4_3" alt="守望先锋第一人称武器视角：科幻武器在手中，PBR金属渲染，发光元件">
+  </div>
+  <div class="shot-cap">⑪ 武器设计 · 英雄专属武器造型 + 第一人称视角（风格示意图）</div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20weapon%20detail%20closeup%2C%20Tracer%20pulse%20pistols%20dual%20wield%2C%20Mercy%20caduceus%20staff%20with%20healing%20beam%2C%20Zenyatta%20orb%20of%20destruction%20floating%20sphere%2C%20clean%20cartoon%20style%20with%20PBR%20metallic%20rendering%2C%20bright%20lighting%2C%20dark%20background&image_size=landscape_4_3" alt="守望先锋武器细节：猎空双枪、天使治疗杖、禅雅塔悬浮宝珠，PBR金属渲染">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20weapon%20reload%20animation%2C%20futuristic%20sci-fi%20weapon%20reload%20sequence%2C%20ammo%20magazine%20ejection%2C%20clean%20cartoon%20style%2C%20orange%20blue%20accent%20colors%2C%20first%20person%20view%2C%20dynamic%20motion%20blur%2C%20bright%20lighting&image_size=landscape_4_3" alt="守望先锋武器换弹动画：科幻武器换弹序列，弹匣弹出，第一人称视角">
+  </div>
+  <div class="shot-cap">⑪ 武器设计 · 更多英雄武器细节 + 换弹动画（风格示意图）</div>
+
+  <h3 class="sub">⑫ 技能系统 <span class="en">ABILITY SYSTEM</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>三技能架构</b>——每个英雄通常拥有：主武器火力 + 2 个普通技能（Shift/E 键）+ 1 个终极技能（Q 键），部分英雄有被动技能</div>
+    <div class="row"><b>职责区分</b>——Tank 技能偏保护/控制/位移，Damage 偏输出/爆发/机动，Support 偏治疗/增益/辅助</div>
+    <div class="row"><b>冷却制</b>——普通技能有独立冷却时间，终极技能通过造成/治疗伤害充能，满 100% 后释放</div>
+    <div class="row"><b>Perks 升级</b>——2026 新增 Perks 系统：Minor Perk 微调技能方向，Major Perk 大幅改变技能效果</div>
+    <div class="row"><b>连招设计</b>——技能之间存在连招组合，如源氏「冲刺+龙刃+跳跃取消」、安娜「睡眠+手雷+射击」</div>
+    <div class="row"><b>视觉传达</b>——每个技能有独特的视觉语言：颜色、形状、动画、音效，玩家可从远处辨识</div>
+    <div class="row"><b>Tab 键查队友</b>——Tab 键展开记分板查看队友终极技能充能百分比，鼓励团队协作</div>
+  </div></div>
+  <div class="shot-wrap">
+  <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20ability%20system%20overview%2C%20hero%20ability%20icons%20layout%2C%20primary%20fire%20shift%20ability%20E%20ability%20ultimate%20Q%20key%2C%20cooldown%20timers%2C%20ultimate%20charge%20percentage%2C%20clean%20futuristic%20UI%2C%20orange%20blue%20color%20scheme%2C%20dark%20background&image_size=landscape_16_9" alt="守望先锋技能系统：三技能架构，冷却计时器，终极技能充能百分比，技能图标布局">
+  <div class="shot-cap">⑫ 技能系统 · 三技能架构 + 冷却 + 充能 + Perks（风格示意图）</div>
+  <div class="vid-group">
+    <div class="vid-wrap">
+      <iframe src="https://www.youtube.com/embed/c3guhZL477Q" title="Vendetta 新英雄技能实机演示" allowfullscreen loading="lazy"></iframe>
+      <div class="vid-cap">Vendetta 新英雄技能实机演示 · 官方</div>
+    </div>
+    <div class="vid-wrap">
+      <iframe src="https://www.youtube.com/embed/NtulVJJlhH8" title="Ramattra 技能演示与终极技能" allowfullscreen loading="lazy"></iframe>
+      <div class="vid-cap">Ramattra 形态切换坦克技能演示 · 官方</div>
+    </div>
+  </div>
+  <div class="vid-group">
+    <div class="vid-wrap">
+      <iframe src="https://www.youtube.com/embed/UfSDgMf1lUE" title="Overwatch 2 全英雄终极技能展示" allowfullscreen loading="lazy"></iframe>
+      <div class="vid-cap">Overwatch 2 全英雄终极技能合集展示</div>
+    </div>
+    <div class="vid-wrap">
+      <iframe src="https://www.youtube.com/embed/GhKCAA6bgIk" title="Overwatch 2 英雄技能教学 重装篇" allowfullscreen loading="lazy"></iframe>
+      <div class="vid-cap">守望先锋新手英雄教学 · 重装篇</div>
+    </div>
+  </div>
+  </div>
+
+  <h3 class="sub">⑬ 技能特效 <span class="en">ABILITY VFX</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>高辨识度</b>——每个技能特效拥有独特的颜色、形状和动画模式，玩家可瞬间辨识是哪个英雄的哪个技能</div>
+    <div class="row"><b>颜色编码</b>——友方技能为蓝/绿色调，敌方技能为红/橙色调，治疗绿色，伤害橙红色，护盾蓝色</div>
+    <div class="row"><b>终极技能全屏特效</b>——释放时触发全屏视觉冲击：源氏龙刃（绿色弧光斩击）、莱因哈特裂地猛击（橙色火焰冲击波）、查莉娅引力弹（紫黑漩涡）、D.Va 自爆（蓝色机甲爆炸光圈）</div>
+    <div class="row"><b>粒子系统</b>——大量使用动态粒子效果：火焰、电弧、光束、碎片、烟雾，高饱和度光照增强视觉冲击</div>
+    <div class="row"><b>音效配合</b>——每个技能有标志性音效，与视觉特效同步，形成「视听一体」的辨识体系</div>
+    <div class="row"><b>On Fire 火焰</b>——表现优异时英雄全身被火焰粒子包裹，是守望先锋独有的视觉正反馈系统</div>
+    <div class="row"><b>无血腥</b>——击杀特效为消散/闪退而非血腥，符合乐观未来主义和全家友善的基调</div>
+    <div class="row"><b>环境影响</b>——部分技能会与环境交互：温斯顿屏障投影器生成半透明穹顶护盾、美的冰墙改变地形</div>
+  </div></div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20ultimate%20ability%20visual%20effects%20showcase%2C%20Genji%20dragonblade%20green%20arc%20slashes%2C%20Reinhardt%20earthshatter%20orange%20flame%20wave%2C%20Zarya%20graviton%20purple%20vortex%2C%20D.Va%20self%20destruct%20blue%20explosion%2C%20high%20saturation%20particle%20effects%2C%20dynamic%20combat%20scene&image_size=landscape_4_3" alt="守望先锋终极技能特效：源氏龙刃绿弧光、莱因哈特裂地猛击橙火焰、查莉娅引力弹紫漩涡">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20On%20Fire%20system%20and%20ability%20particles%2C%20hero%20character%20surrounded%20by%20flame%20particles%2C%20skill%20effects%20color%20coded%20blue%20friendly%20red%20enemy%2C%20healing%20green%20glow%2C%20shield%20blue%20dome%2C%20high%20saturation%20dynamic%20lighting%2C%20futuristic%20FPS%20game&image_size=landscape_4_3" alt="守望先锋On Fire系统与技能粒子：英雄火焰包裹，技能颜色编码蓝友红敌，治疗绿光">
+  </div>
+  <div class="shot-cap">⑬ 技能特效 · 终极技能全屏冲击 + On Fire + 颜色编码（风格示意图）</div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20ability%20effects%20color%20coding%20guide%2C%20blue%20friendly%20abilities%20on%20left%2C%20red%20enemy%20abilities%20on%20right%2C%20green%20healing%20effects%2C%20orange%20damage%20effects%2C%20purple%20hack%20and%20nano%20boost%2C%20clean%20infographic%20diagram%2C%20dark%20background%2C%20color%20legend&image_size=landscape_4_3" alt="守望先锋技能颜色编码指南：蓝友方红敌方绿治疗橙伤害紫骇客纳米">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20hero%20ability%20environmental%20effects%2C%20Winston%20barrier%20projector%20dome%20shield%2C%20Mei%20ice%20wall%20terrain%20change%2C%20Symmetra%20teleporter%20portal%2C%20ability%20interacting%20with%20game%20environment%2C%20clean%20cartoon%20style%2C%20bright%20lighting&image_size=landscape_4_3" alt="守望先锋技能环境影响：温斯顿穹顶护盾、美冰墙地形改变、秩序之光传送门">
+  </div>
+  <div class="shot-cap">⑬ 技能特效 · 颜色编码指南 + 技能环境影响（风格示意图）</div>
+
+  <h3 class="sub">⑭ 图标设计 <span class="en">ICON DESIGN</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>简洁图形概括</b>——与 UI 哲学一致，用一目了然的简单图形概括功能，不过度复杂</div>
+    <div class="row"><b>英雄技能图标</b>——每个技能有专属图标，图形抽象但辨识度高，如源氏「闪」(反弹箭头)、士兵76「螺旋飞弹」(螺旋弹道)</div>
+    <div class="row"><b>颜色规范</b>——图标颜色遵循全局色板：橙色强调、蓝色辅助、红色警告、绿色友方，不超出框架</div>
+    <div class="row"><b>扁平化</b>——OW2 图标更扁平化，去除 OW1 的金属质感和深度阴影，改为纯色平面图标</div>
+    <div class="row"><b>职责图标</b>——Tank（盾形）、Damage（十字准星）、Support（十字医疗），三个职责有统一的图形符号</div>
+    <div class="row"><b>进度徽章</b>——玩家进度系统徽章随等级升级，造型从简到繁、从暗到亮，体现成长感</div>
+    <div class="row"><b>地图图标</b>——地图选择界面使用俯视视角的简化地图轮廓图标</div>
+    <div class="row"><b>击杀信息图标</b>——击杀提示使用英雄头像和武器图标组合，简洁直观</div>
+  </div></div>
+  <div class="shot-wrap">
+  <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20ability%20and%20role%20icon%20set%2C%20flat%20minimal%20game%20icons%2C%20Tank%20shield%20Damage%20crosshair%20Support%20cross%20role%20symbols%2C%20ability%20skill%20icons%20with%20orange%20blue%20accent%20colors%2C%20clean%20vector%20style%2C%20dark%20background%2C%20grid%20layout&image_size=landscape_16_9" alt="守望先锋图标设计：技能图标、职责图标（盾形/准星/十字）、进度徽章、扁平矢量风格">
+  <div class="shot-cap">⑭ 图标设计 · 简洁图形概括 + 扁平矢量 + 职责符号（风格示意图）</div>
+  </div>
+
+  <h3 class="sub">⑮ 角色造型 <span class="en">CHARACTER DESIGN</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>皮克斯式 3D 卡通</b>——重造型轻细节的扁平化卡通风格，材质和光照尽量真实但弱化表面纹理，对造型做适度夸张</div>
+    <div class="row"><b>5-8 色原则</b>——角色身上颜色一般在 5-8 种之间，大面积纯色主体色 + 小面积补色点缀以平衡整体观感</div>
+    <div class="row"><b>无脏旧</b>——去除日常生活中常见的脏旧和污渍细节，保持洁净乐观的未来氛围</div>
+    <div class="row"><b>弱化纹理</b>——细节纹理被弱化，毛发等部位作为整体处理，强调块面感</div>
+    <div class="row"><b>夸张剪影</b>——对肩膀、手部、臀部（重点）、腿部造型做夸张处理，突出角色剪影效果和辨识度</div>
+    <div class="row"><b>体型多样性</b>——从温斯顿（巨型猩猩）到猎空（纤细女性），体型跨度极大，每个英雄剪影独一无二</div>
+    <div class="row"><b>世界观一致性</b>——角色设计融合多国文化元素：日式忍者（源氏/半藏）、美国大兵（士兵76）、瑞典工程师（托比扬）、印度建筑师（秩序之光），但统一在乐观未来主义框架下</div>
+    <div class="row"><b>OW2 头像变化</b>——英雄头像从卡通化转向更立体化，整体造型风格保持一致</div>
+  </div></div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20character%20design%20showcase%2C%20diverse%20hero%20silhouettes%2C%20Pixar%203D%20cartoon%20style%2C%20exaggerated%20proportions%20shoulders%20hips%2C%205-8%20color%20palette%20per%20character%2C%20clean%20no%20grime%2C%20bold%20silhouette%20recognition%2C%20multiple%20heroes%20standing%20together&image_size=landscape_4_3" alt="守望先锋角色造型：多样英雄剪影，皮克斯3D卡通，夸张比例，5-8色配色">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20character%20turnaround%20model%20sheet%2C%20hero%20front%20side%20back%20view%2C%203D%20cartoon%20character%20with%20exaggerated%20proportions%2C%20clean%20surfaces%20no%20texture%20details%2C%20bright%20lighting%2C%20solid%20color%20blocks%2C%20futuristic%20clothing%20design&image_size=landscape_4_3" alt="守望先锋角色模型展示：多角度转身图，3D卡通角色，夸张比例，洁净表面">
+  </div>
+  <div class="shot-cap">⑮ 角色造型 · 皮克斯式夸张剪影 + 5-8 色原则 + 无脏旧（风格示意图）</div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20character%20silhouette%20lineup%2C%20all%20heroes%20in%20black%20silhouette%2C%20showing%20diverse%20body%20types%20and%20proportions%2C%20from%20small%20Tracer%20to%20giant%20Winston%2C%20unique%20recognizable%20outlines%2C%20clean%20silhouette%20test%2C%20dark%20background&image_size=landscape_4_3" alt="守望先锋角色剪影排列：全英雄黑色剪影，展示多样体型和比例，独特可辨识轮廓">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20character%20color%20palette%20breakdown%2C%20showing%205-8%20colors%20per%20hero%2C%20large%20primary%20color%20blocks%20with%20small%20complementary%20accents%2C%20Tracer%20orange%20brown%2C%20Winston%20white%20blue%2C%20Genji%20green%20silver%2C%20clean%20infographic%20style%2C%20dark%20background&image_size=landscape_4_3" alt="守望先锋角色配色分解：每英雄5-8色，大块主色+小面积补色">
+  </div>
+  <div class="shot-cap">⑮ 角色造型 · 全英雄剪影测试 + 配色分解（风格示意图）</div>
+
+  <h3 class="sub">⑯ 材质特征 <span class="en">MATERIAL FEATURES</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>PBR 流程</b>——暴雪首次引入基于物理渲染（PBR），将金属质地与粗糙度整合到材质属性中，美术只需选择对应参数即可呈现正确材质效果</div>
+    <div class="row"><b>金属 vs 亚光</b>——黑百合衣服上的光泽由反射产生（亚光材质），与金属拱顶的高光反射形成鲜明对比，PBR 下不同材质区分明显</div>
+    <div class="row"><b>场景材质</b>——金属拱顶和石头墙面有明显的质感区别，但植物、泥土、石头、木材之间的区别并不细致</div>
+    <div class="row"><b>重复纹理</b>——大面积重复纹理区域融合多张贴图以破除重复感</div>
+    <div class="row"><b>弱化细节</b>——与秘境探险4等写实游戏相比，守望先锋的材质表现缺少叶片透光（次表面反射）和石头环境光反射等细腻效果</div>
+    <div class="row"><b>动画参考</b>——与风格一脉相承的动画短片中植被呈现通透光泽、地面反射环境细节，游戏引擎在此方面有所短板</div>
+    <div class="row"><b>UI 材质</b>——UI 面板呈现未来金属质感：圆润倒角、高光反射、半透明叠加，OW1 金属面板深度感更强</div>
+    <div class="row"><b>无表面纹理</b>——角色和场景去除表面细节纹理，只保留大块结构，这是扁平化卡通风格的核心</div>
+  </div></div>
+  <div class="shot-wrap">
+  <img class="shot-full zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20PBR%20material%20showcase%2C%20metallic%20surfaces%20vs%20matte%20fabric%20materials%2C%20sci-fi%20weapon%20metal%20reflection%2C%20clothing%20fabric%20texture%2C%20stone%20wall%20vs%20metal%20arch%20comparison%2C%20clean%20surfaces%20no%20fine%20details%2C%20bright%20studio%20lighting&image_size=landscape_16_9" alt="守望先锋材质特征：PBR金属vs亚光材质对比，武器金属反射，布料纹理，石墙vs金属拱">
+  <div class="shot-cap">⑯ 材质特征 · PBR 金属/亚光区分 + 弱化细节 + 未来金属 UI（风格示意图）</div>
+  </div>
+
+  <h3 class="sub">⑰ 场景光影 <span class="en">SCENE LIGHTING</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>高饱和度光照</b>——刻意提高光照的强度和饱和度，使游戏画面整体非常明快，与写实游戏的低饱和形成鲜明对比</div>
+    <div class="row"><b>阴影纯度</b>——对阴影的颜色做了提高纯度的调整，使阴影与主体色调一致，不出现灰暗死黑的阴影</div>
+    <div class="row"><b>暗部通透</b>——刻意提高暗部光照的光线反弹强度来模拟全局光照（GI）效果，让暗部也十分通透，不沉闷</div>
+    <div class="row"><b>主色调确立</b>——每张地图确立主色调，大面积使用高纯度颜色，如花村（樱花粉绿）、国王大道（暖黄灰石）、努巴尼（沙金绿植）</div>
+    <div class="row"><b>大块纯色</b>——场景去掉材质上的纹理细节，只保留大块结构，大面积纯色块面构建空间感</div>
+    <div class="row"><b>环境光反弹</b>——模拟全局光照的反弹光，让色彩从一个表面「溢出」到另一个表面，营造温暖通透的整体氛围</div>
+    <div class="row"><b>无写实痕迹</b>——去除时间、气候、大自然对物体产生影响的表现，场景永远处于理想光照状态</div>
+    <div class="row"><b>UI 光照</b>——UI 元素自带发光效果（终极技能橙色辉光、护盾蓝色辉光），与场景光照叠加但不冲突</div>
+  </div></div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20map%20scene%20lighting%2C%20Hanamura%20cherry%20blossom%20pink%20green%20environment%2C%20King%27s%20Row%20warm%20yellow%20stone%20streets%2C%20Numbani%20golden%20green%20futuristic%20city%2C%20high%20saturation%20bright%20lighting%2C%20colorful%20shadows%2C%20global%20illumination%20bounce%20light%2C%20clean%20cartoon%20environment&image_size=landscape_4_3" alt="守望先锋场景光影：花村樱花粉绿、国王大道暖黄石街、努巴尼金绿城市，高饱和光照">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20environment%20lighting%20breakdown%2C%20bright%20key%20light%20with%20colorful%20saturated%20shadows%2C%20global%20illumination%20color%20bounce%2C%20large%20solid%20color%20blocks%20no%20texture%20detail%2C%20warm%20optimistic%20atmosphere%2C%20clean%20futuristic%20architecture%2C%20no%20weather%20aging%20effects&image_size=landscape_4_3" alt="守望先锋光照分解：高饱和主光+彩色阴影+GI反弹光，大块纯色无纹理">
+  </div>
+  <div class="shot-cap">⑰ 场景光影 · 高饱和主光 + 彩色阴影 + GI 反弹 + 大块纯色（风格示意图）</div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20map%20comparison%2C%20Dorado%20warm%20Mexican%20town%20orange%20stone%2C%20Hollywood%20bright%20film%20set%20colors%2C%20Lijiang%20Tower%20neon%20blue%20night%20cityscape%2C%20Route%2066%20desert%20highway%20warm%20dust%2C%20each%20with%20distinct%20dominant%20color%20palette%2C%20clean%20cartoon%20style&image_size=landscape_4_3" alt="守望先锋地图对比：多拉多暖橙石镇、好莱坞明亮片场、漓江塔蓝夜霓虹、66号公路暖沙">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20lighting%20setup%20diagram%2C%20showing%20key%20light%20fill%20light%20bounce%20light%20layers%2C%20high%20saturation%20color%20temperature%2C%20colorful%20ambient%20occlusion%2C%20global%20illumination%20color%20bleed%2C%20clean%20infographic%20diagram%2C%20dark%20background%2C%20bright%20optimistic%20lighting&image_size=landscape_4_3" alt="守望先锋光照布光图：主光+补光+反弹光层次，高饱和色温，GI颜色溢出">
+  </div>
+  <div class="shot-cap">⑰ 场景光影 · 地图主色调对比 + 布光层次分解（风格示意图）</div>
+
+  <h3 class="sub">⑱ BUFF 与 DEBUFF 设计 <span class="en">BUFF / DEBUFF</span></h3>
+  <div class="card"><div class="mini">
+    <div class="row"><b>颜色编码体系</b>——绿色 = 正面增益（治疗、加速、护盾），红色/橙色 = 负面减益（伤害、减速、禁用），蓝色 = 中性/信息（标记、侦测）</div>
+    <div class="row"><b>视觉传达</b>——BUFF/DEBUFF 通过角色身上的粒子效果、光环、颜色变化传达，无需阅读文字即可辨识</div>
+    <div class="row"><b>代表性 BUFF</b>——安娜纳米强效（紫色光环+角色体型微胀）、卢西奥音障（蓝色护盾穹顶）、天使重生（金色复活光柱）、秩序之光护盾（蓝色粒子流）</div>
+    <div class="row"><b>代表性 DEBUFF</b>——安娜生物手雷（紫色液体溅射+禁疗标记）、黑影骇客入侵（紫色网格+技能禁用）、查莉娅粒子炮（蓝色电弧链接）、美冰冻（蓝色冰晶包裹+完全冻结）</div>
+    <div class="row"><b>状态图标</b>——角色头顶/脚下显示状态图标：被治疗（绿色十字上升）、被伤害（红色碎片飞溅）、被冰冻（蓝色冰晶进度条）、被骇入（紫色网格进度条）</div>
+    <div class="row"><b>UI 状态条</b>——HUD 中显示当前 BUFF/DEBUFF 的图标和持续时间，如安娜纳米强效的紫色计时圈</div>
+    <div class="row"><b>终极技能充能</b>——终极技能本身可视为全局 BUFF 机制：100% 充能 = 可释放终极技能，头像周围橙色高亮提示</div>
+    <div class="row"><b>On Fire 系统</b>——连续表现优异时进入 On Fire 状态（全身火焰粒子），是守望先锋独有的正面反馈 BUFF，鼓励积极游戏行为</div>
+    <div class="row"><b>消除而非杀死</b>——被消除的角色消散为光粒子而非倒地死亡，与乐观未来主义基调一致，DEBUFF 效果也偏向「禁用/减速」而非「残酷」</div>
+  </div></div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20BUFF%20effects%20showcase%2C%20Ana%20nano%20boost%20purple%20aura%2C%20Lucio%20sound%20barrier%20blue%20shield%20dome%2C%20Mercy%20resurrect%20golden%20light%20beam%2C%20Symmetra%20shield%20blue%20particles%2C%20hero%20with%20glowing%20status%20effects%2C%20color%20coded%20green%20buff%20red%20debuff%2C%20clean%20futuristic%20game%20VFX&image_size=landscape_4_3" alt="守望先锋BUFF特效：安娜纳米紫光环、卢西奥音障蓝穹顶、天使重生金光柱">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20DEBUFF%20effects%20showcase%2C%20Sombra%20hack%20purple%20grid%20overlay%2C%20Mei%20freeze%20blue%20ice%20crystal%20encasing%2C%20Ana%20biotic%20grenade%20anti%20heal%20purple%20splash%2C%20Zarya%20beam%20blue%20electric%20arc%20link%2C%20status%20effect%20icons%20above%20character%20heads%2C%20color%20coded%20debuff%20system%2C%20futuristic%20game%20VFX&image_size=landscape_4_3" alt="守望先锋DEBUFF特效：黑影骇客紫网格、美冰冻蓝冰晶、安娜禁疗紫液体、查莉娅蓝电弧">
+  </div>
+  <div class="shot-cap">⑱ BUFF/DEBUFF · 颜色编码 + 粒子光环 + 状态图标 + On Fire（风格示意图）</div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20status%20effect%20icon%20chart%2C%20showing%20all%20status%20effects%20with%20icons%20and%20colors%2C%20heal%20boost%20speed%20buff%20green%2C%20anti%20heal%20hack%20freeze%20sleep%20red%20purple%20blue%2C%20nano%20boost%20purple%20aura%2C%20On%20Fire%20flame%2C%20clean%20infographic%2C%20dark%20background&image_size=landscape_4_3" alt="守望先锋状态效果图标总表：所有增益/减益状态图标颜色分类，完整信息图">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20elimination%20and%20respawn%20effect%2C%20hero%20dissolving%20into%20light%20particles%20instead%20of%20dying%2C%20no%20blood%20or%20gore%2C%20clean%20family%20friendly%20death%20animation%2C%20respawn%20room%20with%20hero%20select%2C%20bright%20optimistic%20visuals%2C%20clean%20cartoon%20style&image_size=landscape_4_3" alt="守望先锋消除特效：英雄消散为光粒子而非死亡，无血腥，重生室英雄选择">
+  </div>
+  <div class="shot-cap">⑱ BUFF/DEBUFF · 状态效果图标总表 + 消除/重生特效（风格示意图）</div>
+</section>
+<div class="glitch-line"></div>
+<section id="s3b">
+  <div class="sec-head"><span class="sec-num">SEC.03b</span><h2>技能特征归纳与颜色标识 <span class="en">SKILL CLASSIFICATION & COLOR CODING</span></h2></div>
+  <p class="sec-lead">守望先锋的技能系统拥有一套<b>严格而自洽的颜色编码体系</b>——每种技能类型通过固定的颜色、粒子形态和音效组合实现<b>零文字辨识</b>。以下是对各类技能特征的系统归纳与颜色标识对照。</p>
+
+  <h3 class="sub">A. 技能类型分类 <span class="en">SKILL CATEGORIES</span></h3>
+  <div class="grid g3">
+    <div class="feature-item">
+      <div class="feat-icon">T</div>
+      <h4>Tank 技能特征</h4>
+      <div class="mini">
+        <div class="row"><b>保护</b>——护盾、屏障、减伤（温斯顿穹顶、莱因哈特盾牌、西格玛实验屏障）</div>
+        <div class="row"><b>控制</b>——击退、击晕、位移限制（奥丽莎标枪、路霸钩爪）</div>
+        <div class="row"><b>空间控制</b>——改变地形和站位（D.Va 防御矩阵、拉玛刹形态切换）</div>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon blu">D</div>
+      <h4>Damage 技能特征</h4>
+      <div class="mini">
+        <div class="row"><b>爆发</b>——高瞬间伤害（源氏冲刺、死神死亡之花）</div>
+        <div class="row"><b>机动</b>——位移、加速、飞行（猎空闪回、源氏攀墙、回声飞行）</div>
+        <div class="row"><b>远程</b>——狙击、区域压制（黑百合蛛丝、半藏龙击）</div>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon red">S</div>
+      <h4>Support 技能特征</h4>
+      <div class="mini">
+        <div class="row"><b>治疗</b>——直接回复、持续回复（天使治疗杖、安娜生物步枪）</div>
+        <div class="row"><b>增益</b>——加速、攻击力提升、护盾（卢西奥加速、安娜纳米）</div>
+        <div class="row"><b>辅助</b>——透视、传送、复活（黑影侦测、秩序之光传送门、天使重生）</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub">B. 技能颜色标识体系 <span class="en">COLOR CODING SYSTEM</span></h3>
+  <div class="table-wrap" style="margin-bottom:18px">
+    <table>
+      <thead><tr><th>颜色</th><th>Hex</th><th>技能类型</th><th>代表性技能</th></tr></thead>
+      <tbody>
+        <tr><td style="color:#96e84c">绿色</td><td>#96E84C</td><td>治疗 / 正面增益</td><td>天使治疗光束、卢西奥音速加速、安娜生物手雷（友方）</td></tr>
+        <tr><td style="color:#f99e1a">橙色</td><td>#F99E1A</td><td>伤害 / 终极技能充能</td><td>源氏龙刃、莱因哈特裂地猛击、死神死亡之花</td></tr>
+        <tr><td style="color:#ff4444">红色</td><td>#FF4444</td><td>敌方 / 伤害 / 危险</td><td>敌方技能光效、敌方头顶生命条、法老之鹰火箭弹幕</td></tr>
+        <tr><td style="color:#00b4ff">蓝色</td><td>#00B4FF</td><td>护盾 / 友方标识</td><td>温斯顿屏障穹顶、查莉娅粒子屏障、卢西奥音障</td></tr>
+        <tr><td style="color:#bd00ff">紫色</td><td>#BD00FF</td><td>骇客 / 纳米强效 / 禁疗</td><td>黑影骇客入侵、安娜纳米强效、安娜生物手雷（敌方）</td></tr>
+        <tr><td style="color:#80d0ff">浅蓝</td><td>#80D0FF</td><td>冰冻 / 减速</td><td>美冰墙、美冰冻（蓝色冰晶包裹）</td></tr>
+        <tr><td style="color:#ffd700">金色</td><td>#FFD700</td><td>重生 / 特殊正面</td><td>天使 Valkyrie / 重生（金色复活光柱）</td></tr>
+        <tr><td style="color:#ffffff">白色</td><td>#F0F4F8</td><td>基础 / 中性 / 信息</td><td>士兵76 螺旋飞弹、黑百合红外视觉标记</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="ss-group">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20complete%20skill%20color%20coding%20reference%20chart%2C%20organized%20grid%20of%20ability%20effects%20sorted%20by%20color%2C%20green%20healing%20row%2C%20orange%20damage%20row%2C%20blue%20shield%20row%2C%20red%20enemy%20row%2C%20purple%20hack%20nano%20row%2C%20each%20with%20ability%20icon%20and%20effect%20preview%2C%20clean%20infographic%2C%20dark%20background&image_size=landscape_4_3" alt="守望先锋技能颜色编码完整参照表：按颜色分类的技能效果网格，绿色治疗/橙色伤害/蓝色护盾/红色敌方/紫色骇客纳米">
+  <img class="zoomable" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Overwatch%20style%20ultimate%20ability%20color%20showcase%20by%20role%2C%20Tank%20ultimates%20with%20orange%20and%20blue%20effects%2C%20Damage%20ultimates%20with%20red%20and%20orange%20explosions%2C%20Support%20ultimates%20with%20green%20and%20gold%20healing%20auras%2C%20three%20columns%20comparison%2C%20clean%20infographic%2C%20dark%20background&image_size=landscape_4_3" alt="守望先锋终极技能按职责颜色分类：坦克橙蓝、输出红橙爆炸、辅助绿金治疗光环，三列对比">
+  </div>
+  <div class="shot-cap">B. 颜色标识体系 · 完整参照表 + 按职责终极技能对比（风格示意图）</div>
+
+  <h3 class="sub">C. 技能粒子形态归纳 <span class="en">PARTICLE PATTERNS</span></h3>
+  <div class="grid g2">
+    <div class="card">
+      <h3>粒子形态分类 <span class="tag">PARTICLE TYPES</span></h3>
+      <div class="mini">
+        <div class="row"><b>光环/穹顶</b>——持续区域效果，如卢西奥音障（蓝色穹顶）、温斯顿屏障（半透明穹顶）、安娜纳米（紫色光环）</div>
+        <div class="row"><b>光束/射线</b>——线性投射，如天使治疗光束（绿色/黄色射线）、禅雅塔毁灭宝珠（橙色球体）、士兵76螺旋飞弹</div>
+        <div class="row"><b>爆发/冲击波</b>——以英雄为中心放射，如莱因哈特裂地猛击（橙色火焰地面波）、D.Va 自爆（蓝色爆炸光圈）</div>
+        <div class="row"><b>包裹/冻结</b>——覆盖目标，如美冰冻（蓝色冰晶渐进包裹）、黑影骇客（紫色网格覆盖）</div>
+        <div class="row"><b>漩涡/牵引</b>——引力场效果，如查莉娅引力弹（紫黑螺旋漩涡）、奥丽莎撼地猛刺（橙色吸附旋风）</div>
+        <div class="row"><b>投射物</b>——飞行体，如半藏龙击（双龙螺旋飞行）、法老之鹰火箭（橙色尾迹弹道）</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>音效配合体系 <span class="tag blu">AUDIO DESIGN</span></h3>
+      <div class="mini">
+        <div class="row"><b>终极技能语音</b>——释放时英雄喊出标志性台词，友方为英文原声、敌方为本地化语言，实现「听声辨技」</div>
+        <div class="row"><b>友方 vs 敌方语音</b>——同一个终极技能，友方听到英文台词，敌方听到母语台词，3 秒内可反应</div>
+        <div class="row"><b>标志性音效</b>——每个技能有独立音效：源氏龙刃（金属出鞘）、裂地猛击（轰鸣）、引力弹（嗡鸣）</div>
+        <div class="row"><b>冷却提示音</b>——技能就绪时有轻微提示音，终极技能满充能时有独特音效</div>
+        <div class="row"><b>On Fire 音效</b>——进入 On Fire 状态时独特火焰点燃声效，增强正反馈</div>
+        <div class="row"><b>击杀确认音</b>——击杀时短促确认音效，与击杀信息 UI 同步</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub">D. 职责技能矩阵 <span class="en">ROLE ABILITY MATRIX</span></h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>职责</th><th>主色调</th><th>技能倾向</th><th>终极技能特征</th><th>典型颜色组合</th></tr></thead>
+      <tbody>
+        <tr><td>Tank</td><td>橙+蓝</td><td>保护 / 控制 / 空间</td><td>大范围区域改变（屏障/吸附/形态切换）</td><td>橙(#F99E1A) + 蓝(#00B4FF)</td></tr>
+        <tr><td>Damage</td><td>橙+红</td><td>爆发 / 机动 / 远程</td><td>高伤害全屏冲击（龙刃/弹幕/自爆）</td><td>橙(#F99E1A) + 红(#FF4444)</td></tr>
+        <tr><td>Support</td><td>绿+金</td><td>治疗 / 增益 / 辅助</td><td>团队增益光环（音障/重生/Valkyrie）</td><td>绿(#96E84C) + 金(#FFD700)</td></tr>
+        <tr><td>通用</td><td>紫+白</td><td>骇客 / 禁疗 / 信息</td><td>特殊机制（纳米/红外/骇客）</td><td>紫(#BD00FF) + 白(#F0F4F8)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout" style="margin-top:18px">
+    <b>技能设计核心原则：</b>守望先锋的技能系统遵循<b>「三秒辨识法则」</b>——玩家必须在 3 秒内通过颜色+粒子形态+音效辨识出技能来源和效果。这套颜色编码体系确保了：①友方蓝/绿 vs 敌方红/橙的即时判断；②治疗(绿)、伤害(橙)、护盾(蓝)、骇客(紫)的类型快速分类；③终极技能释放时的全屏视觉冲击+语音台词双重确认。与暗黑赛博朋克游戏的「文字阅读式 UI」不同，守望先锋是<b>「视觉先行式 UI」</b>——颜色和形状即信息，文字仅作辅助。
+  </div>
 </section>
 <div class="glitch-line"></div>
 <section id="s4">
@@ -417,11 +733,19 @@ footer .f-note{font-size:13px;color:var(--ink-dim);margin-bottom:30px;max-width:
         <tr><td>美术风格</td><td>皮克斯式 3D 卡通 (6-7/10)</td><td>重造型轻细节</td></tr>
         <tr><td>特效</td><td>高饱和光照 + 动态粒子 + 金属面板 + On Fire</td><td>乐观未来主义视觉</td></tr>
         <tr><td>设计哲学</td><td>简洁图形概括功能</td><td>颜色规范在白+黄+红+蓝框架内</td></tr>
+        <tr><td>武器设计</td><td>皮克斯式夸张造型 + 5-8 色配色 + 无脏旧</td><td>武器是英雄身份标识的延伸</td></tr>
+        <tr><td>技能架构</td><td>主武器 + 2 普通(Shift/E) + 终极(Q) + 被动</td><td>冷却制 + 终极充能 + Perks 升级</td></tr>
+        <tr><td>技能特效</td><td>高辨识度 + 颜色编码(蓝友红敌) + 全屏终极 + On Fire</td><td>视听一体的辨识体系</td></tr>
+        <tr><td>图标设计</td><td>扁平矢量 + 简洁图形概括 + 职责符号(盾/准星/十字)</td><td>OW2 更扁平化，OW1 金属质感</td></tr>
+        <tr><td>角色造型</td><td>皮克斯 3D 卡通(6-7/10) + 夸张剪影 + 5-8 色</td><td>重造型轻细节，弱化纹理，无脏旧</td></tr>
+        <tr><td>材质特征</td><td>PBR 金属/亚光区分 + 弱化表面纹理 + 大块结构</td><td>暴雪首次采用主流 3A PBR 流程</td></tr>
+        <tr><td>场景光影</td><td>高饱和主光 + 彩色阴影 + GI 反弹 + 大块纯色</td><td>每张地图确立主色调，无写实痕迹</td></tr>
+        <tr><td>BUFF/DEBUFF</td><td>颜色编码(绿正/红负/蓝信息) + 粒子光环 + 状态图标</td><td>消除而非杀死，On Fire 正反馈</td></tr>
       </tbody>
     </table>
   </div>
   <div class="callout" style="margin-top:30px">
-    <b>总结：</b>守望先锋的 UI 是一套<b>「乐观未来主义」</b>设计系统。它以皮克斯式 3D 卡通渲染为基底，通过大胆的橙白配色、倾斜 BigNoodleToo Oblique 字体、未来金属面板和高饱和度光照，构建了一个温暖、色彩鲜明、充满活力的未来世界。与暗黑赛博朋克的冷峻黑暗形成鲜明对比——守望先锋是<b>「明亮即美学」</b>，而赛博朋克是<b>「黑暗即美学」</b>。OW1 的 UI 拥有极强的视觉辨识度：倾斜 HUD、On Fire 火焰、动态英雄背景；OW2 转向扁平简洁但失去部分个性。2026 赛季 1 的大规模 UI/UX 重塑试图找回 OW1 的灵魂——3D 英雄大厅、英雄为中心的导航、恢复个性和视觉活力。守望先锋证明了<b>简洁不等于无个性</b>——好的 UI 应该像英雄一样有自己的面孔。
+    <b>总结：</b>守望先锋的 UI 是一套<b>「乐观未来主义」</b>设计系统。它以皮克斯式 3D 卡通渲染为基底，通过大胆的橙白配色、倾斜 BigNoodleToo Oblique 字体、未来金属面板和高饱和度光照，构建了一个温暖、色彩鲜明、充满活力的未来世界。与暗黑赛博朋克的冷峻黑暗形成鲜明对比——守望先锋是<b>「明亮即美学」</b>，而赛博朋克是<b>「黑暗即美学」</b>。武器设计遵循角色造型语言（5-8 色原则 + 无脏旧），技能特效以颜色编码实现高辨识度（蓝友红敌 + 全屏终极 + On Fire 火焰），图标用简洁图形概括功能，角色造型重剪影轻细节，材质首次采用 PBR 流程区分金属与亚光，场景光影以高饱和主光 + 彩色阴影 + GI 反弹营造通透氛围，BUFF/DEBUFF 以颜色编码（绿正/红负/蓝信息）+ 粒子光环传达状态且消除而非杀死。OW1 的 UI 拥有极强的视觉辨识度：倾斜 HUD、On Fire 火焰、动态英雄背景；OW2 转向扁平简洁但失去部分个性。2026 赛季 1 的大规模 UI/UX 重塑试图找回 OW1 的灵魂——3D 英雄大厅、英雄为中心的导航、恢复个性和视觉活力。守望先锋证明了<b>简洁不等于无个性</b>——好的 UI 应该像英雄一样有自己的面孔。
   </div>
 </section>
 </main>
